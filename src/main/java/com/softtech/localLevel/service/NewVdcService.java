@@ -45,7 +45,6 @@ public class NewVdcService {
 		NewVdcResponseDto newVdcResponseDto = new NewVdcResponseDto();
 		OldVdc oldVdcs = oldVdcRepository.findByOldVdc(oldVdc);
 		System.out.println("The id is" + oldVdcs.getId());
-		// Long id = oldVdcRepository.findByNewVdc(new NewVdc(oldVdcs.getId()));
 		NewVdc newVdc = newVdcRepository.findById(oldVdcs.getNewVdc().getId());
 		newVdcResponseDto.setNewVdc(newVdc.getNewVdc());
 		return newVdcResponseDto;
@@ -53,35 +52,29 @@ public class NewVdcService {
 	}
 
 	public VdcDetailDto getVdcDetail(String oldVdcName) {
-		
-		//NewVdcResponseDto newVdcResponseDto = new NewVdcResponseDto();
+
 		OldVdc oldVdcs = oldVdcRepository.findByOldVdc(oldVdcName);
 		System.out.println("The id is" + oldVdcs.getId());
-		// Long id = oldVdcRepository.findByNewVdc(new NewVdc(oldVdcs.getId()));
 		NewVdc newVdc = newVdcRepository.findById(oldVdcs.getNewVdc().getId());
-		
-		VdcDetailDto vdcDetailDto=new VdcDetailDto();
-		
+		VdcDetailDto vdcDetailDto = new VdcDetailDto();
 		List<OldVdcResponseDto> oldVdcList = new ArrayList<OldVdcResponseDto>();
-		/*NewVdc newVdcs=newVdcRepository.findByNewVdc(newVdc.getNewVdc());*/
-		
 		vdcDetailDto.setNewVdc(newVdc.getNewVdc());
 		vdcDetailDto.setHead(newVdc.getHead());
 		vdcDetailDto.setSubHead(newVdc.getSubHead());
 		vdcDetailDto.setPopulation(newVdc.getPopulation());
 		vdcDetailDto.setArea(newVdc.getArea());
-		
-		List<OldVdc> oldVdc=oldVdcRepository.findAllByNewVdc(new NewVdc(newVdc.getId()));
-		oldVdc.stream().forEach(u->{
-			
-			
+		vdcDetailDto.setEmail(newVdc.getEmail());
+
+		List<OldVdc> oldVdc = oldVdcRepository.findAllByNewVdc(new NewVdc(newVdc.getId()));
+		oldVdc.stream().forEach(u -> {
+
 			OldVdcResponseDto oldVDcs = new OldVdcResponseDto();
 			oldVDcs.setOldVdc(u.getOldVdc());
 			oldVdcList.add(oldVDcs);
 			vdcDetailDto.setOldVdc(oldVdcList);
-			
+
 		});
 		return vdcDetailDto;
-		
+
 	}
 }

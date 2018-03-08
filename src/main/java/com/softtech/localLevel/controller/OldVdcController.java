@@ -16,18 +16,17 @@ import com.softtech.localLevel.service.OldVdcService;
 @RestController
 @RequestMapping("/oldVdcs")
 public class OldVdcController {
-	
+
 	@Autowired
 	private OldVdcService oldVdcService;
 
-	/* To display all the old vdc associated with district name*/
+	/* To display all the old vdc associated with district name */
 
-	@RequestMapping( value="/{district:.+}",method = RequestMethod.GET)
+	@RequestMapping(value = "/{district:.+}", method = RequestMethod.GET)
 	public ResponseEntity<Object> listAllOldVdc(@PathVariable String district) {
-		
+
 		List<OldVdcResponseDto> OldVdcDtoList = oldVdcService.listAllOldVdc(district);
 		return new ResponseEntity<Object>(OldVdcDtoList, HttpStatus.OK);
 	}
-	
-	
+
 }

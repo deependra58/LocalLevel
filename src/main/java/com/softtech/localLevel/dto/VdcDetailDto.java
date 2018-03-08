@@ -11,8 +11,17 @@ public class VdcDetailDto implements Serializable {
 	private String newVdc;
 	private String head;
 	private String subHead;
-	private Long population;
-	private long area;
+	private String population;
+	private String area;
+	private String email;
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	private List<OldVdcResponseDto> oldVdc;
 
 	public String getNewVdc() {
@@ -31,11 +40,11 @@ public class VdcDetailDto implements Serializable {
 		this.head = head;
 	}
 
-	public Long getPopulation() {
+	public String getPopulation() {
 		return population;
 	}
 
-	public void setPopulation(Long population) {
+	public void setPopulation(String population) {
 		this.population = population;
 	}
 
@@ -47,11 +56,11 @@ public class VdcDetailDto implements Serializable {
 		this.subHead = subHead;
 	}
 
-	public long getArea() {
+	public String getArea() {
 		return area;
 	}
 
-	public void setArea(long area) {
+	public void setArea(String area) {
 		this.area = area;
 	}
 

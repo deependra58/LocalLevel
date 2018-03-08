@@ -22,35 +22,17 @@ public class NewVdc implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	private String newVdc;
-	
-	private Long population;
-	private Long area;
+	private String population;
+	private String area;
 	private String head;
 	private String subHead;
+	private String email;
 	
-	public String getHead() {
-		return head;
+	public String getEmail() {
+		return email;
 	}
-	public void setHead(String head) {
-		this.head = head;
-	}
-	public String getSubHead() {
-		return subHead;
-	}
-	public void setSubHead(String subHead) {
-		this.subHead = subHead;
-	}
-	public Long getPopulation() {
-		return population;
-	}
-	public void setPopulation(Long population) {
-		this.population = population;
-	}
-	public Long getArea() {
-		return area;
-	}
-	public void setArea(Long area) {
-		this.area = area;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	@ManyToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	@JsonBackReference
@@ -64,6 +46,32 @@ public class NewVdc implements Serializable {
 	@OneToMany(mappedBy="newVdc",cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	@JsonManagedReference
 	private List<NewWard> newWard;
+	
+	public String getHead() {
+		return head;
+	}
+	public void setHead(String head) {
+		this.head = head;
+	}
+	public String getSubHead() {
+		return subHead;
+	}
+	public void setSubHead(String subHead) {
+		this.subHead = subHead;
+	}
+	public String getPopulation() {
+		return population;
+	}
+	public void setPopulation(String population) {
+		this.population = population;
+	}
+	public String getArea() {
+		return area;
+	}
+	public void setArea(String area) {
+		this.area = area;
+	}
+	
 	
 	public NewVdc(Long id, String newVdc, District district, List<com.softtech.localLevel.model.OldVdc> oldVdc,
 			List<NewWard> newWard) {
