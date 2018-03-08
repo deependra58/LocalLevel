@@ -1,6 +1,8 @@
 package com.softtech.localLevel.model;
 
-public class Test {
+import java.io.Serializable;
+
+public class Test implements Serializable{
 	private String state;
 	private String district;
 	private String newvdc;

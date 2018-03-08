@@ -8,4 +8,8 @@ import com.softtech.localLevel.model.State;
 @Repository
 public interface StateRepository extends JpaRepository <State,Long> {
 
+	//Long getId(String state);
+
+	State findByState(String state);
+
 }

@@ -1,5 +1,6 @@
 package com.softtech.localLevel.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class NewVdc {
+public class NewVdc implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -80,6 +81,9 @@ public class NewVdc {
 	}
 	public NewVdc() {
 		super();
+	}
+	public NewVdc(Long id) {
+		this.id=id;
 	}
 	public void setOldVdc(String string4) {
 		// TODO Auto-generated method stub

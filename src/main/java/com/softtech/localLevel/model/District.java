@@ -1,39 +1,46 @@
 package com.softtech.localLevel.model;
 
-import java.util.List;
+import java.io.Serializable;
+
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javax.persistence.Table;
+
+
 
 @Entity
-public class District {
+@Table(name="district")
+public class District implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	
+	@Column(name="id")
 	private Long id;
 	private String district;
 	
-	@ManyToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE})
-	@JsonBackReference
+	@ManyToOne(cascade= {CascadeType.ALL})
 	@JoinColumn(name="state_id")
 	private State state;
-	
-	@OneToMany(mappedBy="district",cascade={CascadeType.PERSIST,CascadeType.MERGE})
-	@JsonManagedReference
-	private List<NewVdc> vdc;
 
 	public Long getId() {
 		return id;
+	}
+
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
 	}
 
 	public void setId(Long id) {
@@ -48,32 +55,20 @@ public class District {
 		this.district = district;
 	}
 
-	public State getState() {
-		return state;
-	}
-
-	public List<NewVdc> getVdc() {
-		return vdc;
-	}
-
-	public void setVdc(List<NewVdc> vdc) {
-		this.vdc = vdc;
-	}
-
-	public void setState(State state) {
-		this.state = state;
-	}
-
-	public District(Long id, String district, State state) {
-		super();
-		this.id = id;
-		this.district = district;
-		this.state = state;
-	}
+	
 
 	public District() {
 		super();
 	}
+
+	public District(Long id) {
+		this.id=id;
+	}
+	
+	/*@OneToMany(mappedBy="district",cascade={CascadeType.PERSIST,CascadeType.MERGE})
+	@JsonManagedReference
+	private List<NewVdc> vdc;
+*/
 	
 	
 

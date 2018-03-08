@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import com.softtech.localLevel.model.District;
 import com.softtech.localLevel.model.NewVdc;
 import com.softtech.localLevel.model.NewWard;
@@ -49,6 +50,8 @@ public class MainController {
 	private NewWardRepository newWardRepository;
 	@Autowired
 	private OldWardRepository oldWardRepository;
+/*	@Autowired
+	StateDistrictRepository stateDistrictRepository;*/
 
 	@SuppressWarnings({ "null", "unused" })
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
@@ -62,6 +65,7 @@ public class MainController {
 		Iterator rows = sheet.rowIterator();
 
 		int k = 0, counter = 2;
+		String temp=null;
 		String[] temp0 = new String[35083];
 		temp0[0] = null;
 		String[] temp1 = new String[35083];
@@ -84,7 +88,7 @@ public class MainController {
 			try {
 
 				State state = new State();
-				String string0 = row.getCell(1).toString();
+				String string0 = row.getCell(0).toString();
 				byte[] u0 = string0.getBytes("UTF-8");
 				string0 = new String(u0, "UTF-8");
 				for (int j = 0; j < k + 1; j++) {
@@ -101,9 +105,29 @@ public class MainController {
 					state.setState(string0);
 					stateRepository.save(state);
 				}
+				
+				
+				
+			
+				/*NewVdc newVdc = new NewVdc();
+				String string2 = row.getCell(2).toString();
+				byte[] u2 = string2.getBytes("UTF-8");
+				string2 = new String(u2, "UTF-8");
+				if(!temp.equalsIgnoreCase(string2)) {
+					newVdc.setNewVdc(string2);
+					newVdcRepository.save(newVdc);
+					
+					
+				}
+				
+				*/
+				
+				
+				
+				
 
 				District district = new District();
-				String string1 = row.getCell(2).toString();
+				String string1 = row.getCell(1).toString();
 				byte[] u1 = string1.getBytes("UTF-8");
 				string1 = new String(u1, "UTF-8");
 				for (int j = 0; j < k + 1; j++) {
@@ -123,7 +147,7 @@ public class MainController {
 				}
 
 				NewVdc newVdc = new NewVdc();
-				String string2 = row.getCell(3).toString();
+				String string2 = row.getCell(2).toString();
 				byte[] u2 = string2.getBytes("UTF-8");
 				string2 = new String(u2, "UTF-8");
 				for (int j = 0; j < k + 1; j++) {
@@ -141,7 +165,7 @@ public class MainController {
 					newVdcRepository.save(newVdc);
 				}
 
-				NewWard newWard = new NewWard();
+				/*NewWard newWard = new NewWard();
 				String string3 = row.getCell(4).toString();
 				byte[] u3 = string3.getBytes("UTF-8");
 				string3 = new String(u3, "UTF-8");
@@ -159,10 +183,10 @@ public class MainController {
 				if (counter == 0) {
 					newWard.setNewWard(Long.parseLong(a[0]));
 					newWardRepository.save(newWard);
-				}
+				}*/
 
 				OldVdc oldVdc = new OldVdc();
-				String string4 = row.getCell(5).toString();
+				String string4 = row.getCell(4).toString();
 				byte[] u4 = string4.getBytes("UTF-8");
 				string4 = new String(u4, "UTF-8");
 				for (int j = 0; j < k + 1; j++) {
@@ -180,7 +204,7 @@ public class MainController {
 					oldVdcRepository.save(oldVdc);
 				}
 
-				OldWard oldWard = new OldWard();
+				/*OldWard oldWard = new OldWard();
 				String string5 = row.getCell(6).toString();
 				byte[] u5 = string5.getBytes("UTF-8");
 				string5 = new String(u5, "UTF-8");
@@ -198,15 +222,19 @@ public class MainController {
 				if (counter == 0) {
 					oldWard.setOldWard(Long.parseLong(b[0]));
 					oldWardRepository.save(oldWard);
-				}
+				}*/
+
 
 			}
 
 			catch (UnsupportedEncodingException e) {
 			}
 			k++;
+		
+			
+			}
 
-		}
+		
 
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}

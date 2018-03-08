@@ -1,5 +1,7 @@
 package com.softtech.localLevel.model;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,7 +14,7 @@ import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-public class OldWard {
+public class OldWard implements Serializable {
 
 		@Id
 		@GeneratedValue(strategy=GenerationType.AUTO)

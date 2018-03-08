@@ -1,5 +1,7 @@
 package com.softtech.localLevel.model;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +13,7 @@ import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-public class OldVdc {
+public class OldVdc implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
