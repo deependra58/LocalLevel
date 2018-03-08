@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.softtech.localLevel.dto.VdcDetailDto;
 import com.softtech.localLevel.model.District;
 import com.softtech.localLevel.model.NewVdc;
 import com.softtech.localLevel.model.OldVdc;
@@ -13,6 +14,7 @@ import com.softtech.localLevel.repository.DistrictRepository;
 import com.softtech.localLevel.repository.NewVdcRepository;
 import com.softtech.localLevel.repository.OldVdcRepository;
 import com.softtech.localLevel.response.NewVdcResponseDto;
+import com.softtech.localLevel.response.OldVdcResponseDto;
 
 @Service
 public class NewVdcService {
@@ -48,5 +50,38 @@ public class NewVdcService {
 		newVdcResponseDto.setNewVdc(newVdc.getNewVdc());
 		return newVdcResponseDto;
 
+	}
+
+	public VdcDetailDto getVdcDetail(String oldVdcName) {
+		
+		//NewVdcResponseDto newVdcResponseDto = new NewVdcResponseDto();
+		OldVdc oldVdcs = oldVdcRepository.findByOldVdc(oldVdcName);
+		System.out.println("The id is" + oldVdcs.getId());
+		// Long id = oldVdcRepository.findByNewVdc(new NewVdc(oldVdcs.getId()));
+		NewVdc newVdc = newVdcRepository.findById(oldVdcs.getNewVdc().getId());
+		
+		VdcDetailDto vdcDetailDto=new VdcDetailDto();
+		
+		List<OldVdcResponseDto> oldVdcList = new ArrayList<OldVdcResponseDto>();
+		/*NewVdc newVdcs=newVdcRepository.findByNewVdc(newVdc.getNewVdc());*/
+		
+		vdcDetailDto.setNewVdc(newVdc.getNewVdc());
+		vdcDetailDto.setHead(newVdc.getHead());
+		vdcDetailDto.setSubHead(newVdc.getSubHead());
+		vdcDetailDto.setPopulation(newVdc.getPopulation());
+		vdcDetailDto.setArea(newVdc.getArea());
+		
+		List<OldVdc> oldVdc=oldVdcRepository.findAllByNewVdc(new NewVdc(newVdc.getId()));
+		oldVdc.stream().forEach(u->{
+			
+			
+			OldVdcResponseDto oldVDcs = new OldVdcResponseDto();
+			oldVDcs.setOldVdc(u.getOldVdc());
+			oldVdcList.add(oldVDcs);
+			vdcDetailDto.setOldVdc(oldVdcList);
+			
+		});
+		return vdcDetailDto;
+		
 	}
 }

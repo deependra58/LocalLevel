@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.softtech.localLevel.dto.VdcDetailDto;
 import com.softtech.localLevel.response.NewVdcResponseDto;
 import com.softtech.localLevel.service.NewVdcService;
 
@@ -35,6 +36,17 @@ public class NewVdcController {
 		
 		NewVdcResponseDto newVdcResponseDto= newVdcService.getNewVdc(oldVdc);
 		return new ResponseEntity<Object>(newVdcResponseDto,HttpStatus.OK);
+	}
+	
+	/*To display detail about the vdc*/
+	@RequestMapping(value="/NewVdcDetails/{oldVdcName:.+}", method=RequestMethod.GET)
+	public ResponseEntity<Object> getDetails (@PathVariable String oldVdcName){
+		
+		//System.out.println("The id is" + oldVdcName);
+		 VdcDetailDto vdcDetailDto=newVdcService.getVdcDetail(oldVdcName);
+		 return new ResponseEntity<Object>(vdcDetailDto,HttpStatus.OK);
+		 
+		
 	}
 	
 	

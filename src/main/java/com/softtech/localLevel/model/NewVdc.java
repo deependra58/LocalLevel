@@ -23,6 +23,35 @@ public class NewVdc implements Serializable {
 	private Long id;
 	private String newVdc;
 	
+	private Long population;
+	private Long area;
+	private String head;
+	private String subHead;
+	
+	public String getHead() {
+		return head;
+	}
+	public void setHead(String head) {
+		this.head = head;
+	}
+	public String getSubHead() {
+		return subHead;
+	}
+	public void setSubHead(String subHead) {
+		this.subHead = subHead;
+	}
+	public Long getPopulation() {
+		return population;
+	}
+	public void setPopulation(Long population) {
+		this.population = population;
+	}
+	public Long getArea() {
+		return area;
+	}
+	public void setArea(Long area) {
+		this.area = area;
+	}
 	@ManyToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	@JsonBackReference
 	@JoinColumn(name="district_id")

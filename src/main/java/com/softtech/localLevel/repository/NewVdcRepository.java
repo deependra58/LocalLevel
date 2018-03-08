@@ -15,4 +15,14 @@ public interface NewVdcRepository extends JpaRepository <NewVdc, Long>{
 
 	NewVdc findById(Long id);
 
+	NewVdc findByNewVdc(String vdcName);
+
+	
+
+	/*List<NewVdc> findAllByDistrict(District district);
+
+	NewVdc findById(Long id);
+
+	NewVdc findByVdcName(String vdcName);*/
+
 }
