@@ -45,8 +45,53 @@ public class State  implements Serializable {
 	@Column(unique=true)
 	private String state;
 	
+	private String mayor;
+	private String deputMayor;
+	private String website;
+	private String area;
+	private String population;
 	
 	
+	public String getMayor() {
+		return mayor;
+	}
+
+	public void setMayor(String mayor) {
+		this.mayor = mayor;
+	}
+
+	public String getDeputMayor() {
+		return deputMayor;
+	}
+
+	public void setDeput_Mayor(String deputMayor) {
+		this.deputMayor = deputMayor;
+	}
+
+	public String getWebsite() {
+		return website;
+	}
+
+	public void setWebsite(String website) {
+		this.website = website;
+	}
+
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
+	}
+
+	public String getPopulation() {
+		return population;
+	}
+
+	public void setPopulation(String population) {
+		this.population = population;
+	}
+
 	@OneToMany(mappedBy="state",fetch=FetchType.LAZY)
 	private List<District> districts;
 

@@ -2,10 +2,8 @@ package com.softtech.localLevel.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.softtech.localLevel.dto.VdcDetailDto;
 import com.softtech.localLevel.model.District;
 import com.softtech.localLevel.model.NewVdc;
