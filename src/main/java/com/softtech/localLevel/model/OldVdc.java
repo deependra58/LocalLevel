@@ -1,14 +1,17 @@
 package com.softtech.localLevel.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -24,6 +27,17 @@ public class OldVdc implements Serializable {
 	@JsonBackReference
 	@JoinColumn(name = "newVdc_id")
 	private NewVdc newVdc;
+	
+	@OneToMany(mappedBy="oldVdc", fetch=FetchType.LAZY)
+	List<Ward> wards;
+
+	public List<Ward> getWards() {
+		return wards;
+	}
+
+	public void setWards(List<Ward> wards) {
+		this.wards = wards;
+	}
 
 	public Long getId() {
 		return id;
@@ -58,6 +72,11 @@ public class OldVdc implements Serializable {
 
 	public OldVdc() {
 		super();
+	}
+
+	public OldVdc(Long id) {
+		this.id=id;
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
