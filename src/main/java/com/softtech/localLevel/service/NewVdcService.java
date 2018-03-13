@@ -2,14 +2,11 @@ package com.softtech.localLevel.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.transaction.Transactional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.softtech.localLevel.dto.VdcDetailDto;
 import com.softtech.localLevel.model.District;
 import com.softtech.localLevel.model.NewVdc;
@@ -22,7 +19,7 @@ import com.softtech.localLevel.response.OldVdcResponseDto;
 
 @Service
 public class NewVdcService {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(NewVdcService.class);
 
 	@Autowired
@@ -59,7 +56,7 @@ public class NewVdcService {
 		return newVdcResponseDto;
 
 	}
-	
+
 	@Transactional
 	public VdcDetailDto getVdcDetail(String oldVdcName) {
 		LOG.info("\n\nRequest Accepted to show new Vdcs detail from old Vdc\n");
