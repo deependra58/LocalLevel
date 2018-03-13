@@ -13,7 +13,7 @@ import com.softtech.localLevel.service.StateService;
 
 
 @RestController
-@RequestMapping("/states")
+@RequestMapping("/rest/states")
 
 public class StateController {
 	

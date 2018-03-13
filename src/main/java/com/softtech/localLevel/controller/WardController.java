@@ -14,7 +14,7 @@ import com.softtech.localLevel.response.WardResponseDto;
 import com.softtech.localLevel.service.WardService;
 
 @RestController
-@RequestMapping("/wards")
+@RequestMapping("/rest/wards")
 public class WardController {
 	
 	

@@ -14,7 +14,7 @@ import com.softtech.localLevel.response.OldVdcResponseDto;
 import com.softtech.localLevel.service.OldVdcService;
 
 @RestController
-@RequestMapping("/oldVdcs")
+@RequestMapping("/rest/oldVdcs")
 public class OldVdcController {
 
 	@Autowired

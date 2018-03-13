@@ -15,7 +15,7 @@ import com.softtech.localLevel.response.NewVdcResponseDto;
 import com.softtech.localLevel.service.NewVdcService;
 
 @RestController
-@RequestMapping("/newVdcs")
+@RequestMapping("/rest/newVdcs")
 public class NewVdcController {
 
 	@Autowired

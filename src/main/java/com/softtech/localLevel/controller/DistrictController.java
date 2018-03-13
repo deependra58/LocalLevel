@@ -1,6 +1,7 @@
 package com.softtech.localLevel.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,11 +9,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.softtech.localLevel.response.DistrictResponseDto;
 import com.softtech.localLevel.service.DistrictService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+
+
 @RestController
-@RequestMapping("/districts")
+@RequestMapping("/rest/districts")
+@Api(value = "District controller")
 
 public class DistrictController {
 
@@ -20,7 +28,7 @@ public class DistrictController {
 	private DistrictService districtService;
 
 	/* List all districts corresponding to state name */
-
+	@ApiOperation(value = "List districts from state")
 	@RequestMapping(value = "/{state:.+}", method = RequestMethod.GET)
 
 	public ResponseEntity<Object> listAllDistricts(@PathVariable("state") String state) {
