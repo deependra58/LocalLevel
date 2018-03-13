@@ -14,31 +14,37 @@ import com.softtech.localLevel.dto.VdcDetailDto;
 import com.softtech.localLevel.response.NewVdcResponseDto;
 import com.softtech.localLevel.service.NewVdcService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/rest/newVdcs")
+@Api(value="New Vdc Controller", description="New Vdc operations")
 public class NewVdcController {
 
 	@Autowired
 	private NewVdcService newVdcService;
 
-	/* To display all the new Vdc associated with district name */
 
-	@RequestMapping(value = "/list/{district:.+}", method = RequestMethod.GET)
+	@ApiOperation(value="Shows new vdc from district", notes="Shows the corresponsing New Vdcs of a district")
+	@RequestMapping(value = "district/{district:.+}", method = RequestMethod.GET)
 	public ResponseEntity<Object> ListAllNewVdc(@PathVariable String district) {
 
 		List<NewVdcResponseDto> newVdcDtoList = newVdcService.ListAllNewVdc(district);
 		return new ResponseEntity<Object>(newVdcDtoList, HttpStatus.OK);
 	}
 
-	/* To display a new Vdc to which the given old vdc belongs to */
-	@RequestMapping(value = "/{oldVdc:.+}", method = RequestMethod.GET)
+	
+	@ApiOperation(value="Shows the New vdc From old vdc", notes="Shows the new vdc to which the old vdc belongs to")
+	@RequestMapping(value = "oldVdc/{oldVdc:.+}", method = RequestMethod.GET)
 	public ResponseEntity<Object> getNewVdc(@PathVariable String oldVdc) {
 
 		NewVdcResponseDto newVdcResponseDto = newVdcService.getNewVdc(oldVdc);
 		return new ResponseEntity<Object>(newVdcResponseDto, HttpStatus.OK);
 	}
 
-	/* To display detail about the vdc */
+
+	@ApiOperation(value="Display Details about New vdc", notes="Shows the detail about New vdc from oldVdc name")
 	@RequestMapping(value = "/newVdcDetails/{oldVdcName:.+}", method = RequestMethod.GET)
 	public ResponseEntity<Object> getDetails(@PathVariable String oldVdcName) {
 

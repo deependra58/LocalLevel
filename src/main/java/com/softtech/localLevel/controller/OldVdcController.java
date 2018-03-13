@@ -13,16 +13,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.softtech.localLevel.response.OldVdcResponseDto;
 import com.softtech.localLevel.service.OldVdcService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/rest/oldVdcs")
+@Api(value = "Old Vdc Controller", description = "Operations about Old Vdcs")
 public class OldVdcController {
 
 	@Autowired
 	private OldVdcService oldVdcService;
 
-	/* To display all the old vdc associated with district name */
-
-	@RequestMapping(value = "/{district:.+}", method = RequestMethod.GET)
+	@ApiOperation(value = "Shows the old vdcs from district", notes = "Shows the old vdcs corresponding to district")
+	@RequestMapping(value = "district/{district:.+}", method = RequestMethod.GET)
 	public ResponseEntity<Object> listAllOldVdc(@PathVariable String district) {
 
 		List<OldVdcResponseDto> OldVdcDtoList = oldVdcService.listAllOldVdc(district);

@@ -1,8 +1,11 @@
 package com.softtech.localLevel.service;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +20,18 @@ import com.softtech.localLevel.response.OldVdcResponseDto;
 @Service
 public class OldVdcService {
 	
+	private static final Logger LOG=LoggerFactory.getLogger(OldVdcService.class);
 	@Autowired
 	DistrictRepository districtRepository;
 	@Autowired
 	NewVdcRepository newVdcRepository;
 	@Autowired
 	OldVdcRepository oldVdcRepository;
+	
+	@Transactional
 	public List<OldVdcResponseDto> listAllOldVdc(String district) {
 
+		LOG.info("Request accepted to list all old vdcs from district");
 		List<OldVdcResponseDto> oldVdcResponseDtoList = new ArrayList<OldVdcResponseDto>();
 		District districts = districtRepository.findByDistrict(district);
 		// Long id=districts.getId();

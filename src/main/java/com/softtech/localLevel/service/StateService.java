@@ -1,29 +1,28 @@
 package com.softtech.localLevel.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.softtech.localLevel.dto.StateDetailDto;
-import com.softtech.localLevel.model.District;
 import com.softtech.localLevel.model.State;
-import com.softtech.localLevel.repository.DistrictRepository;
 import com.softtech.localLevel.repository.StateRepository;
-
-import com.softtech.localLevel.response.DistrictResponseDto;
 
 @Service
 public class StateService {
 	
+	private static final Logger LOG=LoggerFactory.getLogger(StateService.class);
 	@Autowired
 	private StateRepository stateRepository;
+	
+	
 
+	@Transactional
 	public StateDetailDto getStateDetails(String state) {
-		
+		LOG.info("Requested accepted to show state details from state name");
 		StateDetailDto stateDetailDto=new StateDetailDto();
 		State states=stateRepository.findByState(state);
 		stateDetailDto.setWebsite(states.getWebsite());

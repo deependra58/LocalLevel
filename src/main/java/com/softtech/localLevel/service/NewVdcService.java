@@ -2,8 +2,14 @@ package com.softtech.localLevel.service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.softtech.localLevel.dto.VdcDetailDto;
 import com.softtech.localLevel.model.District;
 import com.softtech.localLevel.model.NewVdc;
@@ -16,6 +22,8 @@ import com.softtech.localLevel.response.OldVdcResponseDto;
 
 @Service
 public class NewVdcService {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(NewVdcService.class);
 
 	@Autowired
 	DistrictRepository districtRepository;
@@ -24,7 +32,9 @@ public class NewVdcService {
 	@Autowired
 	OldVdcRepository oldVdcRepository;
 
+	@Transactional
 	public List<NewVdcResponseDto> ListAllNewVdc(String district) {
+		LOG.info("Request Accepted to list all new Vdcs");
 		List<NewVdcResponseDto> newVdcResponseDtoList = new ArrayList<NewVdcResponseDto>();
 		District districts = districtRepository.findByDistrict(district);
 		List<NewVdc> newVdcs = newVdcRepository.findAllByDistrict(new District(districts.getId()));
@@ -38,8 +48,9 @@ public class NewVdcService {
 		return newVdcResponseDtoList;
 	}
 
+	@Transactional
 	public NewVdcResponseDto getNewVdc(String oldVdc) {
-
+		LOG.info("Request Accepted to show new vdc from old vdc");
 		NewVdcResponseDto newVdcResponseDto = new NewVdcResponseDto();
 		OldVdc oldVdcs = oldVdcRepository.findByOldVdc(oldVdc);
 		System.out.println("The id is" + oldVdcs.getId());
@@ -48,9 +59,10 @@ public class NewVdcService {
 		return newVdcResponseDto;
 
 	}
-
+	
+	@Transactional
 	public VdcDetailDto getVdcDetail(String oldVdcName) {
-
+		LOG.info("Request Accepted to show new Vdcs detail from old Vdc");
 		OldVdc oldVdcs = oldVdcRepository.findByOldVdc(oldVdcName);
 		System.out.println("The id is" + oldVdcs.getId());
 		NewVdc newVdc = newVdcRepository.findById(oldVdcs.getNewVdc().getId());
