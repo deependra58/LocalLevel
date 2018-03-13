@@ -34,7 +34,7 @@ public class NewVdcService {
 
 	@Transactional
 	public List<NewVdcResponseDto> ListAllNewVdc(String district) {
-		LOG.info("Request Accepted to list all new Vdcs");
+		LOG.info("\n\nRequest Accepted to list all new Vdcs\n");
 		List<NewVdcResponseDto> newVdcResponseDtoList = new ArrayList<NewVdcResponseDto>();
 		District districts = districtRepository.findByDistrict(district);
 		List<NewVdc> newVdcs = newVdcRepository.findAllByDistrict(new District(districts.getId()));
@@ -50,7 +50,7 @@ public class NewVdcService {
 
 	@Transactional
 	public NewVdcResponseDto getNewVdc(String oldVdc) {
-		LOG.info("Request Accepted to show new vdc from old vdc");
+		LOG.info("\n\nRequest Accepted to show new vdc from old vdc\n");
 		NewVdcResponseDto newVdcResponseDto = new NewVdcResponseDto();
 		OldVdc oldVdcs = oldVdcRepository.findByOldVdc(oldVdc);
 		System.out.println("The id is" + oldVdcs.getId());
@@ -62,7 +62,7 @@ public class NewVdcService {
 	
 	@Transactional
 	public VdcDetailDto getVdcDetail(String oldVdcName) {
-		LOG.info("Request Accepted to show new Vdcs detail from old Vdc");
+		LOG.info("\n\nRequest Accepted to show new Vdcs detail from old Vdc\n");
 		OldVdc oldVdcs = oldVdcRepository.findByOldVdc(oldVdcName);
 		System.out.println("The id is" + oldVdcs.getId());
 		NewVdc newVdc = newVdcRepository.findById(oldVdcs.getNewVdc().getId());

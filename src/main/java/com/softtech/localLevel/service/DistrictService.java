@@ -35,7 +35,7 @@ public class DistrictService {
 	@Transactional
 	public List<DistrictResponseDto> listAllDistricts(String state) {
 
-		LOG.info("Request Accepted to list all districts from state name");
+		LOG.info("\n\nRequest Accepted to list all districts from state name\n");
 		List<DistrictResponseDto> districtResponseDtoList = new ArrayList<DistrictResponseDto>();
 		State states = stateRepository.findByState(state);
 		Long id = states.getId();

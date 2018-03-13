@@ -22,7 +22,7 @@ public class StateService {
 
 	@Transactional
 	public StateDetailDto getStateDetails(String state) {
-		LOG.info("Requested accepted to show state details from state name");
+		LOG.info("\n\nRequested accepted to show state details from state name\n");
 		StateDetailDto stateDetailDto=new StateDetailDto();
 		State states=stateRepository.findByState(state);
 		stateDetailDto.setWebsite(states.getWebsite());

@@ -31,7 +31,7 @@ public class OldVdcService {
 	@Transactional
 	public List<OldVdcResponseDto> listAllOldVdc(String district) {
 
-		LOG.info("Request accepted to list all old vdcs from district");
+		LOG.info("\n\nRequest accepted to list all old vdcs from district\n");
 		List<OldVdcResponseDto> oldVdcResponseDtoList = new ArrayList<OldVdcResponseDto>();
 		District districts = districtRepository.findByDistrict(district);
 		// Long id=districts.getId();

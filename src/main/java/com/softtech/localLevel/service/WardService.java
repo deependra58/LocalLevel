@@ -31,7 +31,7 @@ public class WardService {
 	
 	public WardResponseDto getWard(Long oldWardId, String oldVdcName) {
 		
-		LOG.info("Request accepted to show newWard and new vdc name");
+		LOG.info("\n\n\nRequest accepted to show newWard and new vdc name\n");
 		OldVdc oldVdcs=oldVdcRepository.findByOldVdc(oldVdcName);
 		Long id=oldVdcs.getId();
 		Ward wards=wardRepository.findByOldWardIdAndOldVdc(oldWardId, new OldVdc(id));
