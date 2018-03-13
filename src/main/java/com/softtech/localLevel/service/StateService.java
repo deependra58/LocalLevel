@@ -29,6 +29,7 @@ public class StateService {
 		stateDetailDto.setArea(states.getArea());
 		stateDetailDto.setPopulation(states.getPopulation());
 		stateDetailDto.setMayor(states.getMayor());
+		stateDetailDto.setCapital(states.getCapital());
 		stateDetailDto.setDeputMayor(states.getDeputMayor());
 		
 		return stateDetailDto;

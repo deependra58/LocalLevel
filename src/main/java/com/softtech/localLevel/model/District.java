@@ -26,7 +26,34 @@ public class District implements Serializable {
 	@Column(name="id")
 	private Long id;
 	private String district;
+	private String area;
+	private String population;
+	private String headquater;
 	
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
+	}
+
+	public String getPopulation() {
+		return population;
+	}
+
+	public void setPopulation(String population) {
+		this.population = population;
+	}
+
+	public String getHeadquater() {
+		return headquater;
+	}
+
+	public void setHeadquater(String headquater) {
+		this.headquater = headquater;
+	}
+
 	@ManyToOne(cascade= {CascadeType.ALL})
 	@JoinColumn(name="state_id")
 	private State state;

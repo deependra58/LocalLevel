@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.softtech.localLevel.response.DistrictDetailsDto;
 import com.softtech.localLevel.response.DistrictResponseDto;
 import com.softtech.localLevel.service.DistrictService;
 
@@ -31,6 +32,15 @@ public class DistrictController {
 
 		List<DistrictResponseDto> districtDtoList = districtService.listAllDistricts(state);
 		return new ResponseEntity<Object>(districtDtoList, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value="Show district details")
+	@RequestMapping(value="district/{district:.+}", method=RequestMethod.GET)
+	public ResponseEntity<Object> getDistrictDetail(@PathVariable String district){
+		
+		DistrictDetailsDto districtDetailsDto= districtService.getDistrictDetails(district);
+		return new ResponseEntity<Object>(districtDetailsDto, HttpStatus.OK);
+		
 	}
 
 }

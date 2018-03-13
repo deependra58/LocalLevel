@@ -49,6 +49,19 @@ public class State  implements Serializable {
 	private String deputMayor;
 	private String website;
 	private String area;
+	private String capital;
+	public String getCapital() {
+		return capital;
+	}
+
+	public void setCapital(String capital) {
+		this.capital = capital;
+	}
+
+	public void setDeputMayor(String deputMayor) {
+		this.deputMayor = deputMayor;
+	}
+
 	private String population;
 	
 	
