@@ -14,6 +14,7 @@ public class VdcDetailDto implements Serializable {
 	private String population;
 	private String area;
 	private String email;
+	private List<OldVdcResponseDto> oldvdc;
 	public String getEmail() {
 		return email;
 	}
@@ -22,7 +23,13 @@ public class VdcDetailDto implements Serializable {
 		this.email = email;
 	}
 
-	private List<OldVdcResponseDto> oldVdc;
+	public List<OldVdcResponseDto> getOldvdc() {
+		return oldvdc;
+	}
+
+	public void setOldvdc(List<OldVdcResponseDto> oldvdc) {
+		this.oldvdc = oldvdc;
+	}
 
 	public String getNewVdc() {
 		return newVdc;
@@ -64,12 +71,8 @@ public class VdcDetailDto implements Serializable {
 		this.area = area;
 	}
 
-	public List<OldVdcResponseDto> getOldVdc() {
-		return oldVdc;
-	}
+	
 
-	public void setOldVdc(List<OldVdcResponseDto> oldVdc) {
-		this.oldVdc = oldVdc;
-	}
+	
 
 }

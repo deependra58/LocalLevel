@@ -50,6 +50,15 @@ public class State  implements Serializable {
 	private String website;
 	private String area;
 	private String capital;
+	private String density;
+	public String getDensity() {
+		return density;
+	}
+
+	public void setDensity(String density) {
+		this.density = density;
+	}
+
 	public String getCapital() {
 		return capital;
 	}

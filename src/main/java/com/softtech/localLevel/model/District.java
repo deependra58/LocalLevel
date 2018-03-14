@@ -29,6 +29,9 @@ public class District implements Serializable {
 	private String area;
 	private String population;
 	private String headquater;
+	@ManyToOne(cascade= {CascadeType.ALL})
+	@JoinColumn(name="state_id")
+	private State state;
 	
 	public String getArea() {
 		return area;
@@ -54,9 +57,7 @@ public class District implements Serializable {
 		this.headquater = headquater;
 	}
 
-	@ManyToOne(cascade= {CascadeType.ALL})
-	@JoinColumn(name="state_id")
-	private State state;
+
 
 	public Long getId() {
 		return id;

@@ -78,9 +78,10 @@ public class NewVdcService {
 			OldVdcResponseDto oldVDcs = new OldVdcResponseDto();
 			oldVDcs.setOldVdc(u.getOldVdc());
 			oldVdcList.add(oldVDcs);
-			vdcDetailDto.setOldVdc(oldVdcList);
+			
 
 		});
+		vdcDetailDto.setOldvdc(oldVdcList);
 		return vdcDetailDto;
 
 	}

@@ -49,7 +49,7 @@ public class NewVdcController {
 	public ResponseEntity<Object> getDetails(@PathVariable String oldVdcName) {
 
 		// System.out.println("The id is" + oldVdcName);
-		VdcDetailDto vdcDetailDto = newVdcService.getVdcDetail(oldVdcName);
+		VdcDetailDto vdcDetailDto = newVdcService.getVdcDetail(oldVdcName);		
 		return new ResponseEntity<Object>(vdcDetailDto, HttpStatus.OK);
 
 	}

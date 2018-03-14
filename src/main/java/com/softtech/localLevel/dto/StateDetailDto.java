@@ -1,5 +1,9 @@
 package com.softtech.localLevel.dto;
 
+import java.util.List;
+
+import com.softtech.localLevel.model.District;
+
 public class StateDetailDto {
 	
 	private String area;
@@ -8,6 +12,22 @@ public class StateDetailDto {
 	private String mayor;
 	private String deputMayor;
 	private String capital;
+	private String density;
+	private List<DistrictDto> district;
+	
+	
+	public List<DistrictDto> getDistrict() {
+		return district;
+	}
+	public void setDistrict(List<DistrictDto> districtDtoList) {
+		this.district = districtDtoList;
+	}
+	public String getDensity() {
+		return density;
+	}
+	public void setDensity(String density) {
+		this.density = density;
+	}
 	public String getCapital() {
 		return capital;
 	}
