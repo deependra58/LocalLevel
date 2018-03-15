@@ -13,6 +13,13 @@ public class StateDetailDto {
 	private String deputMayor;
 	private String capital;
 	private String density;
+	private String statePicture;
+	public String getStatePicture() {
+		return statePicture;
+	}
+	public void setStatePicture(String statePicture) {
+		this.statePicture = statePicture;
+	}
 	private List<DistrictDto> district;
 	
 	

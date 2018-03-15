@@ -51,6 +51,15 @@ public class State  implements Serializable {
 	private String area;
 	private String capital;
 	private String density;
+	private String statePicture;
+	public String getStatePicture() {
+		return statePicture;
+	}
+
+	public void setStatePicture(String statePicture) {
+		this.statePicture = statePicture;
+	}
+
 	public String getDensity() {
 		return density;
 	}
