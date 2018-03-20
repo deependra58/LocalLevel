@@ -27,7 +27,14 @@ public class NewVdc implements Serializable {
 	private String head;
 	private String subHead;
 	private String email;
+	private String headPhoneNumber;
 	
+	public String getHeadPhoneNumber() {
+		return headPhoneNumber;
+	}
+	public void setHeadPhoneNumber(String headPhoneNumber) {
+		this.headPhoneNumber = headPhoneNumber;
+	}
 	public String getEmail() {
 		return email;
 	}

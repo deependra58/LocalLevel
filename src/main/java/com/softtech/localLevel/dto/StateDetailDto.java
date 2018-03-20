@@ -14,6 +14,14 @@ public class StateDetailDto {
 	private String capital;
 	private String density;
 	private String statePicture;
+	private String mayorPhoneNumber;
+	
+	public String getMayorPhoneNumber() {
+		return mayorPhoneNumber;
+	}
+	public void setMayorPhoneNumber(String mayorPhoneNumber) {
+		this.mayorPhoneNumber = mayorPhoneNumber;
+	}
 	public String getStatePicture() {
 		return statePicture;
 	}

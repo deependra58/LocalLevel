@@ -14,6 +14,15 @@ public class VdcDetailDto implements Serializable {
 	private String population;
 	private String area;
 	private String email;
+	private String headPhoneNumber;
+	public String getHeadPhoneNumber() {
+		return headPhoneNumber;
+	}
+
+	public void setHeadPhoneNumber(String headPhoneNumber) {
+		this.headPhoneNumber = headPhoneNumber;
+	}
+
 	private List<OldVdcResponseDto> oldvdc;
 	public String getEmail() {
 		return email;
@@ -54,6 +63,8 @@ public class VdcDetailDto implements Serializable {
 	public void setPopulation(String population) {
 		this.population = population;
 	}
+
+	
 
 	public String getSubHead() {
 		return subHead;

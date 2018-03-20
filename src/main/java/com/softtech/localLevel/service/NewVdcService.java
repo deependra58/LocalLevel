@@ -71,6 +71,7 @@ public class NewVdcService {
 		vdcDetailDto.setPopulation(newVdc.getPopulation());
 		vdcDetailDto.setArea(newVdc.getArea());
 		vdcDetailDto.setEmail(newVdc.getEmail());
+		vdcDetailDto.setHeadPhoneNumber(newVdc.getHeadPhoneNumber());
 
 		List<OldVdc> oldVdc = oldVdcRepository.findAllByNewVdc(new NewVdc(newVdc.getId()));
 		oldVdc.stream().forEach(u -> {

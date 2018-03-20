@@ -2,7 +2,11 @@ package com.softtech.localLevel.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.transaction.Transactional;
 
@@ -17,6 +21,8 @@ import com.softtech.localLevel.repository.DistrictRepository;
 import com.softtech.localLevel.repository.StateRepository;
 import com.softtech.localLevel.response.DistrictDetailsDto;
 import com.softtech.localLevel.response.DistrictResponseDto;
+import com.softtech.localLevel.util.Base64Util;
+import com.softtech.localLevel.util.FileUtil;
 
 @Service
 public class DistrictService {
@@ -75,7 +81,45 @@ public class DistrictService {
 		System.out.println("Id  " + districts.getState().getId());
 		State state = stateRepository.findById(id);
 		districtDetailsDto.setState(state.getState());
+		if (districts.getDistrictPicture() != null) {
+			File file = new File(districts.getDistrictPicture());
+			try {
+				districtDetailsDto
+						.setDistrictPicture(Base64Util.encodeFileToBase64Binary(file));
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+			finally {
+				file.deleteOnExit();
+			}
+		}
 
 		return districtDetailsDto;
 	}
+
+	@Transactional
+	public void postDistrictPicture(String string,Long districtId) {
+		LOG.info("\n\nRequest accepted to post district picture.");
+		File file = null;
+		try {
+			District district = districtRepository.findById(districtId);
+			
+			LOG.info("Request Accepted to post district picture");
+			file = FileUtil.write(String.valueOf(new Date().getTime()).concat(".").concat("png"), string);
+			LOG.info("path {}", file.getAbsolutePath());
+			if (file != null)
+				district.setDistrictPicture(file.getAbsolutePath());
+			districtRepository.save(district);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (file != null) {
+				file.delete();
+			}
+		}
+	}
+
+		
+	
 }

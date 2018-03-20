@@ -6,6 +6,13 @@ public class DistrictDetailsDto {
 	private String population;
 	private String headquater;
 	private String state;
+	private String districtPicture;
+	public String getDistrictPicture() {
+		return districtPicture;
+	}
+	public void setDistrictPicture(String districtPicture) {
+		this.districtPicture = districtPicture;
+	}
 	public String getArea() {
 		return area;
 	}

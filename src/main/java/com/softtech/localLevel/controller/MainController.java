@@ -3,10 +3,7 @@ package com.softtech.localLevel.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
-import java.util.regex.Pattern;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -21,12 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import com.softtech.localLevel.model.District;
 import com.softtech.localLevel.model.NewVdc;
-import com.softtech.localLevel.model.NewWard;
 import com.softtech.localLevel.model.OldVdc;
-import com.softtech.localLevel.model.OldWard;
 import com.softtech.localLevel.model.State;
 import com.softtech.localLevel.repository.DistrictRepository;
 import com.softtech.localLevel.repository.NewVdcRepository;
@@ -35,6 +29,8 @@ import com.softtech.localLevel.repository.OldVdcRepository;
 import com.softtech.localLevel.repository.OldWardRepository;
 import com.softtech.localLevel.repository.StateRepository;
 
+import io.swagger.annotations.ApiOperation;
+@RequestMapping("/rest")
 @RestController
 public class MainController {
 
@@ -54,6 +50,7 @@ public class MainController {
 	StateDistrictRepository stateDistrictRepository;*/
 
 	@SuppressWarnings({ "null", "unused" })
+	@ApiOperation(value="Upload an excel file ")
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	ResponseEntity<Object> processExcelSheet(@RequestParam("local") MultipartFile multipartFile) throws IOException {
 

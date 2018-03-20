@@ -29,10 +29,20 @@ public class District implements Serializable {
 	private String area;
 	private String population;
 	private String headquater;
+	private String districtPicture;
+	
 	@ManyToOne(cascade= {CascadeType.ALL})
 	@JoinColumn(name="state_id")
 	private State state;
 	
+	public String getDistrictPicture() {
+		return districtPicture;
+	}
+
+	public void setDistrictPicture(String districtPicture) {
+		this.districtPicture = districtPicture;
+	}
+
 	public String getArea() {
 		return area;
 	}

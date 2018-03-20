@@ -43,6 +43,7 @@ public class StateService {
 		stateDetailDto.setCapital(states.getCapital());
 		stateDetailDto.setDeputMayor(states.getDeputMayor());
 		stateDetailDto.setDensity(states.getDensity());
+		stateDetailDto.setMayorPhoneNumber(states.getMayorPhoneNumber());
 		List<District> districts = districtRepository.findAllByState(new State(states.getId()));
 		districts.stream().forEach(u -> {
 
