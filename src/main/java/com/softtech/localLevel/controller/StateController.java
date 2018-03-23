@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.ui.Model;
+
+import com.softech.localLevel.request.StateCreationRequest;
+import com.softech.localLevel.request.StateEditRequest;
 import com.softtech.localLevel.dto.StateDetailDto;
+import com.softtech.localLevel.model.State;
 import com.softtech.localLevel.service.StateService;
 
 import io.swagger.annotations.Api;
@@ -40,6 +42,13 @@ public class StateController {
 	@Autowired
 	private StateService stateService;
 	
+	@ApiOperation(value="Post the state details manually", notes="Post state details manually")
+	@RequestMapping(value="state", method=RequestMethod.POST)
+	public ResponseEntity<Object> postState(@RequestBody StateCreationRequest stateCreationRequest){
+		stateService.createState(stateCreationRequest);
+		return new ResponseEntity<Object>(HttpStatus.OK);
+		
+	}
 	
 	@ApiOperation(value="Shows the state details", notes="Shows the details regarding state")
 	@RequestMapping(value = "state/{state:.+}", method = RequestMethod.GET)
@@ -47,6 +56,14 @@ public class StateController {
 		StateDetailDto stateDetaildto = stateService.getStateDetails(state);
 		System.out.println(stateDetaildto.getStatePicture());
 		return new ResponseEntity<Object>(stateDetaildto, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value="Edit state information", notes="Edit state information")
+	@RequestMapping(value="state/{stateId}", method=RequestMethod.PUT)
+	public ResponseEntity<Object> editState(@RequestBody StateEditRequest stateEditRequest, @RequestParam(required=false) String state,@RequestHeader(required=false) Long stateId){
+		State st=stateService.editState(stateEditRequest,state, stateId);
+		return new ResponseEntity<Object>(st,HttpStatus.OK);
+		
 	}
 	
 	

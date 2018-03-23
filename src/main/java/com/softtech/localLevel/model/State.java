@@ -25,7 +25,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.softtech.localLevel.repository.StateRepository;
 
 /**
  * <<Description Here>>
@@ -34,16 +37,20 @@ import org.hibernate.annotations.Cascade;
  * @since , Feb 27, 2018
  */
 
+
+@SuppressWarnings("serial")
 @Entity
 @Table(name="state")
 public class State  implements Serializable {
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(unique=true)
 	private String state;
+	@OneToMany(mappedBy="state",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@JsonManagedReference
+	private List<District> districts;
 	
 	private String mayor;
 	private String deputMayor;
@@ -52,7 +59,30 @@ public class State  implements Serializable {
 	private String capital;
 	private String density;
 	private String statePicture;
+	private String population;
 	private String mayorPhoneNumber;
+	
+	public State(Long id, String state, String mayor, String deputMayor, String website, String area, String capital,
+			String density, String statePicture, String mayorPhoneNumber, String population, List<District> districts) {
+		super();
+		this.id = id;
+		this.state = state;
+		this.mayor = mayor;
+		this.deputMayor = deputMayor;
+		this.website = website;
+		this.area = area;
+		this.capital = capital;
+		this.density = density;
+		this.statePicture = statePicture;
+		this.mayorPhoneNumber = mayorPhoneNumber;
+		this.population = population;
+		this.districts = districts;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public String getMayorPhoneNumber() {
 		return mayorPhoneNumber;
 	}
@@ -89,9 +119,6 @@ public class State  implements Serializable {
 		this.deputMayor = deputMayor;
 	}
 
-	private String population;
-	
-	
 	public String getMayor() {
 		return mayor;
 	}
@@ -132,21 +159,17 @@ public class State  implements Serializable {
 		this.population = population;
 	}
 
-	@OneToMany(mappedBy="state",fetch=FetchType.LAZY)
-	private List<District> districts;
+	
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+	
 
 	public String getState() {
 		return state;
 	}
 
+	public Long getId() {
+		return id;
+	}
 	public void setState(String state) {
 		this.state = state;
 	}
@@ -159,17 +182,11 @@ public class State  implements Serializable {
 		this.districts = districts;
 	}
 
-	public State(Long id, String state, List<District> districts) {
-		super();
-		this.id = id;
-		this.state = state;
-		this.districts = districts;
+	public State(Long id) {
+	 this.id=id;
 	}
 
-	public State(Long id) {
-		super();
-		this.id = id;
-	}
+
 
 	public State(String state) {
 		super();
@@ -179,7 +196,6 @@ public class State  implements Serializable {
 	public State() {
 		super();
 	}
-	
 	
 	
 }

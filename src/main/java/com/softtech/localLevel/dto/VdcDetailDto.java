@@ -3,7 +3,6 @@ package com.softtech.localLevel.dto;
 import java.io.Serializable;
 import java.util.List;
 
-import com.softtech.localLevel.model.OldVdc;
 import com.softtech.localLevel.response.OldVdcResponseDto;
 
 public class VdcDetailDto implements Serializable {

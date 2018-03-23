@@ -2,8 +2,6 @@ package com.softtech.localLevel.dto;
 
 import java.util.List;
 
-import com.softtech.localLevel.model.District;
-
 public class StateDetailDto {
 	
 	private String area;

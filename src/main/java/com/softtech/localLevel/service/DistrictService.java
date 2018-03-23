@@ -13,13 +13,15 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.softech.localLevel.request.DistrictCreationRequest;
+import com.softech.localLevel.request.DistrictEditRequest;
+import com.softtech.localLevel.dto.DistrictDetailsDto;
 import com.softtech.localLevel.model.District;
 
 import com.softtech.localLevel.model.State;
 import com.softtech.localLevel.repository.DistrictRepository;
 
 import com.softtech.localLevel.repository.StateRepository;
-import com.softtech.localLevel.response.DistrictDetailsDto;
 import com.softtech.localLevel.response.DistrictResponseDto;
 import com.softtech.localLevel.util.Base64Util;
 import com.softtech.localLevel.util.FileUtil;
@@ -78,19 +80,16 @@ public class DistrictService {
 		districtDetailsDto.setHeadquater(districts.getHeadquater());
 		districtDetailsDto.setPopulation(districts.getPopulation());
 		Long id = districts.getState().getId();
-		System.out.println("Id  " + districts.getState().getId());
+		// System.out.println("Id " + districts.getState().getId());
 		State state = stateRepository.findById(id);
 		districtDetailsDto.setState(state.getState());
 		if (districts.getDistrictPicture() != null) {
 			File file = new File(districts.getDistrictPicture());
 			try {
-				districtDetailsDto
-						.setDistrictPicture(Base64Util.encodeFileToBase64Binary(file));
-			}
-			catch (IOException e) {
+				districtDetailsDto.setDistrictPicture(Base64Util.encodeFileToBase64Binary(file));
+			} catch (IOException e) {
 				e.printStackTrace();
-			}
-			finally {
+			} finally {
 				file.deleteOnExit();
 			}
 		}
@@ -99,12 +98,12 @@ public class DistrictService {
 	}
 
 	@Transactional
-	public void postDistrictPicture(String string,Long districtId) {
+	public void postDistrictPicture(String string, Long districtId) {
 		LOG.info("\n\nRequest accepted to post district picture.");
 		File file = null;
 		try {
 			District district = districtRepository.findById(districtId);
-			
+
 			LOG.info("Request Accepted to post district picture");
 			file = FileUtil.write(String.valueOf(new Date().getTime()).concat(".").concat("png"), string);
 			LOG.info("path {}", file.getAbsolutePath());
@@ -120,6 +119,37 @@ public class DistrictService {
 		}
 	}
 
-		
-	
+	public void postDistrictDetail(DistrictCreationRequest districtCreationRequest) {
+		District district = new District();
+		district.setPopulation(districtCreationRequest.getPopulation());
+		district.setArea(districtCreationRequest.getArea());
+		// System.out.println(districtCreationRequest.getStateId());
+		State state = stateRepository.findOne(districtCreationRequest.getStateId());
+		district.setState(state);
+		// district.setState(new State(districtCreationRequest.getStateId()));
+		district.setDistrict(districtCreationRequest.getDistrict());
+		district.setHeadquater(districtCreationRequest.getHeadquater());
+		districtRepository.save(district);
+
+	}
+
+	public District editDistrict(DistrictEditRequest districtEditRequest, String districts, Long districtId) {
+		District district =null;
+		if(districts==null) {
+			district = districtRepository.findById(districtId);
+		}
+		else {
+			district = districtRepository.findBydistrict(districts);
+		}
+		district.setDistrict(districtEditRequest.getDistrict());
+		district.setArea(districtEditRequest.getArea());
+		State state = stateRepository.findOne(districtEditRequest.getStateId());
+		district.setState(state);
+		district.setPopulation(districtEditRequest.getPopulation());
+		district.setHeadquater(districtEditRequest.getHeadquater());
+		districtRepository.save(district);
+		return district;
+
+	}
+
 }

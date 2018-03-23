@@ -21,6 +21,8 @@ public interface DistrictRepository extends JpaRepository <District,Long> {
 
 	District findById(Long districtId);
 
+	District findBydistrict(String districts);
+
 	
 
 	

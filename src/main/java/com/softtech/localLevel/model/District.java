@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 
 @Entity
@@ -33,6 +35,7 @@ public class District implements Serializable {
 	
 	@ManyToOne(cascade= {CascadeType.ALL})
 	@JoinColumn(name="state_id")
+	@JsonBackReference
 	private State state;
 	
 	public String getDistrictPicture() {
@@ -80,6 +83,7 @@ public class District implements Serializable {
 	public void setState(State state) {
 		this.state = state;
 	}
+	
 
 	public void setId(Long id) {
 		this.id = id;

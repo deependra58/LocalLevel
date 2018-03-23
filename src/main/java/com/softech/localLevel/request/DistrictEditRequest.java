@@ -1,18 +1,11 @@
-package com.softtech.localLevel.response;
+package com.softech.localLevel.request;
 
-public class DistrictDetailsDto {
-
+public class DistrictEditRequest {
 	private String area;
 	private String population;
 	private String headquater;
-	private String state;
-	private String districtPicture;
-	public String getDistrictPicture() {
-		return districtPicture;
-	}
-	public void setDistrictPicture(String districtPicture) {
-		this.districtPicture = districtPicture;
-	}
+	private Long stateId;
+	private String district;
 	public String getArea() {
 		return area;
 	}
@@ -31,11 +24,19 @@ public class DistrictDetailsDto {
 	public void setHeadquater(String headquater) {
 		this.headquater = headquater;
 	}
-	public String getState() {
-		return state;
+	public Long getStateId() {
+		return stateId;
 	}
-	public void setState(String state) {
-		this.state = state;
+	public void setStateId(Long stateId) {
+		this.stateId = stateId;
 	}
-	
+	public String getDistrict() {
+		return district;
+	}
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+	public DistrictEditRequest() {
+		super();
+	}
 }

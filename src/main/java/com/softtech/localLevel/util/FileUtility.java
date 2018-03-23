@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  * <<This is the utility to upload files>>
  * @author Deependra
- * @version 12.0.0
+ * @version 1.0.0
  * @since , 2 Mar 2018
  */
 public class FileUtility {
@@ -27,6 +27,7 @@ public class FileUtility {
 		}
 		try {
 			byte[] bytes = file.getBytes();
+			//System.out.println("/n/n/n "+bytes);
 			filePath = new File(directory.getPath().concat(File.separator).concat(name)
 					.concat(file.getOriginalFilename()));
 			Path path = Paths
