@@ -35,7 +35,7 @@ public class District implements Serializable {
 	
 	@ManyToOne(cascade= {CascadeType.ALL})
 	@JoinColumn(name="state_id")
-	@JsonBackReference
+	//@JsonBackReference
 	private State state;
 	
 	public String getDistrictPicture() {

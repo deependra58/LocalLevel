@@ -23,12 +23,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.softtech.localLevel.repository.StateRepository;
 
 /**
  * <<Description Here>>
@@ -49,7 +45,7 @@ public class State  implements Serializable {
 	@Column(unique=true)
 	private String state;
 	@OneToMany(mappedBy="state",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	@JsonManagedReference
+	//@JsonManagedReference
 	private List<District> districts;
 	
 	private String mayor;
@@ -61,6 +57,9 @@ public class State  implements Serializable {
 	private String statePicture;
 	private String population;
 	private String mayorPhoneNumber;
+//	
+//	@OneToOne(mappedBy="state", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+//	private Ministry ministry;
 	
 	public State(Long id, String state, String mayor, String deputMayor, String website, String area, String capital,
 			String density, String statePicture, String mayorPhoneNumber, String population, List<District> districts) {
