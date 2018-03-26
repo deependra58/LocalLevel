@@ -10,10 +10,13 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.softech.localLevel.exception.AlreadyExistException;
 import com.softech.localLevel.exception.NotFoundException;
 import com.softech.localLevel.request.MinistryCreationDto;
 import com.softech.localLevel.request.MinistryEditRequest;
 import com.softtech.localLevel.model.Ministry;
+import com.softtech.localLevel.model.State;
+import com.softtech.localLevel.repository.StateRepository;
 import com.softtech.localLevel.repository.ministryRepository;
 import com.softtech.localLevel.response.MinistryResponseDto;
 import com.softtech.localLevel.util.FileUtil;
@@ -27,8 +30,17 @@ public class MininstryService {
 	@Autowired
 	private ministryRepository ministryRepository;
 
+	@Autowired
+	private StateRepository stateRepository;
+
 	@Transactional
 	public Ministry createCentralMinistry(MinistryCreationDto minsitryCreationDto) {
+
+		Ministry minist = ministryRepository.findByMinistryName(minsitryCreationDto.getMinistryName());
+		if (minist != null) {
+			throw new AlreadyExistException(
+					"Ministry with name " + minsitryCreationDto.getMinistryName() + " already exist");
+		}
 		Ministry ministry = new Ministry();
 		ministry.setMinisterName(minsitryCreationDto.getMinisterName());
 		ministry.setMinisterEmail(minsitryCreationDto.getMinisterEmail());
@@ -59,7 +71,11 @@ public class MininstryService {
 
 	@Transactional
 	public void deleteMinistry(String ministryName) {
-		Ministry ministry = ministryRepository.findByMinistryNameAndGovType(ministryName, GovType.CENTRAL);
+		Ministry ministry = ministryRepository.findByMinistryNameAndGovTypeAndStatusNot(ministryName, GovType.CENTRAL,
+				Status.DELETED);
+		if (ministry == null) {
+			throw new NotFoundException("Ministry with " + ministryName + " not found.");
+		}
 		ministry.setStatus(Status.DELETED);
 		ministryRepository.save(ministry);
 
@@ -82,10 +98,12 @@ public class MininstryService {
 	}
 
 	@Transactional
-	public List<MinistryResponseDto> getLocalMinistries() {
+	public List<MinistryResponseDto> getLocalMinistries(String stateName) {
 
 		List<MinistryResponseDto> ministryResponseList = new ArrayList<MinistryResponseDto>();
-		List<Ministry> ministries = ministryRepository.findByGovTypeAndStatusNot(GovType.LOCAL, Status.DELETED);
+		State state = stateRepository.findByState(stateName);
+		List<Ministry> ministries = ministryRepository.findByGovTypeAndStatusNotAndState(GovType.LOCAL, Status.DELETED,
+				new State(state.getId()));
 		ministries.stream().forEach(u -> {
 			MinistryResponseDto ministryResponseDto = new MinistryResponseDto();
 			ministryResponseDto.setMinistryName(u.getMinistryName());
@@ -98,12 +116,25 @@ public class MininstryService {
 	}
 
 	@Transactional
-	public Ministry createLocalMinistry(MinistryCreationDto minsitryCreationDto) {
+	public Ministry createLocalMinistry(MinistryCreationDto minsitryCreationDto, String stateName) {
+		State state = stateRepository.findByState(stateName);
+		System.out.println("Ministry Name:" + minsitryCreationDto.getMinistryName() + "State Id:" + state.getId());
+		Ministry minist = ministryRepository.findByMinistryNameAndState(minsitryCreationDto.getMinistryName(),
+				new State(state.getId()));
+		System.out.println("Ministry Info" + minist.toString());
+
+		if (minist != null) {
+			throw new AlreadyExistException(
+					"Ministry with name " + minsitryCreationDto.getMinistryName() + " already exist");
+		}
+		System.out.println("hello world");
 		Ministry ministry = new Ministry();
+
 		ministry.setMinisterName(minsitryCreationDto.getMinisterName());
 		ministry.setMinisterEmail(minsitryCreationDto.getMinisterEmail());
 		ministry.setContactNumber(minsitryCreationDto.getContactNumber());
 		ministry.setMinistryName(minsitryCreationDto.getMinistryName());
+		ministry.setState(state);
 		ministry.setGovType(GovType.LOCAL);
 		ministry.setStatus(Status.ACTIVE);
 		File file = null;
@@ -128,8 +159,14 @@ public class MininstryService {
 	}
 
 	@Transactional
-	public void deleteLocalMinistry(String ministryName) {
-		Ministry ministry = ministryRepository.findByMinistryNameAndGovType(ministryName, GovType.LOCAL);
+	public void deleteLocalMinistry(String ministryName, String stateName) {
+		State state = stateRepository.findByState(stateName);
+		Ministry ministry = ministryRepository.findByMinistryNameAndGovTypeAndStateAndStatusNot(ministryName,
+				GovType.LOCAL, new State(state.getId()), Status.DELETED);
+		if (ministry == null) {
+			throw new NotFoundException("Ministry with " + ministryName + " not found.");
+		}
+
 		ministry.setStatus(Status.DELETED);
 		ministryRepository.save(ministry);
 
@@ -137,36 +174,37 @@ public class MininstryService {
 
 	@Transactional
 	public Ministry editCentralMinistry(MinistryEditRequest ministryEditRequest, String ministryName) {
-		Ministry ministry=ministryRepository.findByMinistryNameAndGovTypeAndStatusNot(ministryName,GovType.CENTRAL, Status.DELETED);
-		Ministry savedMinistry=new Ministry();
-		if(ministry!=null) {
-			
-			ministry.setMinistryName(ministryEditRequest.getMinistryName());
-			ministry.setMinisterName(ministryEditRequest.getMinisterName());
-			ministry.setMinisterEmail(ministryEditRequest.getMinisterEmail());
-			ministry.setContactNumber(ministryEditRequest.getContactNumber());
-			savedMinistry=ministryRepository.save(ministry);
+		Ministry ministry = ministryRepository.findByMinistryNameAndGovTypeAndStatusNot(ministryName, GovType.CENTRAL,
+				Status.DELETED);
+		if (ministry == null) {
+			throw new NotFoundException("Ministry with " + ministryName + " not found.");
 		}
-		else {
-			 throw new NotFoundException("Ministry with "+ministryName+" not found.");
-		}
+		Ministry savedMinistry = new Ministry();
+
+		ministry.setMinistryName(ministryEditRequest.getMinistryName());
+		ministry.setMinisterName(ministryEditRequest.getMinisterName());
+		ministry.setMinisterEmail(ministryEditRequest.getMinisterEmail());
+		ministry.setContactNumber(ministryEditRequest.getContactNumber());
+		savedMinistry = ministryRepository.save(ministry);
+
 		return savedMinistry;
 	}
 
-	public Ministry editLocalMinistry(MinistryEditRequest ministryEditRequest, String ministryName) {
-		Ministry ministry=ministryRepository.findByMinistryNameAndGovTypeAndStatusNot(ministryName,GovType.LOCAL, Status.DELETED);
-		Ministry savedMinistry=new Ministry();
-		if(ministry!=null) {
-			
-			ministry.setMinistryName(ministryEditRequest.getMinistryName());
-			ministry.setMinisterName(ministryEditRequest.getMinisterName());
-			ministry.setMinisterEmail(ministryEditRequest.getMinisterEmail());
-			ministry.setContactNumber(ministryEditRequest.getContactNumber());
-			savedMinistry=ministryRepository.save(ministry);
+	public Ministry editLocalMinistry(MinistryEditRequest ministryEditRequest, String ministryName, String state) {
+		State states = stateRepository.findByState(state);
+		Ministry ministry = ministryRepository.findByMinistryNameAndStateAndGovTypeAndStatusNot(ministryName,
+				new State(states.getId()), GovType.LOCAL, Status.DELETED);
+		if (ministry == null) {
+			throw new NotFoundException("Ministry with " + ministryName + " not found.");
 		}
-		else {
-			 throw new NotFoundException("Ministry with "+ministryName+" not found.");
-		}
+		Ministry savedMinistry = new Ministry();
+
+		ministry.setMinistryName(ministryEditRequest.getMinistryName());
+		ministry.setMinisterName(ministryEditRequest.getMinisterName());
+		ministry.setMinisterEmail(ministryEditRequest.getMinisterEmail());
+		ministry.setContactNumber(ministryEditRequest.getContactNumber());
+		savedMinistry = ministryRepository.save(ministry);
+
 		return savedMinistry;
 	}
 

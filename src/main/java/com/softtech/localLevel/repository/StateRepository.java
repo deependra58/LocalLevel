@@ -12,11 +12,13 @@ public interface StateRepository extends JpaRepository <State,Long> {
 
 	
 
-	void findByState(State state);
+	State findByState(State state);
 
 	State findByState(String state);
 
 	State findById(Object state);
+
+	//State findByStateName(String stateName);
 
 	
 

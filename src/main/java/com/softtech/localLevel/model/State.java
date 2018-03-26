@@ -22,8 +22,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -57,9 +57,9 @@ public class State  implements Serializable {
 	private String statePicture;
 	private String population;
 	private String mayorPhoneNumber;
-//	
-//	@OneToOne(mappedBy="state", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-//	private Ministry ministry;
+	
+	@OneToMany(mappedBy="state", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	private List<Ministry> ministry;
 	
 	public State(Long id, String state, String mayor, String deputMayor, String website, String area, String capital,
 			String density, String statePicture, String mayorPhoneNumber, String population, List<District> districts) {
@@ -76,6 +76,14 @@ public class State  implements Serializable {
 		this.mayorPhoneNumber = mayorPhoneNumber;
 		this.population = population;
 		this.districts = districts;
+	}
+
+	public List<Ministry> getMinistry() {
+		return ministry;
+	}
+
+	public void setMinistry(List<Ministry> ministry) {
+		this.ministry = ministry;
 	}
 
 	public void setId(Long id) {

@@ -1,25 +1,40 @@
 package com.softtech.localLevel.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.softtech.localLevel.util.GovType;
 import com.softtech.localLevel.util.Status;
 
-
 @Entity
 public class Ministry {
-
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String ministryName;
+	private String ministerName;
+	private String contactNumber;
+	private String ministerImage;
+	private String ministerEmail;
+	
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="state_id")
+	private State state;
+
+	@Enumerated(EnumType.STRING)
+	private GovType govType;
+
+	@Enumerated(EnumType.STRING)
+	private Status status;
+
 	public String getMinistryName() {
 		return ministryName;
 	}
@@ -28,17 +43,6 @@ public class Ministry {
 		this.ministryName = ministryName;
 	}
 
-	private String ministerName;
-	private String contactNumber;
-	private String ministerImage;
-	private String ministerEmail;
-
-	@Enumerated(EnumType.STRING)
-	private GovType govType;
-
-	@Enumerated(EnumType.STRING)
-	private Status status;
-	
 	public Status getStatus() {
 		return status;
 	}
@@ -65,6 +69,14 @@ public class Ministry {
 
 	public String getMinisterName() {
 		return ministerName;
+	}
+
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
 	}
 
 	public void setMinisterName(String ministerName) {
@@ -98,6 +110,7 @@ public class Ministry {
 	public Ministry() {
 		super();
 	}
+
 	@Override
 	public String toString() {
 		return "Ministry [id=" + id + ", ministryName=" + ministryName + ", ministerName=" + ministerName

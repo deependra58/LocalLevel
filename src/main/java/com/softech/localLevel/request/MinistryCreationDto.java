@@ -7,7 +7,15 @@ public class MinistryCreationDto {
 	private String contactNumber;
 	private String ministerImage;
 	private String ministerEmail;
+	//private Long stateId;
 	
+	
+//	public Long getStateId() {
+//		return stateId;
+//	}
+//	public void setStateId(Long stateId) {
+//		this.stateId = stateId;
+//	}
 	public String getMinistryName() {
 		return ministryName;
 	}
