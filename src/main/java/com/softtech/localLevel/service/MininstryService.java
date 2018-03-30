@@ -14,6 +14,7 @@ import com.softech.localLevel.exception.AlreadyExistException;
 import com.softech.localLevel.exception.NotFoundException;
 import com.softech.localLevel.request.MinistryCreationDto;
 import com.softech.localLevel.request.MinistryEditRequest;
+import com.softtech.localLevel.dto.MinistryDetailsDto;
 import com.softtech.localLevel.model.Ministry;
 import com.softtech.localLevel.model.State;
 import com.softtech.localLevel.repository.StateRepository;
@@ -129,7 +130,6 @@ public class MininstryService {
 		}
 		System.out.println("hello world");
 		Ministry ministry = new Ministry();
-
 		ministry.setMinisterName(minsitryCreationDto.getMinisterName());
 		ministry.setMinisterEmail(minsitryCreationDto.getMinisterEmail());
 		ministry.setContactNumber(minsitryCreationDto.getContactNumber());
@@ -166,7 +166,6 @@ public class MininstryService {
 		if (ministry == null) {
 			throw new NotFoundException("Ministry with " + ministryName + " not found.");
 		}
-
 		ministry.setStatus(Status.DELETED);
 		ministryRepository.save(ministry);
 
@@ -186,10 +185,10 @@ public class MininstryService {
 		ministry.setMinisterEmail(ministryEditRequest.getMinisterEmail());
 		ministry.setContactNumber(ministryEditRequest.getContactNumber());
 		savedMinistry = ministryRepository.save(ministry);
-
 		return savedMinistry;
 	}
 
+	@Transactional
 	public Ministry editLocalMinistry(MinistryEditRequest ministryEditRequest, String ministryName, String state) {
 		State states = stateRepository.findByState(state);
 		Ministry ministry = ministryRepository.findByMinistryNameAndStateAndGovTypeAndStatusNot(ministryName,
@@ -204,8 +203,41 @@ public class MininstryService {
 		ministry.setMinisterEmail(ministryEditRequest.getMinisterEmail());
 		ministry.setContactNumber(ministryEditRequest.getContactNumber());
 		savedMinistry = ministryRepository.save(ministry);
-
 		return savedMinistry;
+	}
+
+	@Transactional
+	public MinistryDetailsDto showCentralDetails(String ministryName) {
+		Ministry ministry = ministryRepository.findByMinistryNameAndStatusNot(ministryName, Status.DELETED);
+		if (ministry == null) {
+			throw new NotFoundException("Ministry with given name " + ministryName + " not found!");
+		}
+		MinistryDetailsDto mdto = new MinistryDetailsDto();
+		mdto.setMinistryName(ministry.getMinistryName());
+		mdto.setMinisterName(ministry.getMinisterName());
+		mdto.setMinisterImage(ministry.getMinisterImage());
+		mdto.setContactNumber(ministry.getContactNumber());
+		mdto.setMinisterEmail(ministry.getMinisterEmail());
+		System.out.println(mdto.toString());
+		return mdto;
+	}
+
+	@Transactional
+	public MinistryDetailsDto showLocalDetails(String ministryName, String stateName) {
+		State state = stateRepository.findByState(stateName);
+		Ministry ministry = ministryRepository.findByMinistryNameAndStatusNotAndState(ministryName, Status.DELETED,
+				new State(state.getId()));
+		if (ministry == null) {
+			throw new NotFoundException("Ministry with given name " + ministryName + " not found!");
+		}
+		MinistryDetailsDto mdto = new MinistryDetailsDto();
+		mdto.setMinistryName(ministry.getMinistryName());
+		mdto.setMinisterName(ministry.getMinisterName());
+		mdto.setMinisterImage(ministry.getMinisterImage());
+		mdto.setContactNumber(ministry.getContactNumber());
+		mdto.setMinisterEmail(ministry.getMinisterEmail());
+		System.out.println(mdto.toString());
+		return mdto;
 	}
 
 }

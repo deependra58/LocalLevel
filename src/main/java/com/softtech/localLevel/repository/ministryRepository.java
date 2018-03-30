@@ -34,6 +34,10 @@ public interface ministryRepository extends JpaRepository<Ministry,Long>{
 
 	Ministry findByMinistryNameAndGovTypeAndStateAndStatusNot(String ministryName, GovType local, State state,
 			Status deleted);
+
+	Ministry findByMinistryNameAndStatusNot(String ministryName, Status deleted);
+
+	Ministry findByMinistryNameAndStatusNotAndState(String ministryName, Status deleted, State state);
 	
 
 }

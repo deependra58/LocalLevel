@@ -21,12 +21,14 @@ import org.springframework.web.multipart.MultipartFile;
 import com.softtech.localLevel.model.District;
 import com.softtech.localLevel.model.NewVdc;
 import com.softtech.localLevel.model.OldVdc;
+import com.softtech.localLevel.model.SDistrict;
 import com.softtech.localLevel.model.State;
 import com.softtech.localLevel.repository.DistrictRepository;
 import com.softtech.localLevel.repository.NewVdcRepository;
 import com.softtech.localLevel.repository.NewWardRepository;
 import com.softtech.localLevel.repository.OldVdcRepository;
 import com.softtech.localLevel.repository.OldWardRepository;
+import com.softtech.localLevel.repository.SDistrictRepository;
 import com.softtech.localLevel.repository.StateRepository;
 
 import io.swagger.annotations.ApiOperation;
@@ -46,8 +48,8 @@ public class MainController {
 	private NewWardRepository newWardRepository;
 	@Autowired
 	private OldWardRepository oldWardRepository;
-/*	@Autowired
-	StateDistrictRepository stateDistrictRepository;*/
+	@Autowired
+	SDistrictRepository sDistrictRepository;
 
 	@SuppressWarnings({ "null", "unused" })
 	@ApiOperation(value="Upload an excel file ")
@@ -84,24 +86,24 @@ public class MainController {
 
 			try {
 
-				State state = new State();
-				String string0 = row.getCell(0).toString();
-				byte[] u0 = string0.getBytes("UTF-8");
-				string0 = new String(u0, "UTF-8");
-				for (int j = 0; j < k + 1; j++) {
-					if (!string0.equalsIgnoreCase(temp0[j])) {
-						counter = 0;
-					} else {
-						counter = 1;
-						break;
-					}
-
-				}
-				temp0[k + 1] = string0;
-				if (counter == 0) {
-					state.setState(string0);
-					stateRepository.save(state);
-				}
+//				State state = new State();
+//				String string0 = row.getCell(0).toString();
+//				byte[] u0 = string0.getBytes("UTF-8");
+//				string0 = new String(u0, "UTF-8");
+//				for (int j = 0; j < k + 1; j++) {
+//					if (!string0.equalsIgnoreCase(temp0[j])) {
+//						counter = 0;
+//					} else {
+//						counter = 1;
+//						break;
+//					}
+//
+//				}
+//				temp0[k + 1] = string0;
+//				if (counter == 0) {
+//					state.setState(string0);
+//					stateRepository.save(state);
+//				}
 				
 				
 				
@@ -123,7 +125,7 @@ public class MainController {
 				
 				
 
-				District district = new District();
+				SDistrict district = new SDistrict();
 				String string1 = row.getCell(1).toString();
 				byte[] u1 = string1.getBytes("UTF-8");
 				string1 = new String(u1, "UTF-8");
@@ -139,67 +141,67 @@ public class MainController {
 				temp1[k + 1] = string1;
 				if (counter == 0) {
 					district.setDistrict(string1);
-					districtRepository.save(district);
+					sDistrictRepository.save(district);
 					// System.out.println(district1.toString());
 				}
 
-				NewVdc newVdc = new NewVdc();
-				String string2 = row.getCell(2).toString();
-				byte[] u2 = string2.getBytes("UTF-8");
-				string2 = new String(u2, "UTF-8");
-				for (int j = 0; j < k + 1; j++) {
-					if (!string2.equalsIgnoreCase(temp2[j])) {
-						counter = 0;
-					} else {
-						counter = 1;
-						break;
-					}
+//				NewVdc newVdc = new NewVdc();
+//				String string2 = row.getCell(2).toString();
+//				byte[] u2 = string2.getBytes("UTF-8");
+//				string2 = new String(u2, "UTF-8");
+//				for (int j = 0; j < k + 1; j++) {
+//					if (!string2.equalsIgnoreCase(temp2[j])) {
+//						counter = 0;
+//					} else {
+//						counter = 1;
+//						break;
+//					}
+//
+//				}
+//				temp2[k + 1] = string2;
+//				if (counter == 0) {
+//					newVdc.setNewVdc(string2);
+//					newVdcRepository.save(newVdc);
+//				}
 
-				}
-				temp2[k + 1] = string2;
-				if (counter == 0) {
-					newVdc.setNewVdc(string2);
-					newVdcRepository.save(newVdc);
-				}
+//				NewWard newWard = new NewWard();
+//				String string3 = row.getCell(4).toString();
+//				byte[] u3 = string3.getBytes("UTF-8");
+//				string3 = new String(u3, "UTF-8");
+//				String[] a = string3.split(Pattern.quote("."));
+//				for (int j = 0; j < k + 1; j++) {
+//					if (!string3.equalsIgnoreCase(temp3[j])) {
+//						counter = 0;
+//					} else {
+//						counter = 1;
+//						break;
+//					}
+//
+//				}
+//				temp3[k + 1] = string3;
+//				if (counter == 0) {
+//					newWard.setNewWard(Long.parseLong(a[0]));
+//					newWardRepository.save(newWard);
+//				}
 
-				/*NewWard newWard = new NewWard();
-				String string3 = row.getCell(4).toString();
-				byte[] u3 = string3.getBytes("UTF-8");
-				string3 = new String(u3, "UTF-8");
-				String[] a = string3.split(Pattern.quote("."));
-				for (int j = 0; j < k + 1; j++) {
-					if (!string3.equalsIgnoreCase(temp3[j])) {
-						counter = 0;
-					} else {
-						counter = 1;
-						break;
-					}
-
-				}
-				temp3[k + 1] = string3;
-				if (counter == 0) {
-					newWard.setNewWard(Long.parseLong(a[0]));
-					newWardRepository.save(newWard);
-				}*/
-
-				OldVdc oldVdc = new OldVdc();
-				String string4 = row.getCell(4).toString();
-				byte[] u4 = string4.getBytes("UTF-8");
-				string4 = new String(u4, "UTF-8");
-				for (int j = 0; j < k + 1; j++) {
-					if (!string4.equalsIgnoreCase(temp4[j])) {
-						counter = 0;
-					} else {
-						counter = 1;
-						break;
-					}
-
-				}
-				temp4[k + 1] = string4;
-				if (counter == 0) {
-					oldVdc.setOldVdc(string4);
-					oldVdcRepository.save(oldVdc);
-				}
+//				OldVdc oldVdc = new OldVdc();
+//				String string4 = row.getCell(4).toString();
+//				byte[] u4 = string4.getBytes("UTF-8");
+//				string4 = new String(u4, "UTF-8");
+//				for (int j = 0; j < k + 1; j++) {
+//					if (!string4.equalsIgnoreCase(temp4[j])) {
+//						counter = 0;
+//					} else {
+//						counter = 1;
+//						break;
+//					}
+//
+//				}
+//				temp4[k + 1] = string4;
+//				if (counter == 0) {
+//					oldVdc.setOldVdc(string4);
+//					oldVdcRepository.save(oldVdc);
+//				}
 
 				/*OldWard oldWard = new OldWard();
 				String string5 = row.getCell(6).toString();

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.softech.localLevel.request.MinistryCreationDto;
 import com.softech.localLevel.request.MinistryEditRequest;
+import com.softtech.localLevel.dto.MinistryDetailsDto;
 import com.softtech.localLevel.model.Ministry;
 import com.softtech.localLevel.response.MinistryResponseDto;
 import com.softtech.localLevel.service.MininstryService;
@@ -51,8 +52,9 @@ public class MinistryController {
 		return new ResponseEntity<Object>("Ministry Deleted", HttpStatus.OK);
 
 	}
+	
 
-	@ApiOperation(value = "Delete Mininstry detail", notes = "Delete Local ministry Detail")
+	@ApiOperation(value = "Delete Local Mininstry detail", notes = "Delete Local ministry Detail")
 	@RequestMapping(value = "LocalMinistries/{ministryName:.+}/{stateName:.+}", method = RequestMethod.DELETE)
 	public ResponseEntity<Object> deleteLocalMinistry(@PathVariable String ministryName, String stateName) {
 		ministryService.deleteLocalMinistry(ministryName, stateName);
@@ -98,5 +100,19 @@ public class MinistryController {
 		return new ResponseEntity<Object>(ministry.getId(), HttpStatus.OK);
 
 	}
-
+	
+	@ApiOperation(value="Show central Ministry Details", notes="Showing central level government details")
+	@RequestMapping(value="centralMinistries/{ministryName:.+}",method=RequestMethod.GET)
+	public ResponseEntity<Object> showCentralDetails(@PathVariable String ministryName){
+		MinistryDetailsDto ministryDetailDto=ministryService.showCentralDetails(ministryName);
+		return new ResponseEntity<Object>(ministryDetailDto,HttpStatus.OK);
+	}
+	
+	@ApiOperation(value="Show Local Ministry Details", notes="Showing Local level government details")
+	@RequestMapping(value="centralMinistries/{ministryName:.+}/{stateName:.+}",method=RequestMethod.GET)
+	public ResponseEntity<Object> showLocalDetails(@PathVariable String ministryName, @RequestHeader String stateName){
+		MinistryDetailsDto ministryDetailDto=ministryService.showLocalDetails(ministryName, stateName);
+		return new ResponseEntity<Object>(ministryDetailDto,HttpStatus.OK);
+	}
+	
 }
