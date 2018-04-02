@@ -1,21 +1,25 @@
 package com.softtech.localLevel.model;
 
 import java.io.Serializable;
-
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.softtech.localLevel.util.LocalLevelType;
+
+
 
 
 
@@ -33,11 +37,78 @@ public class District implements Serializable {
 	private String headquater;
 	private String districtPicture;
 	
+	@Enumerated(EnumType.STRING)
+	private LocalLevelType  localLevelType;
+	
 	@ManyToOne(cascade= {CascadeType.ALL})
 	@JoinColumn(name="state_id")
-	//@JsonBackReference
 	private State state;
 	
+	@OneToMany(mappedBy="district", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	private List<Vdc> vdc;
+	
+	public List<Vdc> getVdc() {
+		return vdc;
+	}
+
+	public void setVdc(List<Vdc> vdc) {
+		this.vdc = vdc;
+	}
+
+	@OneToMany(mappedBy="district",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	private List<RuralMunicipality> ruralMunicipality;
+	
+	@OneToMany(mappedBy="district",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	private List<Municipality> municipality;
+	
+	@OneToMany(mappedBy="district",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	private List<SubMetropolitan> subMetropolitan;
+	
+	@OneToMany(mappedBy="district",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	private List<Metropolitan> metropolitan;
+	
+	
+	
+	public LocalLevelType getLocalLevelType() {
+		return localLevelType;
+	}
+
+	public void setLocalLevelType(LocalLevelType localLevelType) {
+		this.localLevelType = localLevelType;
+	}
+
+	public List<RuralMunicipality> getRuralMunicipality() {
+		return ruralMunicipality;
+	}
+
+	public void setRuralMunicipality(List<RuralMunicipality> ruralMunicipality) {
+		this.ruralMunicipality = ruralMunicipality;
+	}
+
+	public List<Municipality> getMunicipality() {
+		return municipality;
+	}
+
+	public void setMunicipality(List<Municipality> municipality) {
+		this.municipality = municipality;
+	}
+
+	public List<SubMetropolitan> getSubMetropolitan() {
+		return subMetropolitan;
+	}
+
+	public void setSubMetropolitan(List<SubMetropolitan> subMetropolitan) {
+		this.subMetropolitan = subMetropolitan;
+	}
+
+	public List<Metropolitan> getMetropolitan() {
+		return metropolitan;
+	}
+
+	public void setMetropolitan(List<Metropolitan> metropolitan) {
+		this.metropolitan = metropolitan;
+	}
+
 	public String getDistrictPicture() {
 		return districtPicture;
 	}

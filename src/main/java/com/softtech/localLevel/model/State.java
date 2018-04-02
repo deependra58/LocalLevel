@@ -18,6 +18,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +27,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.softtech.localLevel.util.LocalLevelType;
 
 /**
  * <<Description Here>>
@@ -61,6 +65,19 @@ public class State  implements Serializable {
 	@OneToMany(mappedBy="state", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<Ministry> ministry;
 	
+	
+	@Enumerated(EnumType.STRING)
+	private LocalLevelType localLevelType;
+	
+	
+	public LocalLevelType getLocalLevelType() {
+		return localLevelType;
+	}
+
+	public void setLocalLevelType(LocalLevelType localLevelType) {
+		this.localLevelType = localLevelType;
+	}
+
 	public State(Long id, String state, String mayor, String deputMayor, String website, String area, String capital,
 			String density, String statePicture, String mayorPhoneNumber, String population, List<District> districts) {
 		super();
