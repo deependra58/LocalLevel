@@ -18,6 +18,7 @@ import com.softtech.localLevel.repository.MunicipalityRepository;
 import com.softtech.localLevel.repository.RuralMunicipalityRepository;
 import com.softtech.localLevel.repository.SubMetropolitanRepository;
 import com.softtech.localLevel.repository.VdcRepository;
+import com.softtech.localLevel.util.Status;
 
 @Service
 public class VdcService {
@@ -46,46 +47,119 @@ public class VdcService {
 		Vdc vdcs = new Vdc();
 		vdcs.setVdc(vdc);
 		District districts = districtRepository.findByDistrict(district);
-		if(districts==null) {
-			throw new NotFoundException("District with name "+district+" not found. Try with different name.");
+		if (districts == null) {
+			throw new NotFoundException("District with name " + district + " not found. Try with different name.");
 		}
 		vdcs.setDistrict(districts);
 
 		if (ruralMunicipality != null) {
-			RuralMunicipality ruralMunicipalities = ruralMunicipalityRepository.findByRuralMunicipal(ruralMunicipality);
-			if(ruralMunicipalities==null) {
-				throw new NotFoundException("Rural Municipality with name "+ruralMunicipality+" not found. Try with different name.");
+			RuralMunicipality ruralMunicipalities = ruralMunicipalityRepository.findByRuralMunicipalAndStatusNot(ruralMunicipality,Status.DELETED);
+			if (ruralMunicipalities == null) {
+				throw new NotFoundException(
+						"Rural Municipality with name " + ruralMunicipality + " not found. Try with different name.");
 			}
 			vdcs.setRuralMunicipality(ruralMunicipalities);
 
 		}
 		if (municipality != null) {
-			Municipality municipalities = municipalityRepository.findByMunicipal(municipality);
-			if(municipalities==null) {
-				throw new NotFoundException("Municipality with name "+ municipality+" not found. Try with different name.");
+			Municipality municipalities = municipalityRepository.findByMunicipalAndStatusNot(municipality,Status.DELETED);
+			if (municipalities == null) {
+				throw new NotFoundException(
+						"Municipality with name " + municipality + " not found. Try with different name.");
 			}
 			vdcs.setMunicipality(municipalities);
 		}
 
 		if (subMetropolitan != null) {
-			SubMetropolitan subMetropolitans = subMetropolitanRepository.findBySubMetropolitan(subMetropolitan);
-			if(subMetropolitans==null) {
-				throw new NotFoundException("Sub-metropolitan with name "+ subMetropolitan +" not found. Try with different name.");
+			SubMetropolitan subMetropolitans = subMetropolitanRepository.findBySubMetropolitanAndStatusNot(subMetropolitan,Status.DELETED);
+			if (subMetropolitans == null) {
+				throw new NotFoundException(
+						"Sub-metropolitan with name " + subMetropolitan + " not found. Try with different name.");
 			}
 			vdcs.setSubMetropolitan(subMetropolitans);
 		}
 
 		if (metropolitan != null) {
-			Metropolitan metropolitans = metropolitanRepository.findByMetropolitan(metropolitan);
-			if(metropolitans==null) {
-				throw new NotFoundException("Metropolitan with name "+ metropolitan +" not found. Try with different name.");
+			Metropolitan metropolitans = metropolitanRepository.findByMetropolitanAndStatusNot(metropolitan,Status.DELETED);
+			if (metropolitans == null) {
+				throw new NotFoundException(
+						"Metropolitan with name " + metropolitan + " not found. Try with different name.");
 			}
 			vdcs.setMetropolitan(metropolitans);
 
 		}
 
+		vdcs.setStatus(Status.ACTIVE);
 		vdcRepository.save(vdcs);
 
 	}
+
+	@Transactional
+	public void editVdcDetails(Long vdcId, String vdc, String district, String ruralMunicipality, String municipality,
+			String subMetropolitan, String metropolitan) {
+		Vdc vdcs = vdcRepository.findByIdAndStatusNot(vdcId,Status.DELETED);
+		
+		vdcs.setVdc(vdc);
+		vdcs.setRuralMunicipality(null);
+		vdcs.setMunicipality(null);
+		vdcs.setSubMetropolitan(null);
+		vdcs.setMetropolitan(null);
+		District districts = districtRepository.findByDistrict(district);
+		if (districts == null) {
+			throw new NotFoundException("District with name " + district + " not found. Try with different name.");
+		}
+		vdcs.setDistrict(districts);
+
+		if (ruralMunicipality != null) {
+			RuralMunicipality ruralMunicipalities = ruralMunicipalityRepository.findByRuralMunicipalAndStatusNot(ruralMunicipality,Status.DELETED);
+			if (ruralMunicipalities == null) {
+				throw new NotFoundException(
+						"Rural Municipality with name " + ruralMunicipality + " not found. Try with different name.");
+			}
+			vdcs.setRuralMunicipality(ruralMunicipalities);
+
+		}
+		if (municipality != null) {
+			Municipality municipalities = municipalityRepository.findByMunicipalAndStatusNot(municipality,Status.DELETED);
+			if (municipalities == null) {
+				throw new NotFoundException(
+						"Municipality with name " + municipality + " not found. Try with different name.");
+			}
+			vdcs.setMunicipality(municipalities);
+		}
+
+		if (subMetropolitan != null) {
+			SubMetropolitan subMetropolitans = subMetropolitanRepository.findBySubMetropolitanAndStatusNot(subMetropolitan,Status.DELETED);
+			if (subMetropolitans == null) {
+				throw new NotFoundException(
+						"Sub-metropolitan with name " + subMetropolitan + " not found. Try with different name.");
+			}
+			vdcs.setSubMetropolitan(subMetropolitans);
+		}
+
+		if (metropolitan != null) {
+			Metropolitan metropolitans = metropolitanRepository.findByMetropolitanAndStatusNot(metropolitan,Status.DELETED);
+			if (metropolitans == null) {
+				throw new NotFoundException(
+						"Metropolitan with name " + metropolitan + " not found. Try with different name.");
+			}
+			vdcs.setMetropolitan(metropolitans);
+
+		}
+
+		vdcs.setStatus(Status.ACTIVE);
+		vdcRepository.save(vdcs);
+
+	}
+
+	public void deleteVdc(Long vdcId, String vdc) {
+		Vdc vdcs=vdcRepository.findByIdAndVdcAndStatusNot(vdcId, vdc,Status.DELETED);
+		vdcs.setStatus(Status.DELETED);
+		
+		
+		
+	}
+	
+	
 
 }

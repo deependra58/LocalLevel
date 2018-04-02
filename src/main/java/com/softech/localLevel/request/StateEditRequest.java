@@ -6,8 +6,8 @@ public class StateEditRequest {
 	private String area;
 	private String population;
 	private String website;
-	private String mayor;
-	private String deputMayor;
+	private String governer;
+	private String chiefMinister;
 	private String capital;
 	private String density;
 	//private String statePicture;
@@ -36,17 +36,17 @@ public class StateEditRequest {
 	public void setWebsite(String website) {
 		this.website = website;
 	}
-	public String getMayor() {
-		return mayor;
+	public String getGoverner() {
+		return governer;
 	}
-	public void setMayor(String mayor) {
-		this.mayor = mayor;
+	public void setGoverner(String governer) {
+		this.governer = governer;
 	}
-	public String getDeputMayor() {
-		return deputMayor;
+	public String getChiefMinister() {
+		return chiefMinister;
 	}
-	public void setDeputMayor(String deputMayor) {
-		this.deputMayor = deputMayor;
+	public void setChiefMinister(String chiefMinister) {
+		this.chiefMinister = chiefMinister;
 	}
 	public String getCapital() {
 		return capital;
@@ -60,12 +60,6 @@ public class StateEditRequest {
 	public void setDensity(String density) {
 		this.density = density;
 	}
-//	public String getStatePicture() {
-//		return statePicture;
-//	}
-//	public void setStatePicture(String statePicture) {
-//		this.statePicture = statePicture;
-//	}
 	public String getMayorPhoneNumber() {
 		return mayorPhoneNumber;
 	}
@@ -74,6 +68,7 @@ public class StateEditRequest {
 	}
 	public StateEditRequest() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 	
 }

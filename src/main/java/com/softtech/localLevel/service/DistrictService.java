@@ -65,7 +65,10 @@ public class DistrictService {
 		List<DistrictResponseDto> districtResponseDtoList = new ArrayList<DistrictResponseDto>();
 		State states = stateRepository.findByState(state);
 		Long id = states.getId();
-		List<District> districts = districtRepository.findAllByState(new State(id));
+		
+		System.out.println(id);
+		List<District> districts = districtRepository.findAllByState(new State(states.getId()));
+		System.out.println(districts.toString());
 
 		districts.stream().forEach(u -> {
 			DistrictResponseDto districtResponseDto = new DistrictResponseDto();

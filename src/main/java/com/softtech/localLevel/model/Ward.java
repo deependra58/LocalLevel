@@ -2,10 +2,12 @@ package com.softtech.localLevel.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -18,8 +20,9 @@ public class Ward implements Serializable {
 	private Long newWardId;
 	private Long oldWardId;
 	
-	@ManyToOne
-	private OldVdc oldVdc;
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="vdc_id")
+	private Vdc vdc;
 
 	public Long getId() {
 		return id;
@@ -45,13 +48,14 @@ public class Ward implements Serializable {
 		this.oldWardId = oldWardId;
 	}
 
-	public OldVdc getOldVdc() {
-		return oldVdc;
+	public Vdc getVdc() {
+		return vdc;
 	}
 
-	public void setOldVdc(OldVdc oldVdc) {
-		this.oldVdc = oldVdc;
+	public void setVdc(Vdc vdc) {
+		this.vdc = vdc;
 	}
+
 	
 	
 	

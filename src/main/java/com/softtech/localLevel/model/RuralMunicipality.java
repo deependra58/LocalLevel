@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.softtech.localLevel.util.LocalLevelType;
+import com.softtech.localLevel.util.Status;
 
 @Entity
 @Table(name="ruralMunicipality")
@@ -37,6 +38,15 @@ public class RuralMunicipality implements Serializable{
 	private String viceChairmenContact;
 	private String viceChairmenEmail;
 	
+	@Enumerated(EnumType.STRING)
+	private Status status;
+	
+	public Status getStatus() {
+		return status;
+	}
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 	@ManyToOne(cascade= {CascadeType.ALL})
 	@JoinColumn(name="district_id")
 	private District district;

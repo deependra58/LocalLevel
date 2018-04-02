@@ -177,6 +177,15 @@ public class District implements Serializable {
 	public District(Long id) {
 		this.id=id;
 	}
+
+	@Override
+	public String toString() {
+		return "District [id=" + id + ", district=" + district + ", area=" + area + ", population=" + population
+				+ ", headquater=" + headquater + ", districtPicture=" + districtPicture + ", localLevelType="
+				+ localLevelType + ", state=" + state + ", vdc=" + vdc + ", ruralMunicipality=" + ruralMunicipality
+				+ ", municipality=" + municipality + ", subMetropolitan=" + subMetropolitan + ", metropolitan="
+				+ metropolitan + "]";
+	}
 	
 	/*@OneToMany(mappedBy="district",cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	@JsonManagedReference

@@ -45,22 +45,21 @@ public class State  implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	
 	@Column(unique=true)
 	private String state;
 	@OneToMany(mappedBy="state",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	//@JsonManagedReference
 	private List<District> districts;
 	
-	private String mayor;
-	private String deputMayor;
+	private String governer;
+	private String chiefMinister;
 	private String website;
 	private String area;
 	private String capital;
 	private String density;
 	private String statePicture;
 	private String population;
-	private String mayorPhoneNumber;
+	
 	
 	@OneToMany(mappedBy="state", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<Ministry> ministry;
@@ -68,158 +67,149 @@ public class State  implements Serializable {
 	
 	@Enumerated(EnumType.STRING)
 	private LocalLevelType localLevelType;
-	
-	
-	public LocalLevelType getLocalLevelType() {
-		return localLevelType;
+
+
+	public Long getId() {
+		return id;
 	}
 
-	public void setLocalLevelType(LocalLevelType localLevelType) {
-		this.localLevelType = localLevelType;
-	}
-
-	public State(Long id, String state, String mayor, String deputMayor, String website, String area, String capital,
-			String density, String statePicture, String mayorPhoneNumber, String population, List<District> districts) {
-		super();
-		this.id = id;
-		this.state = state;
-		this.mayor = mayor;
-		this.deputMayor = deputMayor;
-		this.website = website;
-		this.area = area;
-		this.capital = capital;
-		this.density = density;
-		this.statePicture = statePicture;
-		this.mayorPhoneNumber = mayorPhoneNumber;
-		this.population = population;
-		this.districts = districts;
-	}
-
-	public List<Ministry> getMinistry() {
-		return ministry;
-	}
-
-	public void setMinistry(List<Ministry> ministry) {
-		this.ministry = ministry;
-	}
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getMayorPhoneNumber() {
-		return mayorPhoneNumber;
-	}
-
-	public void setMayorPhoneNumber(String mayorPhoneNumber) {
-		this.mayorPhoneNumber = mayorPhoneNumber;
-	}
-
-	public String getStatePicture() {
-		return statePicture;
-	}
-
-	public void setStatePicture(String statePicture) {
-		this.statePicture = statePicture;
-	}
-
-	public String getDensity() {
-		return density;
-	}
-
-	public void setDensity(String density) {
-		this.density = density;
-	}
-
-	public String getCapital() {
-		return capital;
-	}
-
-	public void setCapital(String capital) {
-		this.capital = capital;
-	}
-
-	public void setDeputMayor(String deputMayor) {
-		this.deputMayor = deputMayor;
-	}
-
-	public String getMayor() {
-		return mayor;
-	}
-
-	public void setMayor(String mayor) {
-		this.mayor = mayor;
-	}
-
-	public String getDeputMayor() {
-		return deputMayor;
-	}
-
-	public void setDeput_Mayor(String deputMayor) {
-		this.deputMayor = deputMayor;
-	}
-
-	public String getWebsite() {
-		return website;
-	}
-
-	public void setWebsite(String website) {
-		this.website = website;
-	}
-
-	public String getArea() {
-		return area;
-	}
-
-	public void setArea(String area) {
-		this.area = area;
-	}
-
-	public String getPopulation() {
-		return population;
-	}
-
-	public void setPopulation(String population) {
-		this.population = population;
-	}
-
-	
-
-	
 
 	public String getState() {
 		return state;
 	}
 
-	public Long getId() {
-		return id;
-	}
+
 	public void setState(String state) {
 		this.state = state;
 	}
+
 
 	public List<District> getDistricts() {
 		return districts;
 	}
 
+
 	public void setDistricts(List<District> districts) {
 		this.districts = districts;
 	}
 
-	public State(Long id) {
-	 this.id=id;
+
+	public String getGoverner() {
+		return governer;
 	}
 
 
-
-	public State(String state) {
-		super();
-		this.state = state;
+	public void setGoverner(String governer) {
+		this.governer = governer;
 	}
+
+
+	public String getChiefMinister() {
+		return chiefMinister;
+	}
+
+
+	public void setChiefMinister(String chiefMinister) {
+		this.chiefMinister = chiefMinister;
+	}
+
+
+	public String getWebsite() {
+		return website;
+	}
+
+
+	public void setWebsite(String website) {
+		this.website = website;
+	}
+
+
+	public String getArea() {
+		return area;
+	}
+
+
+	public void setArea(String area) {
+		this.area = area;
+	}
+
+
+	public String getCapital() {
+		return capital;
+	}
+
+
+	public void setCapital(String capital) {
+		this.capital = capital;
+	}
+
+
+	public String getDensity() {
+		return density;
+	}
+
+
+	public void setDensity(String density) {
+		this.density = density;
+	}
+
+
+	public String getStatePicture() {
+		return statePicture;
+	}
+
+
+	public void setStatePicture(String statePicture) {
+		this.statePicture = statePicture;
+	}
+
+
+	public String getPopulation() {
+		return population;
+	}
+
+
+	public void setPopulation(String population) {
+		this.population = population;
+	}
+
+
+	public List<Ministry> getMinistry() {
+		return ministry;
+	}
+
+
+	public void setMinistry(List<Ministry> ministry) {
+		this.ministry = ministry;
+	}
+
+
+	public LocalLevelType getLocalLevelType() {
+		return localLevelType;
+	}
+
+
+	public void setLocalLevelType(LocalLevelType localLevelType) {
+		this.localLevelType = localLevelType;
+	}
+
 
 	public State() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
+
+
+	public State(Long id) {
+		this.id=id;
+	}
+	
+	
 	
 	
 }

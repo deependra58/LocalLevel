@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -101,14 +102,16 @@ public class DistrictController {
 				String string2 = row.getCell(4).toString();
 				byte[] u2 = string2.getBytes("UTF-8");
 				string2 = new String(u2, "UTF-8");
-				district.setArea(string2);
+				String[] a=string2.split(Pattern.quote("."));
+				district.setArea(a[0]);
 
 				String string3 = row.getCell(5).toString();
 				byte[] u3 = string3.getBytes("UTF-8");
 				string3 = new String(u3, "UTF-8");
-				district.setPopulation(string3);
+				String[] a2=string3.split(Pattern.quote("."));
+				district.setPopulation(a2[0]);
 
-				district.setLocalLevelType(LocalLevelType.STATE);
+				district.setLocalLevelType(LocalLevelType.DISTRICT);
 
 				districtRepository.save(district);
 			}
@@ -118,13 +121,13 @@ public class DistrictController {
 
 		}
 
-		return new ResponseEntity<Object>(HttpStatus.OK);
+		return new ResponseEntity<Object>("District uploaded",HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "List districts from state")
 	@RequestMapping(value = "state/{state:.+}", method = RequestMethod.GET)
 	public ResponseEntity<Object> listAllDistricts(@PathVariable("state") String state) {
-
+		 System.out.println("Hello world!!");
 		List<DistrictResponseDto> districtDtoList = districtService.listAllDistricts(state);
 		return new ResponseEntity<Object>(districtDtoList, HttpStatus.OK);
 	}

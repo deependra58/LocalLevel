@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -72,6 +73,8 @@ public class MunicipalityController {
 			}
 
 			try {
+				
+				
 
 				Municipality municipality = new Municipality();
 				String string0 = row.getCell(3).toString();
@@ -82,17 +85,20 @@ public class MunicipalityController {
 				String string1 = row.getCell(5).toString();
 				byte[] u1 = string1.getBytes("UTF-8");
 				string1 = new String(u1, "UTF-8");
-				municipality.setPopulation(string1);
+				String[] a2=string1.split(Pattern.quote("."));
+				municipality.setPopulation(a2[0]);
 
 				String string2 = row.getCell(6).toString();
 				byte[] u2 = string2.getBytes("UTF-8");
 				string2 = new String(u2, "UTF-8");
-				municipality.setArea(string2);
+				String[] a1=string2.split(Pattern.quote("."));
+				municipality.setArea(a1[0]);
 
 				String string3 = row.getCell(7).toString();
 				byte[] u3 = string3.getBytes("UTF-8");
 				string3 = new String(u3, "UTF-8");
-				municipality.setDensity(string3);
+				String[] a3=string3.split(Pattern.quote("."));
+				municipality.setDensity(a3[0]);
 
 				String string4 = row.getCell(8).toString();
 				byte[] u4 = string4.getBytes("UTF-8");
@@ -118,7 +124,7 @@ public class MunicipalityController {
 
 		}
 
-		return new ResponseEntity<Object>(HttpStatus.OK);
+		return new ResponseEntity<Object>("Municipality uploaded!",HttpStatus.OK);
 	}
 	
 	@ApiOperation(value="Show all municipalities belonging to district")

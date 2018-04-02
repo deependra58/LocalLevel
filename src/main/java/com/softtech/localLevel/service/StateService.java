@@ -44,11 +44,11 @@ public class StateService {
 
 		stateDetailDto.setArea(states.getArea());
 		stateDetailDto.setPopulation(states.getPopulation());
-		stateDetailDto.setMayor(states.getMayor());
+		stateDetailDto.setGoverner(states.getGoverner());
 		stateDetailDto.setCapital(states.getCapital());
-		stateDetailDto.setDeputMayor(states.getDeputMayor());
+		stateDetailDto.setChiefMinister(states.getChiefMinister());
 		stateDetailDto.setDensity(states.getDensity());
-		stateDetailDto.setMayorPhoneNumber(states.getMayorPhoneNumber());
+		//stateDetailDto.setMayorPhoneNumber(states.getMayorPhoneNumber());
 		List<District> districts = districtRepository.findAllByState(new State(states.getId()));
 		districts.stream().forEach(u -> {
 
@@ -130,12 +130,12 @@ public class StateService {
 		state.setPopulation(stateCreationRequest.getPopulation());
 		state.setArea(stateCreationRequest.getArea());
 		state.setState(stateCreationRequest.getState());
-		state.setMayor(stateCreationRequest.getMayor());
-		state.setDeputMayor(stateCreationRequest.getDeputMayor());
+		state.setGoverner(stateCreationRequest.getGoverner());
+		state.setChiefMinister(stateCreationRequest.getChiefMinister());
 		state.setWebsite(stateCreationRequest.getWebsite());
 		state.setCapital(stateCreationRequest.getCapital());
 		state.setDensity(stateCreationRequest.getDensity());
-		state.setMayorPhoneNumber(stateCreationRequest.getMayorPhoneNumber());
+		//state.setMayorPhoneNumber(stateCreationRequest.getMayorPhoneNumber());
 		stateRepository.save(state);
 		
 	}
@@ -152,12 +152,12 @@ public class StateService {
 		state.setPopulation(stateEditRequest.getPopulation());
 		state.setArea(stateEditRequest.getArea());
 		state.setState(stateEditRequest.getState());
-		state.setMayor(stateEditRequest.getMayor());
-		state.setDeputMayor(stateEditRequest.getDeputMayor());
+		state.setGoverner(stateEditRequest.getGoverner());
+		state.setChiefMinister(stateEditRequest.getChiefMinister());
 		state.setWebsite(stateEditRequest.getWebsite());
 		state.setCapital(stateEditRequest.getCapital());
 		state.setDensity(stateEditRequest.getDensity());
-		state.setMayorPhoneNumber(stateEditRequest.getMayorPhoneNumber());
+		//state.setMayorPhoneNumber(stateEditRequest.getMayorPhoneNumber());
 		stateRepository.save(state);
 		return state;
 	}

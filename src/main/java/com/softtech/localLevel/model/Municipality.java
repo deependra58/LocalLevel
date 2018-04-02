@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.softtech.localLevel.util.LocalLevelType;
+import com.softtech.localLevel.util.Status;
 
 @Entity
 public class Municipality implements Serializable {
@@ -35,6 +36,13 @@ public class Municipality implements Serializable {
 	private String deputMayorContact;
 	private String deputMayorEmail;
 	
+	@Enumerated(EnumType.STRING)
+	private Status status;
+	
+	@Enumerated(EnumType.STRING)
+	private LocalLevelType localLevelType;
+	
+
 	@ManyToOne(cascade= {CascadeType.ALL})
 	@JoinColumn(name="district_id")
 	private District district;
@@ -50,14 +58,19 @@ public class Municipality implements Serializable {
 		this.vdc = vdc;
 	}
 
-	@Enumerated(EnumType.STRING)
-	private LocalLevelType localLevelType;
 	
 
 	public LocalLevelType getLocalLevelType() {
 		return localLevelType;
 	}
 
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 	public void setLocalLevelType(LocalLevelType localLevelType) {
 		this.localLevelType = localLevelType;
 	}

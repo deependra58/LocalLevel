@@ -1,12 +1,20 @@
 package com.softtech.localLevel.model;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.softtech.localLevel.util.Status;
 
 @Entity
 public class Vdc {
@@ -27,15 +35,36 @@ public class Vdc {
 	@ManyToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "municipality_id")
 	private Municipality municipality;
-	
-	@ManyToOne(cascade= {CascadeType.ALL})
-	@JoinColumn(name="subMetropolitan_id")
+
+	@ManyToOne(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "subMetropolitan_id")
 	private SubMetropolitan subMetropolitan;
-	
-	@ManyToOne(cascade= {CascadeType.ALL})
-	@JoinColumn(name="metropolitan_id")
+
+	@ManyToOne(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "metropolitan_id")
 	private Metropolitan metropolitan;
-	
+
+	@OneToMany(mappedBy = "vdc", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Ward> ward;
+
+	@Enumerated(EnumType.STRING)
+	private Status status;
+
+	public List<Ward> getWard() {
+		return ward;
+	}
+
+	public void setWard(List<Ward> ward) {
+		this.ward = ward;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 
 	public Metropolitan getMetropolitan() {
 		return metropolitan;

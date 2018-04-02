@@ -7,14 +7,13 @@ import org.springframework.stereotype.Repository;
 
 import com.softtech.localLevel.model.District;
 import com.softtech.localLevel.model.Municipality;
+import com.softtech.localLevel.util.Status;
 
 @Repository
-public interface MunicipalityRepository extends JpaRepository<Municipality,Long>{
+public interface MunicipalityRepository extends JpaRepository<Municipality, Long> {
 
 	List<Municipality> findAllBydistrict(District district);
 
-	//Municipality findByMunicipality(String municipality);
-
-	Municipality findByMunicipal(String municipality);
+	Municipality findByMunicipalAndStatusNot(String municipality, Status deleted);
 
 }

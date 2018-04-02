@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.softtech.localLevel.util.LocalLevelType;
+import com.softtech.localLevel.util.Status;
 
 @Entity
 public class SubMetropolitan implements Serializable {
@@ -46,8 +47,17 @@ public class SubMetropolitan implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private LocalLevelType localLevelType;
 	
+	@Enumerated(EnumType.STRING)
+	private Status status;
 	
 	
+	
+	public Status getStatus() {
+		return status;
+	}
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 	public List<Vdc> getVdc() {
 		return vdc;
 	}

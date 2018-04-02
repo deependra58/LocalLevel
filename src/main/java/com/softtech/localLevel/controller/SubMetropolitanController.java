@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
+import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -12,6 +14,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.softtech.localLevel.model.SubMetropolitan;
 import com.softtech.localLevel.repository.SubMetropolitanRepository;
+import com.softtech.localLevel.response.SubMetropolitanResponseDto;
+import com.softtech.localLevel.service.DistrictService;
 import com.softtech.localLevel.util.LocalLevelType;
 
 import io.swagger.annotations.ApiOperation;
@@ -30,6 +35,9 @@ public class SubMetropolitanController {
 
 	@Autowired
 	private SubMetropolitanRepository subMetropolitanRepository;
+	
+	@Autowired
+	private DistrictService districtService;
 
 	@ApiOperation(value = "Upload an excel file for Sub-Metropolitan")
 	@RequestMapping(value = "/uploadSubMetropolitan", method = RequestMethod.POST)
@@ -75,17 +83,20 @@ public class SubMetropolitanController {
 				String string1 = row.getCell(5).toString();
 				byte[] u1 = string1.getBytes("UTF-8");
 				string1 = new String(u1, "UTF-8");
-				subMetropolitan.setPopulation(string1);
+				String[] a3=string1.split(Pattern.quote("."));
+				subMetropolitan.setPopulation(a3[0]);
 
 				String string2 = row.getCell(6).toString();
 				byte[] u2 = string2.getBytes("UTF-8");
 				string2 = new String(u2, "UTF-8");
-				subMetropolitan.setArea(string2);
+				String[] a2=string2.split(Pattern.quote("."));
+				subMetropolitan.setArea(a2[0]);
 
 				String string3 = row.getCell(7).toString();
 				byte[] u3 = string3.getBytes("UTF-8");
 				string3 = new String(u3, "UTF-8");
-				subMetropolitan.setDensity(string3);
+				String[] a1=string3.split(Pattern.quote("."));
+				subMetropolitan.setDensity(a1[0]);
 
 				String string4 = row.getCell(8).toString();
 				byte[] u4 = string4.getBytes("UTF-8");
@@ -112,7 +123,16 @@ public class SubMetropolitanController {
 
 		}
 
-		return new ResponseEntity<Object>(HttpStatus.OK);
+		return new ResponseEntity<Object>("Sub Metropolitan uploaded!",HttpStatus.OK);
+	}
+	
+	@ApiOperation(value="Show all SubMetropolitns belonging to district")
+	@RequestMapping(value="subMetropolitan/{district:.+}",method=RequestMethod.GET)
+	public ResponseEntity<Object> showMunicipalities(@PathVariable String district){
+		
+		List<SubMetropolitanResponseDto> subMetropolitanResponseDtoList=districtService.getSubMetropolitan(district);
+		return new ResponseEntity<Object>(subMetropolitanResponseDtoList, HttpStatus.OK);
+		
 	}
 
 }

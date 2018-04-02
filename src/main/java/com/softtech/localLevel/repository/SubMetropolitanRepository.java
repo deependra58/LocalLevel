@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.softtech.localLevel.model.District;
 import com.softtech.localLevel.model.SubMetropolitan;
+import com.softtech.localLevel.util.Status;
 
 public interface SubMetropolitanRepository extends JpaRepository<SubMetropolitan,Long>{
 
@@ -13,6 +14,8 @@ public interface SubMetropolitanRepository extends JpaRepository<SubMetropolitan
 
 	List<SubMetropolitan> findAllByDistrict(District district);
 
-	SubMetropolitan findBySubMetropolitan(String subMetropolitan);
+	//SubMetropolitan findBySubMetropolitan(String subMetropolitan);
+
+	SubMetropolitan findBySubMetropolitanAndStatusNot(String subMetropolitan, Status deleted);
 
 }
