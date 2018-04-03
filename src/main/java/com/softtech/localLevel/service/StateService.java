@@ -21,6 +21,7 @@ import com.softtech.localLevel.model.District;
 import com.softtech.localLevel.model.State;
 import com.softtech.localLevel.repository.DistrictRepository;
 import com.softtech.localLevel.repository.StateRepository;
+import com.softtech.localLevel.util.FileUtil;
 import com.softtech.localLevel.util.FileUtility;
 
 
@@ -74,24 +75,24 @@ public class StateService {
 		return stateDetailDto;
 	}
 
-	public void postPicture(String string, Long stateId) {
-		/*File file = null;
+	public void postPicture(String imgString, String state) {
+		File file = null;
 		try {
-			State state = stateRepository.findById(stateId);
+			State states = stateRepository.findByState(state);
 
 			LOG.info("Request Accepted to post state picture");
-			file = FileUtil.write(String.valueOf(new Date().getTime()).concat(".").concat("png"), string);
+			file = FileUtil.write(String.valueOf(new Date().getTime()).concat(".").concat("png"), imgString);
 			LOG.info("path {}", file.getAbsolutePath());
 			if (file != null)
-				state.setStatePicture(file.getAbsolutePath());
-			stateRepository.save(state);
+				states.setStatePicture(file.getAbsolutePath());
+			stateRepository.save(states);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			if (file != null) {
 				file.delete();
 			}
-		}*/
+		}
 	}
 	
 

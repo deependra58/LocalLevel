@@ -24,9 +24,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.softech.localLevel.exception.AlreadyExistException;
 import com.softech.localLevel.request.StateCreationRequest;
 import com.softech.localLevel.request.StateEditRequest;
 import com.softtech.localLevel.dto.StateDetailDto;
+import com.softtech.localLevel.model.District;
 import com.softtech.localLevel.model.State;
 import com.softtech.localLevel.repository.StateRepository;
 import com.softtech.localLevel.service.StateService;
@@ -82,6 +84,12 @@ public class StateController {
 			}
 
 			try {
+				
+				State st=stateRepository.findByState("state 1");
+				if(st!=null) {
+					
+					throw new AlreadyExistException("State file has been already uploaded into the database.");
+				}
 
 				State state = new State();
 				String string0 = row.getCell(1).toString();
@@ -155,7 +163,7 @@ public class StateController {
 	}
 	
 	@ApiOperation(value="Shows the state details", notes="Shows the details regarding state")
-	@RequestMapping(value = "state/{state:.+}", method = RequestMethod.GET)
+	@RequestMapping(value = "stateDetails/{state:.+}", method = RequestMethod.GET)
 	public ResponseEntity<Object> listAllDistricts(@PathVariable("state") String state) {
 		StateDetailDto stateDetaildto = stateService.getStateDetails(state);
 		System.out.println(stateDetaildto.getStatePicture());
@@ -163,7 +171,7 @@ public class StateController {
 	}
 	
 	@ApiOperation(value="Edit state information", notes="Edit state information")
-	@RequestMapping(value="state/{stateId}", method=RequestMethod.PUT)
+	@RequestMapping(value="editState/{stateId}", method=RequestMethod.PUT)
 	public ResponseEntity<Object> editState(@RequestBody StateEditRequest stateEditRequest, @RequestParam(required=false) String state,@RequestHeader(required=false) Long stateId){
 		State st=stateService.editState(stateEditRequest,state, stateId);
 		return new ResponseEntity<Object>(st,HttpStatus.OK);
@@ -172,9 +180,9 @@ public class StateController {
 	
 	
 	@ApiOperation(value="Post the state picture", notes="Post the state picture")
-	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Object> postPicture(@RequestBody String string ,@RequestHeader Long stateId){
-	stateService.postPicture(string,stateId);
+	@RequestMapping(value="stateImg/{state:.+}",method=RequestMethod.POST)
+	public ResponseEntity<Object> postPicture(@RequestBody String string ,@RequestParam String state){
+	stateService.postPicture(string,state);
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
 	

@@ -21,11 +21,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.softech.localLevel.exception.AlreadyExistException;
+import com.softtech.localLevel.dto.SubMetropolitanDetailsDto;
+import com.softtech.localLevel.model.Municipality;
 import com.softtech.localLevel.model.SubMetropolitan;
 import com.softtech.localLevel.repository.SubMetropolitanRepository;
 import com.softtech.localLevel.response.SubMetropolitanResponseDto;
 import com.softtech.localLevel.service.DistrictService;
+import com.softtech.localLevel.service.SubMetropolitanService;
 import com.softtech.localLevel.util.LocalLevelType;
+import com.softtech.localLevel.util.Status;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -38,6 +43,9 @@ public class SubMetropolitanController {
 	
 	@Autowired
 	private DistrictService districtService;
+	
+	@Autowired
+	private SubMetropolitanService subMetropolitanService;
 
 	@ApiOperation(value = "Upload an excel file for Sub-Metropolitan")
 	@RequestMapping(value = "/uploadSubMetropolitan", method = RequestMethod.POST)
@@ -74,6 +82,12 @@ public class SubMetropolitanController {
 
 			try {
 
+				SubMetropolitan m=subMetropolitanRepository.findBySubMetropolitan("Dharan");
+				if(m!=null) {
+					
+					throw new AlreadyExistException("Sub-Metropolitan file has been already uploaded into the database.");
+				}
+				
 				SubMetropolitan subMetropolitan = new SubMetropolitan();
 				String string0 = row.getCell(3).toString();
 				byte[] u0 = string0.getBytes("UTF-8");
@@ -114,6 +128,7 @@ public class SubMetropolitanController {
 				subMetropolitan.setDeputMayor(string6);
 				
 				subMetropolitan.setLocalLevelType(LocalLevelType.SUBMETROPOLITAN);
+				subMetropolitan.setStatus(Status.ACTIVE);
 
 				subMetropolitanRepository.save(subMetropolitan);
 			}
@@ -128,10 +143,19 @@ public class SubMetropolitanController {
 	
 	@ApiOperation(value="Show all SubMetropolitns belonging to district")
 	@RequestMapping(value="subMetropolitan/{district:.+}",method=RequestMethod.GET)
-	public ResponseEntity<Object> showMunicipalities(@PathVariable String district){
+	public ResponseEntity<Object> showSubMetropolitan(@PathVariable String district){
 		
 		List<SubMetropolitanResponseDto> subMetropolitanResponseDtoList=districtService.getSubMetropolitan(district);
 		return new ResponseEntity<Object>(subMetropolitanResponseDtoList, HttpStatus.OK);
+		
+	}
+	
+	@ApiOperation(value="Show SubMetropolitns Details")
+	@RequestMapping(value="subMetropolitanDetails/{SubMetropolitan:.+}",method=RequestMethod.GET)
+	public ResponseEntity<Object> showSubMetropolitanDetails(@PathVariable String SubMetropolitan){
+		
+		SubMetropolitanDetailsDto subMetropolitanDetailsDto=subMetropolitanService.getSubMetropolitanDetails(SubMetropolitan);
+		return new ResponseEntity<Object>(subMetropolitanDetailsDto, HttpStatus.OK);
 		
 	}
 

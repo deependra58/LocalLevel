@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.softech.localLevel.exception.NotFoundException;
 import com.softech.localLevel.request.DistrictCreationRequest;
 import com.softech.localLevel.request.DistrictEditRequest;
 import com.softtech.localLevel.dto.DistrictDetailsDto;
@@ -36,6 +37,7 @@ import com.softtech.localLevel.response.SubMetropolitanResponseDto;
 import com.softtech.localLevel.util.Base64Util;
 import com.softtech.localLevel.util.FileUtil;
 import com.softtech.localLevel.util.LocalLevelType;
+import com.softtech.localLevel.util.Status;
 
 @Service
 public class DistrictService {
@@ -124,11 +126,15 @@ public class DistrictService {
 	}
 
 	@Transactional
-	public void postDistrictPicture(String string, Long districtId) {
+	public void postDistrictPicture(String string, String districts) {
 		LOG.info("\n\nRequest accepted to post district picture.");
+		District district = districtRepository.findByDistrict(districts);
+		if(district==null) {
+			throw new NotFoundException("District "+districts+ "not found.");
+		}
 		File file = null;
 		try {
-			District district = districtRepository.findById(districtId);
+			
 
 			LOG.info("Request Accepted to post district picture");
 			file = FileUtil.write(String.valueOf(new Date().getTime()).concat(".").concat("png"), string);
@@ -163,16 +169,28 @@ public class DistrictService {
 		District district =null;
 		if(districts==null) {
 			district = districtRepository.findById(districtId);
+			if(district==null) {
+				throw new NotFoundException("District with the id "+districtId+ " not found.");
+			}
 		}
 		else {
+			district = districtRepository.findBydistrict(districts);
+			if(district==null) {
+				throw new NotFoundException("District with the name "+districts+ " not found.");
+			}
 			district = districtRepository.findBydistrict(districts);
 		}
 		district.setDistrict(districtEditRequest.getDistrict());
 		district.setArea(districtEditRequest.getArea());
-		State state = stateRepository.findOne(districtEditRequest.getStateId());
+		State state = stateRepository.findByState(districtEditRequest.getState());
+		if(state==null) {
+			throw new NotFoundException(districtEditRequest.getState()+" doesn't exist!");
+		}
 		district.setState(state);
 		district.setPopulation(districtEditRequest.getPopulation());
 		district.setHeadquater(districtEditRequest.getHeadquater());
+		district.setStatus(Status.ACTIVE);
+		district.setLocalLevelType(LocalLevelType.DISTRICT);
 		districtRepository.save(district);
 		return district;
 

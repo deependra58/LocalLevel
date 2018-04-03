@@ -18,4 +18,8 @@ public interface RuralMunicipalityRepository extends JpaRepository<RuralMunicipa
 
 	RuralMunicipality findByRuralMunicipalAndStatusNot(String ruralMunicipality, Status deleted);
 
+
+
+	RuralMunicipality findByRuralMunicipal(String ruralMunicipal);
+
 }

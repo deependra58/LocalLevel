@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.softtech.localLevel.util.LocalLevelType;
+import com.softtech.localLevel.util.Status;
 
 
 
@@ -40,6 +41,9 @@ public class District implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private LocalLevelType  localLevelType;
 	
+	@Enumerated(EnumType.STRING)
+	private Status status;
+	
 	@ManyToOne(cascade= {CascadeType.ALL})
 	@JoinColumn(name="state_id")
 	private State state;
@@ -47,6 +51,15 @@ public class District implements Serializable {
 	@OneToMany(mappedBy="district", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<Vdc> vdc;
 	
+	
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
 	public List<Vdc> getVdc() {
 		return vdc;
 	}

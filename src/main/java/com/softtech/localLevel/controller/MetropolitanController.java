@@ -21,11 +21,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.softech.localLevel.exception.AlreadyExistException;
+import com.softtech.localLevel.dto.MetropolitanDetailsDto;
 import com.softtech.localLevel.model.Metropolitan;
+import com.softtech.localLevel.model.SubMetropolitan;
 import com.softtech.localLevel.repository.MetropolitanRepository;
 import com.softtech.localLevel.response.MetropolitanResponseDto;
 import com.softtech.localLevel.service.DistrictService;
+import com.softtech.localLevel.service.MetropolitanService;
 import com.softtech.localLevel.util.LocalLevelType;
+import com.softtech.localLevel.util.Status;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -37,6 +42,9 @@ public class MetropolitanController {
 	
 	@Autowired
 	private DistrictService districtService;
+	
+	@Autowired
+	private MetropolitanService metropolitanService;
 
 	@ApiOperation(value = "Upload an excel file for Metropolitan")
 	@RequestMapping(value = "/uploadMetropolitan", method = RequestMethod.POST)
@@ -72,6 +80,13 @@ public class MetropolitanController {
 			}
 
 			try {
+				
+				Metropolitan m=metropolitanRepository.findByMetropolitan("Birgunj");
+				if(m!=null) {
+					
+					throw new AlreadyExistException("Metropolitan file has been already uploaded into the database.");
+				}
+				
 
 				Metropolitan metropolitan = new Metropolitan();
 				String string0 = row.getCell(3).toString();
@@ -115,6 +130,7 @@ public class MetropolitanController {
 				metropolitan.setDeputMayor(string6);
 				
 				metropolitan.setLocalLevelType(LocalLevelType.METROPOLITAN);
+				metropolitan.setStatus(Status.ACTIVE);
 
 				metropolitanRepository.save(metropolitan);
 			}
@@ -135,4 +151,15 @@ public class MetropolitanController {
 		return new ResponseEntity<Object>(metropolitanResponseDto, HttpStatus.OK);
 		
 	}
+	
+	@ApiOperation(value="Show metropolitans details")
+	@RequestMapping(value="metropolitanDetails/{metropolitans:.+}",method=RequestMethod.GET)
+	public ResponseEntity<Object> showMetropolitanDetails(@PathVariable String metropolitans){
+		
+		MetropolitanDetailsDto metropolitanDetailsDto=metropolitanService.getMetropolitanDetails(metropolitans);
+		return new ResponseEntity<Object>(metropolitanDetailsDto, HttpStatus.OK);
+		
+	}
+	
+	
 }

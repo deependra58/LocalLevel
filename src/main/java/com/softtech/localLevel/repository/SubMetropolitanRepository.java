@@ -14,8 +14,10 @@ public interface SubMetropolitanRepository extends JpaRepository<SubMetropolitan
 
 	List<SubMetropolitan> findAllByDistrict(District district);
 
-	//SubMetropolitan findBySubMetropolitan(String subMetropolitan);
+	SubMetropolitan findBySubMetropolitan(String subMetropolitan);
 
 	SubMetropolitan findBySubMetropolitanAndStatusNot(String subMetropolitan, Status deleted);
+
+	//SubMetropolitan findBySubMetropolitan();
 
 }

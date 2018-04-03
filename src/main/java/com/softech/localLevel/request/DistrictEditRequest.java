@@ -4,7 +4,7 @@ public class DistrictEditRequest {
 	private String area;
 	private String population;
 	private String headquater;
-	private Long stateId;
+	private String state;
 	private String district;
 	public String getArea() {
 		return area;
@@ -24,11 +24,12 @@ public class DistrictEditRequest {
 	public void setHeadquater(String headquater) {
 		this.headquater = headquater;
 	}
-	public Long getStateId() {
-		return stateId;
+
+	public String getState() {
+		return state;
 	}
-	public void setStateId(Long stateId) {
-		this.stateId = stateId;
+	public void setState(String state) {
+		this.state = state;
 	}
 	public String getDistrict() {
 		return district;

@@ -21,11 +21,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.softech.localLevel.exception.AlreadyExistException;
+import com.softtech.localLevel.dto.MunicipalityDetailsDto;
 import com.softtech.localLevel.model.Municipality;
 import com.softtech.localLevel.repository.MunicipalityRepository;
 import com.softtech.localLevel.response.MunicipalityResponseDto;
 import com.softtech.localLevel.service.DistrictService;
+import com.softtech.localLevel.service.MunicipalityService;
 import com.softtech.localLevel.util.LocalLevelType;
+import com.softtech.localLevel.util.Status;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -35,6 +39,9 @@ public class MunicipalityController {
 
 	@Autowired
 	private MunicipalityRepository municipalityRepository;
+	
+	@Autowired
+	private MunicipalityService municipalityService;
 	
 	@Autowired
 	private DistrictService districtService;
@@ -74,6 +81,11 @@ public class MunicipalityController {
 
 			try {
 				
+				Municipality m=municipalityRepository.findByMunicipal("Bhojpur");
+				if(m!=null) {
+					
+					throw new AlreadyExistException("Municipality file has been already uploaded into the database.");
+				}
 				
 
 				Municipality municipality = new Municipality();
@@ -116,6 +128,7 @@ public class MunicipalityController {
 				municipality.setDeputMayor(string6);
 
 				municipality.setLocalLevelType(LocalLevelType.MUNICIPAL);
+				municipality.setStatus(Status.ACTIVE);
 				municipalityRepository.save(municipality);
 			}
 
@@ -135,5 +148,15 @@ public class MunicipalityController {
 		return new ResponseEntity<Object>(municipalityResponseDtoList, HttpStatus.OK);
 		
 	}
+	
+	@ApiOperation(value = "Show Municipality Details")
+	@RequestMapping(value = "municipalityDetails/{Municipality:.+}", method = RequestMethod.GET)
+	public ResponseEntity<Object> showMunicipalityDetails(@PathVariable String Municipality) {
+
+		MunicipalityDetailsDto municipalityDetailsDto=municipalityService.showMunicipalityDetails(Municipality);
+		return new ResponseEntity<Object>(municipalityDetailsDto, HttpStatus.OK);
+
+	}
+
 
 }

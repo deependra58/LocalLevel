@@ -21,11 +21,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.softech.localLevel.exception.AlreadyExistException;
+import com.softtech.localLevel.dto.RuralMunicipalDetailsDto;
 import com.softtech.localLevel.model.RuralMunicipality;
 import com.softtech.localLevel.repository.RuralMunicipalityRepository;
 import com.softtech.localLevel.response.RuralMunicipalResponseDto;
 import com.softtech.localLevel.service.DistrictService;
+import com.softtech.localLevel.service.RuralMunicipalityService;
 import com.softtech.localLevel.util.LocalLevelType;
+import com.softtech.localLevel.util.Status;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -38,6 +42,9 @@ public class RuralMunicipalityController {
 	
 	@Autowired
 	private DistrictService districtService;
+	
+	@Autowired
+	private RuralMunicipalityService ruralMunicipalityService;
 
 	@ApiOperation(value = "Upload an excel file for Rural Municipality")
 	@RequestMapping(value = "/uploadRuralMunicipality", method = RequestMethod.POST)
@@ -73,6 +80,11 @@ public class RuralMunicipalityController {
 
 			try {
 
+				
+				RuralMunicipality rm=ruralMunicipalityRepository.findByRuralMunicipal("Aamchok");
+				if(rm!=null) {
+					throw new AlreadyExistException("Rural Municipality File has been already uploaded into database.");
+				}
 				RuralMunicipality ruralMunicipality = new RuralMunicipality();
 				String string0 = row.getCell(3).toString();
 				byte[] u0 = string0.getBytes("UTF-8");
@@ -113,6 +125,7 @@ public class RuralMunicipalityController {
 				ruralMunicipality.setViceChairmen(string6);
 
 				ruralMunicipality.setLocalLevelType(LocalLevelType.RURAL);
+				ruralMunicipality.setStatus(Status.ACTIVE);
 
 				ruralMunicipalityRepository.save(ruralMunicipality);
 			}
@@ -133,5 +146,15 @@ public class RuralMunicipalityController {
 		return new ResponseEntity<Object>(ruralMunicipalityResponseDto, HttpStatus.OK);
 
 	}
+	
+	@ApiOperation(value = "Show Rural Municipality Details")
+	@RequestMapping(value = "ruralMunicipalityDetails/{ruralMunicipal:.+}", method = RequestMethod.GET)
+	public ResponseEntity<Object> showRuralMunicipalityDetails(@PathVariable String ruralMunicipal) {
+
+		RuralMunicipalDetailsDto ruralMunicipalDetailsDto=ruralMunicipalityService.showDetails(ruralMunicipal);
+		return new ResponseEntity<Object>(ruralMunicipalDetailsDto, HttpStatus.OK);
+
+	}
 
 }
+

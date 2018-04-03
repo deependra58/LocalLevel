@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.softech.localLevel.exception.AlreadyExistException;
 import com.softech.localLevel.request.DistrictCreationRequest;
 import com.softech.localLevel.request.DistrictEditRequest;
 import com.softtech.localLevel.dto.DistrictDetailsDto;
@@ -36,6 +37,7 @@ import com.softtech.localLevel.response.RuralMunicipalResponseDto;
 import com.softtech.localLevel.response.SubMetropolitanResponseDto;
 import com.softtech.localLevel.service.DistrictService;
 import com.softtech.localLevel.util.LocalLevelType;
+import com.softtech.localLevel.util.Status;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -87,6 +89,13 @@ public class DistrictController {
 			}
 
 			try {
+				
+				District dist=districtRepository.findByDistrict("Jhapa");
+				if(dist!=null) {
+					
+					throw new AlreadyExistException("District file has been already uploaded into the database.");
+				}
+				
 
 				District district = new District();
 				String string0 = row.getCell(1).toString();
@@ -112,6 +121,7 @@ public class DistrictController {
 				district.setPopulation(a2[0]);
 
 				district.setLocalLevelType(LocalLevelType.DISTRICT);
+				district.setStatus(Status.ACTIVE);
 
 				districtRepository.save(district);
 			}
@@ -177,10 +187,10 @@ public class DistrictController {
 	
 
 	@ApiOperation(value = "Post District Picture")
-	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Object> postDistrictPicture(@RequestBody String string, @RequestHeader Long districtId) {
+	@RequestMapping(value="districtImgage/{district:.+}",method = RequestMethod.POST)
+	public ResponseEntity<Object> postDistrictPicture(@RequestBody String string, @RequestHeader String district) {
 
-		districtService.postDistrictPicture(string, districtId);
+		districtService.postDistrictPicture(string, district);
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
 
