@@ -161,6 +161,7 @@ public class DistrictService {
 		// district.setState(new State(districtCreationRequest.getStateId()));
 		district.setDistrict(districtCreationRequest.getDistrict());
 		district.setHeadquater(districtCreationRequest.getHeadquater());
+		district.setStatus(Status.ACTIVE);
 		districtRepository.save(district);
 
 	}

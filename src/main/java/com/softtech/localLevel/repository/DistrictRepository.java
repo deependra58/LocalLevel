@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.softtech.localLevel.model.District;
 
 import com.softtech.localLevel.model.State;
+import com.softtech.localLevel.util.Status;
 
 
 @Repository
@@ -22,6 +23,8 @@ public interface DistrictRepository extends JpaRepository <District,Long> {
 	District findById(Long districtId);
 
 	District findBydistrict(String districts);
+
+	District findByDistrictAndStatusNot(String mountainDistrict, Status deleted);
 
 	
 

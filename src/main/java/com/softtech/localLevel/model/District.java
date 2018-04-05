@@ -20,38 +20,89 @@ import javax.persistence.Table;
 import com.softtech.localLevel.util.LocalLevelType;
 import com.softtech.localLevel.util.Status;
 
-
-
-
-
 @Entity
-@Table(name="district")
+@Table(name = "district")
 public class District implements Serializable {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
 	private Long id;
 	private String district;
 	private String area;
 	private String population;
 	private String headquater;
 	private String districtPicture;
-	
+
 	@Enumerated(EnumType.STRING)
-	private LocalLevelType  localLevelType;
-	
+	private LocalLevelType localLevelType;
+
 	@Enumerated(EnumType.STRING)
 	private Status status;
-	
-	@ManyToOne(cascade= {CascadeType.ALL})
-	@JoinColumn(name="state_id")
+
+	@ManyToOne(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "state_id")
 	private State state;
-	
-	@OneToMany(mappedBy="district", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+
+	@OneToMany(mappedBy = "district", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Vdc> vdc;
-	
-	
+
+	@OneToMany(mappedBy = "district", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<RuralMunicipality> ruralMunicipality;
+
+	@OneToMany(mappedBy = "district", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Municipality> municipality;
+
+	@OneToMany(mappedBy = "district", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<SubMetropolitan> subMetropolitan;
+
+	@OneToMany(mappedBy = "district", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Metropolitan> metropolitan;
+
+	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<NaturalResources> naturalResources;
+
+	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Infrastructure> infrastructure;
+
+	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Demographic> demographic;
+
+	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Attraction> attraction;
+
+	public List<NaturalResources> getNaturalResources() {
+		return naturalResources;
+	}
+
+	public void setNaturalResources(List<NaturalResources> naturalResources) {
+		this.naturalResources = naturalResources;
+	}
+
+	public List<Infrastructure> getInfrastructure() {
+		return infrastructure;
+	}
+
+	public void setInfrastructure(List<Infrastructure> infrastructure) {
+		this.infrastructure = infrastructure;
+	}
+
+	public List<Demographic> getDemographic() {
+		return demographic;
+	}
+
+	public void setDemographic(List<Demographic> demographic) {
+		this.demographic = demographic;
+	}
+
+	public List<Attraction> getAttraction() {
+		return attraction;
+	}
+
+	public void setAttraction(List<Attraction> attraction) {
+		this.attraction = attraction;
+	}
+
 	public Status getStatus() {
 		return status;
 	}
@@ -68,20 +119,6 @@ public class District implements Serializable {
 		this.vdc = vdc;
 	}
 
-	@OneToMany(mappedBy="district",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	private List<RuralMunicipality> ruralMunicipality;
-	
-	@OneToMany(mappedBy="district",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	private List<Municipality> municipality;
-	
-	@OneToMany(mappedBy="district",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	private List<SubMetropolitan> subMetropolitan;
-	
-	@OneToMany(mappedBy="district",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	private List<Metropolitan> metropolitan;
-	
-	
-	
 	public LocalLevelType getLocalLevelType() {
 		return localLevelType;
 	}
@@ -154,8 +191,6 @@ public class District implements Serializable {
 		this.headquater = headquater;
 	}
 
-
-
 	public Long getId() {
 		return id;
 	}
@@ -167,7 +202,6 @@ public class District implements Serializable {
 	public void setState(State state) {
 		this.state = state;
 	}
-	
 
 	public void setId(Long id) {
 		this.id = id;
@@ -181,14 +215,12 @@ public class District implements Serializable {
 		this.district = district;
 	}
 
-	
-
 	public District() {
 		super();
 	}
 
 	public District(Long id) {
-		this.id=id;
+		this.id = id;
 	}
 
 	@Override
@@ -199,16 +231,12 @@ public class District implements Serializable {
 				+ ", municipality=" + municipality + ", subMetropolitan=" + subMetropolitan + ", metropolitan="
 				+ metropolitan + "]";
 	}
-	
-	/*@OneToMany(mappedBy="district",cascade={CascadeType.PERSIST,CascadeType.MERGE})
-	@JsonManagedReference
-	private List<NewVdc> vdc;
-*/
-	
-	
 
-	
-	
-	
+	/*
+	 * @OneToMany(mappedBy="district",cascade={CascadeType.PERSIST,CascadeType.MERGE
+	 * })
+	 * 
+	 * @JsonManagedReference private List<NewVdc> vdc;
+	 */
 
 }

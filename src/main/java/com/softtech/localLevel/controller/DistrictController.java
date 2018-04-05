@@ -24,11 +24,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.softech.localLevel.exception.AlreadyExistException;
+import com.softech.localLevel.exception.NotFoundException;
 import com.softech.localLevel.request.DistrictCreationRequest;
 import com.softech.localLevel.request.DistrictEditRequest;
 import com.softtech.localLevel.dto.DistrictDetailsDto;
 import com.softtech.localLevel.model.District;
+import com.softtech.localLevel.model.State;
 import com.softtech.localLevel.repository.DistrictRepository;
+import com.softtech.localLevel.repository.StateRepository;
 import com.softtech.localLevel.response.DistrictResponseDto;
 import com.softtech.localLevel.response.LocalLevelResponseDto;
 import com.softtech.localLevel.response.MetropolitanResponseDto;
@@ -53,6 +56,9 @@ public class DistrictController {
 
 	@Autowired
 	private DistrictRepository districtRepository;
+	
+	@Autowired
+	private StateRepository stateRepository;
 
 	@SuppressWarnings("rawtypes")
 	@ApiOperation(value = "Upload an excel file for District")
@@ -81,6 +87,13 @@ public class DistrictController {
 		temp4[0] = null;
 		String[] temp5 = new String[35083];
 		temp5[0] = null;
+		
+		District dist=districtRepository.findByDistrict("Jhapa");
+		if(dist!=null) {
+			
+			throw new AlreadyExistException("District file has been already uploaded into the database.");
+		}
+		
 
 		while (rows.hasNext()) {
 			row = (XSSFRow) rows.next();
@@ -90,11 +103,6 @@ public class DistrictController {
 
 			try {
 				
-				District dist=districtRepository.findByDistrict("Jhapa");
-				if(dist!=null) {
-					
-					throw new AlreadyExistException("District file has been already uploaded into the database.");
-				}
 				
 
 				District district = new District();
@@ -107,6 +115,15 @@ public class DistrictController {
 				byte[] u1 = string1.getBytes("UTF-8");
 				string1 = new String(u1, "UTF-8");
 				district.setHeadquater(string1);
+				
+				String string01=row.getCell(3).toString();
+				byte[] u01=string01.getBytes("UTF-8");
+				string01=new String(u01, "UTF-8");
+				State state=stateRepository.findByState(string01);
+				if(state==null) {
+					throw new NotFoundException("State with name "+string01+" couldn't be found!");
+				}
+				district.setState(state);
 
 				String string2 = row.getCell(4).toString();
 				byte[] u2 = string2.getBytes("UTF-8");

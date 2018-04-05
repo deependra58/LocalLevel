@@ -76,6 +76,12 @@ public class StateController {
 		temp4[0] = null;
 		String[] temp5 = new String[35083];
 		temp5[0] = null;
+		
+		State st=stateRepository.findByState("state 7");
+		if(st!=null) {
+			
+			throw new AlreadyExistException("State file has been already uploaded into the database.");
+		}
 
 		while (rows.hasNext()) {
 			row = (XSSFRow) rows.next();
@@ -85,11 +91,7 @@ public class StateController {
 
 			try {
 				
-				State st=stateRepository.findByState("state 1");
-				if(st!=null) {
-					
-					throw new AlreadyExistException("State file has been already uploaded into the database.");
-				}
+				
 
 				State state = new State();
 				String string0 = row.getCell(1).toString();

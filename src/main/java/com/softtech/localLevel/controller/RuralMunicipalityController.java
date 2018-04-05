@@ -22,8 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.softech.localLevel.exception.AlreadyExistException;
+import com.softech.localLevel.exception.NotFoundException;
 import com.softtech.localLevel.dto.RuralMunicipalDetailsDto;
+import com.softtech.localLevel.model.District;
 import com.softtech.localLevel.model.RuralMunicipality;
+import com.softtech.localLevel.repository.DistrictRepository;
 import com.softtech.localLevel.repository.RuralMunicipalityRepository;
 import com.softtech.localLevel.response.RuralMunicipalResponseDto;
 import com.softtech.localLevel.service.DistrictService;
@@ -45,6 +48,9 @@ public class RuralMunicipalityController {
 	
 	@Autowired
 	private RuralMunicipalityService ruralMunicipalityService;
+	
+	@Autowired
+	private DistrictRepository districtRepository;
 
 	@ApiOperation(value = "Upload an excel file for Rural Municipality")
 	@RequestMapping(value = "/uploadRuralMunicipality", method = RequestMethod.POST)
@@ -71,6 +77,11 @@ public class RuralMunicipalityController {
 		temp4[0] = null;
 		String[] temp5 = new String[35083];
 		temp5[0] = null;
+		
+		RuralMunicipality rm=ruralMunicipalityRepository.findByRuralMunicipal("Aamchok");
+		if(rm!=null) {
+			throw new AlreadyExistException("Rural Municipality File has been already uploaded into database.");
+		}
 
 		while (rows.hasNext()) {
 			row = (XSSFRow) rows.next();
@@ -81,15 +92,21 @@ public class RuralMunicipalityController {
 			try {
 
 				
-				RuralMunicipality rm=ruralMunicipalityRepository.findByRuralMunicipal("Aamchok");
-				if(rm!=null) {
-					throw new AlreadyExistException("Rural Municipality File has been already uploaded into database.");
-				}
+				
 				RuralMunicipality ruralMunicipality = new RuralMunicipality();
 				String string0 = row.getCell(3).toString();
 				byte[] u0 = string0.getBytes("UTF-8");
 				string0 = new String(u0, "UTF-8");
 				ruralMunicipality.setRuralMunicipal(string0);
+				
+				String string01 = row.getCell(1).toString();
+				byte[] u01 = string01.getBytes("UTF-8");
+				string01 = new String(u01, "UTF-8");
+				District district=districtRepository.findByDistrict(string01);
+				if(district==null) {
+					throw new NotFoundException("District with name "+string01+" couldn't be found!");
+				}
+				ruralMunicipality.setDistrict(district);
 
 				String string1 = row.getCell(5).toString();
 				byte[] u1 = string1.getBytes("UTF-8");
