@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -29,9 +30,22 @@ import com.softech.localLevel.request.StateCreationRequest;
 import com.softech.localLevel.request.StateEditRequest;
 import com.softtech.localLevel.dto.StateDetailDto;
 import com.softtech.localLevel.model.District;
+import com.softtech.localLevel.model.ProtectedAreas;
 import com.softtech.localLevel.model.State;
 import com.softtech.localLevel.repository.StateRepository;
+import com.softtech.localLevel.response.LakesResponseDto;
+import com.softtech.localLevel.response.MountainsResponseDto;
+import com.softtech.localLevel.response.NaturalResourcesDtoList;
+import com.softtech.localLevel.response.ProtectedAreaResponseDto;
+
+import com.softtech.localLevel.response.RiversResponseDto;
+import com.softtech.localLevel.response.WaterfallResponseDto;
+import com.softtech.localLevel.service.LakesService;
+import com.softtech.localLevel.service.MountainService;
+import com.softtech.localLevel.service.ProtectedAreasService;
+import com.softtech.localLevel.service.RiversService;
 import com.softtech.localLevel.service.StateService;
+import com.softtech.localLevel.service.WaterfallService;
 import com.softtech.localLevel.util.LocalLevelType;
 
 import io.swagger.annotations.Api;
@@ -49,6 +63,21 @@ public class StateController {
 	
 	@Autowired
 	private StateRepository stateRepository;
+	
+	@Autowired
+	private MountainService mountainService;
+	
+	@Autowired
+	private RiversService riversService;
+	
+	@Autowired
+	private LakesService LakesService;
+	
+	@Autowired
+	private WaterfallService waterfallService;
+	
+	@Autowired
+	private ProtectedAreasService protectedAreasService;
 	
 	@ApiOperation(value = "Upload an excel file for State")
 	@RequestMapping(value = "/uploadState", method = RequestMethod.POST)
@@ -186,6 +215,20 @@ public class StateController {
 	public ResponseEntity<Object> postPicture(@RequestBody String string ,@RequestParam String state){
 	stateService.postPicture(string,state);
 		return new ResponseEntity<Object>(HttpStatus.OK);
+	}
+	
+	@ApiOperation(value="Get natural resources")
+	@RequestMapping(value="naturalResources/{state:.+}",method=RequestMethod.GET)
+	public ResponseEntity<Object> getNaturalResources(String state){
+		
+		List<MountainsResponseDto> mountainsResponseDtos=mountainService.getMountain(state);
+		List<RiversResponseDto> riversResponseDtos=riversService.getRivers(state);
+		List<LakesResponseDto> lakesResponseDtos=LakesService.getLakes(state);
+		List<WaterfallResponseDto> waterfallResponseDtos=waterfallService.getWaterfall(state);
+		List<ProtectedAreaResponseDto> protectedAreasResponseDtos=protectedAreasService.getProtectedArea(state);
+		NaturalResourcesDtoList naturalResourcesDtoList=new NaturalResourcesDtoList(mountainsResponseDtos,riversResponseDtos,lakesResponseDtos,waterfallResponseDtos,protectedAreasResponseDtos);
+		return new ResponseEntity<Object> (naturalResourcesDtoList,HttpStatus.OK);
+		
 	}
 	
 	/*==========================================================================================================*/

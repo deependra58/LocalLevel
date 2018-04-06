@@ -71,6 +71,42 @@ public class District implements Serializable {
 	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Attraction> attraction;
 
+	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Mountains> mountains;
+
+	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Lakes> lakes;
+	
+	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Waterfall> waterfall;
+	
+	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<ProtectedAreas> protectedAreas;
+		
+	public List<ProtectedAreas> getProtectedAreas() {
+		return protectedAreas;
+	}
+
+	public void setProtectedAreas(List<ProtectedAreas> protectedAreas) {
+		this.protectedAreas = protectedAreas;
+	}
+
+	public List<Waterfall> getWaterfall() {
+		return waterfall;
+	}
+
+	public void setWaterfall(List<Waterfall> waterfall) {
+		this.waterfall = waterfall;
+	}
+
+	public List<Lakes> getLakes() {
+		return lakes;
+	}
+
+	public void setLakes(List<Lakes> lakes) {
+		this.lakes = lakes;
+	}
+
 	public List<NaturalResources> getNaturalResources() {
 		return naturalResources;
 	}
@@ -81,6 +117,14 @@ public class District implements Serializable {
 
 	public List<Infrastructure> getInfrastructure() {
 		return infrastructure;
+	}
+
+	public List<Mountains> getMountains() {
+		return mountains;
+	}
+
+	public void setMountains(List<Mountains> mountains) {
+		this.mountains = mountains;
 	}
 
 	public void setInfrastructure(List<Infrastructure> infrastructure) {
@@ -231,12 +275,5 @@ public class District implements Serializable {
 				+ ", municipality=" + municipality + ", subMetropolitan=" + subMetropolitan + ", metropolitan="
 				+ metropolitan + "]";
 	}
-
-	/*
-	 * @OneToMany(mappedBy="district",cascade={CascadeType.PERSIST,CascadeType.MERGE
-	 * })
-	 * 
-	 * @JsonManagedReference private List<NewVdc> vdc;
-	 */
 
 }

@@ -48,6 +48,9 @@ import io.swagger.annotations.ApiOperation;
 public class NaturalResourcesController {
 	@Autowired
 	private NaturalResourcesService naturalResourcesService;
+	
+	@Autowired
+	private NaturalResourcesRepository naturalResourcesRepository;
 
 	@Autowired
 	private DistrictRepository districtRepository;
@@ -55,8 +58,7 @@ public class NaturalResourcesController {
 	@Autowired
 	private StateRepository stateRepository;
 
-	@Autowired
-	private NaturalResourcesRepository naturalResourcesRepository;
+	
 
 	@ApiOperation(value = "Upload an excel file for Natural Resources-Mountains")
 	@RequestMapping(value = "/uploadNaturalResources/mountains", method = RequestMethod.POST)
@@ -171,6 +173,60 @@ public class NaturalResourcesController {
 	@ApiOperation(value = "Upload an excel file for Natural Resources-Lakes")
 	@RequestMapping(value = "/uploadNaturalResources/lakes", method = RequestMethod.POST)
 	ResponseEntity<Object> processExcelSheetForLakes(@RequestParam("lakes") MultipartFile multipartFile)
+			throws IOException {
+
+		InputStream stream = multipartFile.getInputStream();
+		XSSFWorkbook workbook = new XSSFWorkbook(stream);
+		XSSFSheet sheet = workbook.getSheetAt(0);
+		XSSFRow row;
+		XSSFCell cell;
+		Iterator rows = sheet.rowIterator();
+
+		NaturalResources nr = naturalResourcesRepository.findBylake("rara");
+		if (nr != null) {
+			throw new AlreadyExistException("Rara Files Already uploaded!");
+		}
+
+		while (rows.hasNext()) {
+			row = (XSSFRow) rows.next();
+			if (row.getRowNum() == 0) {
+				continue;
+			}
+
+			try {
+
+				NaturalResources naturalResources = new NaturalResources();
+				String string0 = row.getCell(2).toString();
+				byte[] u0 = string0.getBytes("UTF-8");
+				string0 = new String(u0, "UTF-8");
+				District district = districtRepository.findByDistrict(string0);
+				State state = stateRepository.findById(district.getState().getId());
+				naturalResources.setDistrict(district);
+				naturalResources.setState(state);
+				
+
+
+				String string1 = row.getCell(1).toString();
+				byte[] u1 = string1.getBytes("UTF-8");
+				string1 = new String(u1, "UTF-8");
+				naturalResources.setLake(string1);
+
+				naturalResources.setStatus(Status.ACTIVE);
+
+				naturalResourcesRepository.save(naturalResources);
+			}
+
+			catch (UnsupportedEncodingException e) {
+			}
+
+		}
+
+		return new ResponseEntity<Object>("Lakes file  uploaded Successfully!", HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "Upload an excel file for Natural Resources-waterfalls")
+	@RequestMapping(value = "/uploadNaturalResources/waterfalls", method = RequestMethod.POST)
+	ResponseEntity<Object> processExcelSheetFor(@RequestParam("lakes") MultipartFile multipartFile)
 			throws IOException {
 
 		InputStream stream = multipartFile.getInputStream();

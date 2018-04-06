@@ -60,7 +60,12 @@ public class State implements Serializable {
 	// @JsonManagedReference
 	private List<District> districts;
 
-	
+	@OneToMany(mappedBy = "state", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Ministry> ministry;
+
+	@Enumerated(EnumType.STRING)
+	private LocalLevelType localLevelType;
+
 	@OneToMany(mappedBy = "state", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<NaturalResources> naturalResources;
 	
@@ -69,6 +74,39 @@ public class State implements Serializable {
 	
 	@OneToMany(mappedBy="state",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<Demographic> demographic;
+	
+	@OneToMany(mappedBy="district", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<Mountains> mountains;
+	
+	@OneToMany(mappedBy="district", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<Lakes> lakes;
+
+	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Waterfall> waterfall;
+
+	public List<Waterfall> getWaterfall() {
+		return waterfall;
+	}
+
+	public void setWaterfall(List<Waterfall> waterfall) {
+		this.waterfall = waterfall;
+	}
+
+	public List<Mountains> getMountains() {
+		return mountains;
+	}
+
+	public List<Lakes> getLakes() {
+		return lakes;
+	}
+
+	public void setLakes(List<Lakes> lakes) {
+		this.lakes = lakes;
+	}
+
+	public void setMountains(List<Mountains> mountains) {
+		this.mountains = mountains;
+	}
 
 	public List<Infrastructure> getInfracture() {
 		return infracture;
@@ -86,11 +124,6 @@ public class State implements Serializable {
 		this.demographic = demographic;
 	}
 
-	@OneToMany(mappedBy = "state", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Ministry> ministry;
-
-	@Enumerated(EnumType.STRING)
-	private LocalLevelType localLevelType;
 
 	public List<NaturalResources> getNaturalResources() {
 		return naturalResources;

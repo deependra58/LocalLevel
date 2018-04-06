@@ -1,12 +1,28 @@
 package com.softtech.localLevel.response;
 
-import com.softtech.localLevel.model.District;
-
 public class MountainsResponseDto {
 
 	private String mountain;
 	private String mountainHeight;
 	private String district;
+	private String description;
+	private String mountainImage;
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getMountainImage() {
+		return mountainImage;
+	}
+
+	public void setMountainImage(String mountainImage) {
+		this.mountainImage = mountainImage;
+	}
 
 	public String getDistrict() {
 		return district;
@@ -30,6 +46,12 @@ public class MountainsResponseDto {
 
 	public void setMountainHeight(String mountainHeight) {
 		this.mountainHeight = mountainHeight;
+	}
+
+	@Override
+	public String toString() {
+		return "MountainsResponseDto [mountain=" + mountain + ", mountainHeight=" + mountainHeight + ", district="
+				+ district + ", description=" + description + ", mountainImage=" + mountainImage + "]";
 	}
 
 }

@@ -134,12 +134,13 @@ public class NaturalResourcesService {
 
 	@Transactional
 	public List<MountainsResponseDto> getMountain(String state) {
-		MountainsResponseDto mountainsResponseDto = new MountainsResponseDto();
+		
 		List<MountainsResponseDto> mountainResponseDtoList = new ArrayList<MountainsResponseDto>();
 		State states = stateRepository.findByState(state);
 		List<NaturalResources> naturalResources = naturalResourcesRepository.findAllByState(new State(states.getId()));
 		naturalResources.stream().forEach(u -> {
 			if (u.getMountain() != null) {
+				MountainsResponseDto mountainsResponseDto = new MountainsResponseDto();
 				mountainsResponseDto.setMountain(u.getMountain());
 				mountainsResponseDto.setMountainHeight(u.getMountainHeight());
 				District district=districtRepository.findById(u.getDistrict().getId());
