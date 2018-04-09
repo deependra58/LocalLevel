@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,37 +22,38 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.softech.localLevel.exception.AlreadyExistException;
 import com.softtech.localLevel.model.District;
+import com.softtech.localLevel.model.Hydropower;
+import com.softtech.localLevel.model.Industry;
 
 import com.softtech.localLevel.model.State;
-import com.softtech.localLevel.model.Waterfall;
 import com.softtech.localLevel.repository.DistrictRepository;
+import com.softtech.localLevel.repository.IndustryRepository;
 import com.softtech.localLevel.repository.StateRepository;
-import com.softtech.localLevel.repository.WaterfallRepository;
-import com.softtech.localLevel.response.WaterfallResponseDto;
-import com.softtech.localLevel.service.WaterfallService;
+import com.softtech.localLevel.response.IndustriesResponseDto;
+import com.softtech.localLevel.service.IndustryService;
 import com.softtech.localLevel.util.Status;
 
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("rest/waterfall")
-public class WaterfallController {
-	
-	@Autowired
-	private WaterfallRepository waterfallRepsoitory;
-	
-	@Autowired
-	private DistrictRepository districtRepository;
+@RequestMapping("rest/industry")
+public class IndustryController {
 	
 	@Autowired
 	private StateRepository stateRepository;
 	
 	@Autowired
-	private WaterfallService waterfallService;
+	private DistrictRepository districtRepository;
 	
-	@ApiOperation(value = "Upload an excel file for Natural Resources-waterfalls")
-	@RequestMapping(value = "/uploadNaturalResources/waterfalls", method = RequestMethod.POST)
-	ResponseEntity<Object> processExcelSheetFor(@RequestParam("lakes") MultipartFile multipartFile)
+	@Autowired
+	private IndustryService industryService;
+	
+	@Autowired
+	private IndustryRepository industryRepository;
+	
+	@ApiOperation(value = "Upload an excel file for Infrastructure-Industry")
+	@RequestMapping(value = "/uploadIndustry/Industry", method = RequestMethod.POST)
+	ResponseEntity<Object> processExcelSheetForIndustry(@RequestParam("Industry") MultipartFile multipartFile)
 			throws IOException {
 
 		InputStream stream = multipartFile.getInputStream();
@@ -63,9 +63,9 @@ public class WaterfallController {
 		XSSFCell cell;
 		Iterator rows = sheet.rowIterator();
 
-		Waterfall nr = waterfallRepsoitory.findByWaterfall("rara");
+		Industry nr = industryRepository.findByIndustryAndStatusNot(" Hetauda Cement Factory", Status.DELETED);
 		if (nr != null) {
-			throw new AlreadyExistException("Waterfall Files Already uploaded!");
+			throw new AlreadyExistException("Industry Files Already uploaded!");
 		}
 
 		while (rows.hasNext()) {
@@ -76,56 +76,59 @@ public class WaterfallController {
 
 			try {
 
-				Waterfall naturalResources = new Waterfall();
+				Industry industry = new Industry();
 				String string0 = row.getCell(2).toString();
 				byte[] u0 = string0.getBytes("UTF-8");
 				string0 = new String(u0, "UTF-8");
 				District district = districtRepository.findByDistrict(string0);
 				State state = stateRepository.findById(district.getState().getId());
-				naturalResources.setDistrict(district);
-				naturalResources.setState(state);
-				
-
+				industry.setDistrict(district);
+				industry.setState(state);
 
 				String string1 = row.getCell(1).toString();
 				byte[] u1 = string1.getBytes("UTF-8");
 				string1 = new String(u1, "UTF-8");
-				naturalResources.setWaterfall(string1);
-				
-				String string2 = row.getCell(1).toString();
+				industry.setIndustry(string1);
+
+				String string2 = row.getCell(3).toString();
 				byte[] u2 = string2.getBytes("UTF-8");
 				string2 = new String(u2, "UTF-8");
-				naturalResources.setWaterfall(string2);
+				industry.setAddress(string2);
+
+				String string3 = row.getCell(4).toString();
+				byte[] u3 = string3.getBytes("UTF-8");
+				string3 = new String(u3, "UTF-8");
+				industry.setDescription(string3);
 				
+				
+				industry.setStatus(Status.ACTIVE);
 
-				naturalResources.setStatus(Status.ACTIVE);
-
-				waterfallRepsoitory.save(naturalResources);
+				industryRepository.save(industry);
 			}
 
 			catch (UnsupportedEncodingException e) {
 			}
 
 		}
-
-		return new ResponseEntity<Object>("Waterfall file  uploaded Successfully!", HttpStatus.OK);
+		return new ResponseEntity<Object>("Hydropower File uploaded successfully!", HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "Post waterfalls Manually", notes = "Posting waterfall")
-	@RequestMapping(value = "addWaterfall", method = RequestMethod.POST)
-	public ResponseEntity<Object> postwaterfall(@RequestParam String waterfall_name, @RequestHeader String district, @RequestParam String description) {
-		Waterfall ns = waterfallService.postWaterfall(waterfall_name, district, description);
-		return new ResponseEntity<Object>(ns.getWaterfall() + " waterfall added successuflly", HttpStatus.OK);
+	@ApiOperation(value = "Post industries")
+	@RequestMapping(value = "addIndustries", method = RequestMethod.POST)
+	public ResponseEntity<Object> postIndustry(@RequestParam String industryName, @RequestParam String district,@RequestParam String address, @RequestParam String description) {
+		Industry infra = industryService.postIndustry(industryName, district,description,address);
+
+		return new ResponseEntity<Object>(infra.getIndustry() + " posted Successfully", HttpStatus.OK);
 
 	}
 	
-	@ApiOperation(value = "Get waterfall")
-	@RequestMapping(value = "getWaterfall/{state:.+}", method = RequestMethod.GET)
-	public ResponseEntity<Object> getWaterfall(@PathVariable String state) {
-
-		List<WaterfallResponseDto> waterfallResponseDtoList = waterfallService.getWaterfall(state);
-		return new ResponseEntity<Object>(waterfallResponseDtoList, HttpStatus.OK);
-
+	@ApiOperation(value="get industries")
+	@RequestMapping(value="getIndustries/{state:.+}", method=RequestMethod.GET)
+	public ResponseEntity<Object> getIndustries(@PathVariable String state){
+		
+		List<IndustriesResponseDto> industriesResponseDto=industryService.getIndustries(state);
+		return new ResponseEntity<Object>(industriesResponseDto, HttpStatus.OK);
+		
 	}
 
 }

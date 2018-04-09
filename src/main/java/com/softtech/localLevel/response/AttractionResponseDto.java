@@ -5,6 +5,14 @@ public class AttractionResponseDto {
 	private String item;
 	private String district;
 	private String description;
+	private String localAddress;
+	
+	public String getLocalAddress() {
+		return localAddress;
+	}
+	public void setLocalAddress(String localAddress) {
+		this.localAddress = localAddress;
+	}
 	public String getItem() {
 		return item;
 	}

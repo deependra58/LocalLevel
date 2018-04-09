@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.softech.localLevel.exception.NotFoundException;
 import com.softtech.localLevel.model.Attraction;
 import com.softtech.localLevel.model.District;
-import com.softtech.localLevel.model.Infrastructure;
+
 import com.softtech.localLevel.model.State;
 import com.softtech.localLevel.repository.AttractionRepository;
 import com.softtech.localLevel.repository.DistrictRepository;
@@ -32,7 +32,7 @@ public class AttractionService {
 	private StateRepository stateRepository;
 
 	@Transactional
-	public Attraction postFamousFor(String item, String district,String description) {
+	public Attraction postFamousFor(String item, String district,String description,String localAddress) {
 		Attraction fm = new Attraction();
 		District dist = districtRepository.findByDistrict(district);
 		if (dist == null) {
@@ -40,6 +40,7 @@ public class AttractionService {
 		}
 		fm.setDistrict(dist);
 		fm.setItem(item);
+		fm.setLocalAddress(localAddress);
 		fm.setDescription(description);
 		State state = stateRepository.findById(dist.getState().getId());
 		fm.setState(state);
@@ -59,6 +60,7 @@ public class AttractionService {
 				District district = districtRepository.findById(u.getDistrict().getId());
 				attractionResponseDto.setDistrict(district.getDistrict());
 				attractionResponseDto.setDescription(u.getDescription());
+				attractionResponseDto.setLocalAddress(u.getLocalAddress());
 				attractionResponseDtoList.add(attractionResponseDto);
 			}
 		});

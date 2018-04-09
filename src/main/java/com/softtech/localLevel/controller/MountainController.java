@@ -26,7 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.softech.localLevel.exception.AlreadyExistException;
 import com.softtech.localLevel.model.District;
 import com.softtech.localLevel.model.Mountains;
-import com.softtech.localLevel.model.NaturalResources;
+
 import com.softtech.localLevel.model.State;
 import com.softtech.localLevel.repository.DistrictRepository;
 import com.softtech.localLevel.repository.MountainsRepository;

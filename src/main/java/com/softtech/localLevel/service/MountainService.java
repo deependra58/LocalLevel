@@ -10,7 +10,7 @@ import com.softech.localLevel.exception.AlreadyExistException;
 import com.softech.localLevel.exception.NotFoundException;
 import com.softtech.localLevel.model.District;
 import com.softtech.localLevel.model.Mountains;
-import com.softtech.localLevel.model.NaturalResources;
+
 import com.softtech.localLevel.model.State;
 import com.softtech.localLevel.repository.DistrictRepository;
 import com.softtech.localLevel.repository.MountainsRepository;

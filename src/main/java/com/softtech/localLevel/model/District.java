@@ -60,15 +60,6 @@ public class District implements Serializable {
 	private List<Metropolitan> metropolitan;
 
 	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<NaturalResources> naturalResources;
-
-	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Infrastructure> infrastructure;
-
-	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Demographic> demographic;
-
-	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Attraction> attraction;
 
 	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -76,13 +67,57 @@ public class District implements Serializable {
 
 	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Lakes> lakes;
-	
+
 	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Waterfall> waterfall;
-	
+
 	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<ProtectedAreas> protectedAreas;
-		
+
+	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Airports> airports;
+
+	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Hospital> hospital;
+
+	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Hydropower> hydropower;
+
+	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Industry> industry;
+
+	public List<Industry> getIndustry() {
+		return industry;
+	}
+
+	public void setIndustry(List<Industry> industry) {
+		this.industry = industry;
+	}
+
+	public List<Hydropower> getHydropower() {
+		return hydropower;
+	}
+
+	public void setHydropower(List<Hydropower> hydropower) {
+		this.hydropower = hydropower;
+	}
+
+	public List<Hospital> getHospital() {
+		return hospital;
+	}
+
+	public void setHospital(List<Hospital> hospital) {
+		this.hospital = hospital;
+	}
+
+	public List<Airports> getAirports() {
+		return airports;
+	}
+
+	public void setAirports(List<Airports> airports) {
+		this.airports = airports;
+	}
+
 	public List<ProtectedAreas> getProtectedAreas() {
 		return protectedAreas;
 	}
@@ -107,36 +142,12 @@ public class District implements Serializable {
 		this.lakes = lakes;
 	}
 
-	public List<NaturalResources> getNaturalResources() {
-		return naturalResources;
-	}
-
-	public void setNaturalResources(List<NaturalResources> naturalResources) {
-		this.naturalResources = naturalResources;
-	}
-
-	public List<Infrastructure> getInfrastructure() {
-		return infrastructure;
-	}
-
 	public List<Mountains> getMountains() {
 		return mountains;
 	}
 
 	public void setMountains(List<Mountains> mountains) {
 		this.mountains = mountains;
-	}
-
-	public void setInfrastructure(List<Infrastructure> infrastructure) {
-		this.infrastructure = infrastructure;
-	}
-
-	public List<Demographic> getDemographic() {
-		return demographic;
-	}
-
-	public void setDemographic(List<Demographic> demographic) {
-		this.demographic = demographic;
 	}
 
 	public List<Attraction> getAttraction() {

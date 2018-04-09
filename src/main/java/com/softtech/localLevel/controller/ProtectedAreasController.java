@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.softech.localLevel.exception.AlreadyExistException;
 import com.softtech.localLevel.model.District;
-import com.softtech.localLevel.model.NaturalResources;
+
 import com.softtech.localLevel.model.ProtectedAreas;
 import com.softtech.localLevel.model.State;
 import com.softtech.localLevel.repository.DistrictRepository;
@@ -110,7 +110,7 @@ public class ProtectedAreasController {
 
 		}
 
-		return new ResponseEntity<Object>("Lakes file  uploaded Successfully!", HttpStatus.OK);
+		return new ResponseEntity<Object>("Protected Areas file  uploaded Successfully!", HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "Post protectedAreas Manually", notes = "Posting protected Areas")

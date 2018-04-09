@@ -27,8 +27,8 @@ public class AttractionController {
 	
 	@ApiOperation(value="Post famous items")
 	@RequestMapping(value="famousFor", method=RequestMethod.POST)
-	public ResponseEntity<Object> postFamousFor(@RequestParam String item, @RequestParam String district,@RequestParam String description){
-		Attraction ff=attractionService.postFamousFor(item,district,description);
+	public ResponseEntity<Object> postFamousFor(@RequestParam String item, @RequestParam String district,@RequestParam String localAddress,@RequestParam String description){
+		Attraction ff=attractionService.postFamousFor(item,district,description,localAddress);
 		return new ResponseEntity<Object>(ff.getItem()+" posted Successfully!",HttpStatus.OK);
 	}
 	

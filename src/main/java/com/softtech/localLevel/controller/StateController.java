@@ -24,22 +24,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.softech.localLevel.exception.AlreadyExistException;
 import com.softech.localLevel.request.StateCreationRequest;
 import com.softech.localLevel.request.StateEditRequest;
 import com.softtech.localLevel.dto.StateDetailDto;
-import com.softtech.localLevel.model.District;
-import com.softtech.localLevel.model.ProtectedAreas;
 import com.softtech.localLevel.model.State;
 import com.softtech.localLevel.repository.StateRepository;
+import com.softtech.localLevel.response.AirportsResponseDto;
+import com.softtech.localLevel.response.HospitalResponseDto;
+import com.softtech.localLevel.response.HydropowerResponseDto;
+import com.softtech.localLevel.response.IndustriesResponseDto;
+import com.softtech.localLevel.response.InfrastructureDtoList;
 import com.softtech.localLevel.response.LakesResponseDto;
 import com.softtech.localLevel.response.MountainsResponseDto;
 import com.softtech.localLevel.response.NaturalResourcesDtoList;
 import com.softtech.localLevel.response.ProtectedAreaResponseDto;
-
 import com.softtech.localLevel.response.RiversResponseDto;
 import com.softtech.localLevel.response.WaterfallResponseDto;
+import com.softtech.localLevel.service.AirportsService;
+import com.softtech.localLevel.service.HospitalService;
+import com.softtech.localLevel.service.HydropowerService;
+import com.softtech.localLevel.service.IndustryService;
 import com.softtech.localLevel.service.LakesService;
 import com.softtech.localLevel.service.MountainService;
 import com.softtech.localLevel.service.ProtectedAreasService;
@@ -78,6 +83,18 @@ public class StateController {
 	
 	@Autowired
 	private ProtectedAreasService protectedAreasService;
+	
+	@Autowired
+	private AirportsService airportService;
+	
+	@Autowired
+	private HydropowerService hydropowerService;
+	
+	@Autowired
+	private HospitalService hospitalService;
+	
+	@Autowired
+	private IndustryService industryService;
 	
 	@ApiOperation(value = "Upload an excel file for State")
 	@RequestMapping(value = "/uploadState", method = RequestMethod.POST)
@@ -228,6 +245,20 @@ public class StateController {
 		List<ProtectedAreaResponseDto> protectedAreasResponseDtos=protectedAreasService.getProtectedArea(state);
 		NaturalResourcesDtoList naturalResourcesDtoList=new NaturalResourcesDtoList(mountainsResponseDtos,riversResponseDtos,lakesResponseDtos,waterfallResponseDtos,protectedAreasResponseDtos);
 		return new ResponseEntity<Object> (naturalResourcesDtoList,HttpStatus.OK);
+		
+	}
+	
+	@ApiOperation(value="Get Infrastructures")
+	@RequestMapping(value="Infrastructure/{state:.+}", method=RequestMethod.GET)
+public ResponseEntity<Object> getInfrastructures(String state){
+		
+		List<AirportsResponseDto> airportsResponseDtos=airportService.getAirports(state);
+		List<HospitalResponseDto> hospitalResponseDtos=hospitalService.getHospitalDetail(state);
+		List<HydropowerResponseDto> hydropowerResponseDtos=hydropowerService.getHydropower(state);
+		List<IndustriesResponseDto> industriesResponseDtos=industryService.getIndustries(state);
+		
+		InfrastructureDtoList infrastructureDtoList=new InfrastructureDtoList(airportsResponseDtos,hydropowerResponseDtos,hospitalResponseDtos,industriesResponseDtos);
+		return new ResponseEntity<Object> (infrastructureDtoList,HttpStatus.OK);
 		
 	}
 	

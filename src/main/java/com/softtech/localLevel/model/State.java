@@ -66,34 +66,49 @@ public class State implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private LocalLevelType localLevelType;
 
-	@OneToMany(mappedBy = "state", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<NaturalResources> naturalResources;
-	
-	@OneToMany(mappedBy="state",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	private List<Infrastructure> infracture;
-	
-	@OneToMany(mappedBy="state",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	private List<Demographic> demographic;
-	
-	@OneToMany(mappedBy="district", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy = "state", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Mountains> mountains;
-	
-	@OneToMany(mappedBy="district", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+
+	@OneToMany(mappedBy = "state", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Lakes> lakes;
 
-	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "state", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Waterfall> waterfall;
 
-	public List<Waterfall> getWaterfall() {
-		return waterfall;
+	@OneToMany(mappedBy = "state", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Airports> airports;
+
+	@OneToMany(mappedBy = "state", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Hospital> hospital;
+
+	@OneToMany(mappedBy = "state", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Hydropower> hydropower;
+
+	@OneToMany(mappedBy = "state", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Industry> industry;
+
+	public List<Hydropower> getHydropower() {
+		return hydropower;
 	}
 
-	public void setWaterfall(List<Waterfall> waterfall) {
-		this.waterfall = waterfall;
+	public void setHydropower(List<Hydropower> hydropower) {
+		this.hydropower = hydropower;
+	}
+
+	public List<Hospital> getHospital() {
+		return hospital;
+	}
+
+	public void setHospital(List<Hospital> hospital) {
+		this.hospital = hospital;
 	}
 
 	public List<Mountains> getMountains() {
 		return mountains;
+	}
+
+	public void setMountains(List<Mountains> mountains) {
+		this.mountains = mountains;
 	}
 
 	public List<Lakes> getLakes() {
@@ -104,33 +119,20 @@ public class State implements Serializable {
 		this.lakes = lakes;
 	}
 
-	public void setMountains(List<Mountains> mountains) {
-		this.mountains = mountains;
+	public List<Waterfall> getWaterfall() {
+		return waterfall;
 	}
 
-	public List<Infrastructure> getInfracture() {
-		return infracture;
+	public void setWaterfall(List<Waterfall> waterfall) {
+		this.waterfall = waterfall;
 	}
 
-	public void setInfracture(List<Infrastructure> infracture) {
-		this.infracture = infracture;
+	public List<Airports> getAirports() {
+		return airports;
 	}
 
-	public List<Demographic> getDemographic() {
-		return demographic;
-	}
-
-	public void setDemographic(List<Demographic> demographic) {
-		this.demographic = demographic;
-	}
-
-
-	public List<NaturalResources> getNaturalResources() {
-		return naturalResources;
-	}
-
-	public void setNaturalResources(List<NaturalResources> naturalResources) {
-		this.naturalResources = naturalResources;
+	public void setAirports(List<Airports> airports) {
+		this.airports = airports;
 	}
 
 	public Long getId() {
@@ -246,5 +248,4 @@ public class State implements Serializable {
 		this.id = id;
 	}
 
-	
 }

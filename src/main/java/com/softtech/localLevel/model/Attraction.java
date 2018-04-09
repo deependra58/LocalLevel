@@ -22,6 +22,7 @@ public class Attraction implements Serializable {
 	private String item;
 
 	private String description;
+	private String localAddress;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	private State state;
@@ -36,6 +37,17 @@ public class Attraction implements Serializable {
 	public District getDistrict() {
 		return district;
 	}
+	
+
+	public String getLocalAddress() {
+		return localAddress;
+	}
+
+
+	public void setLocalAddress(String localAddress) {
+		this.localAddress = localAddress;
+	}
+
 
 	public void setDistrict(District district) {
 		this.district = district;
