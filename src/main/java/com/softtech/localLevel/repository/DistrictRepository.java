@@ -26,6 +26,8 @@ public interface DistrictRepository extends JpaRepository <District,Long> {
 
 	District findByDistrictAndStatusNot(String mountainDistrict, Status deleted);
 
+	District findById(District district);
+
 	
 
 	

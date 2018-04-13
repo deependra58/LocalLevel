@@ -39,9 +39,9 @@ public class SubMetropolitan implements Serializable {
 	@ManyToOne(cascade= {CascadeType.ALL})
 	@JoinColumn(name="district_id")
 	private District district;
-	
-	@OneToMany(mappedBy="subMetropolitan", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private List<Vdc> vdc;
+//	
+//	@OneToMany(mappedBy="subMetropolitan", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+//	private List<Vdc> vdc;
 	
 	
 	@Enumerated(EnumType.STRING)
@@ -58,12 +58,12 @@ public class SubMetropolitan implements Serializable {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	public List<Vdc> getVdc() {
-		return vdc;
-	}
-	public void setVdc(List<Vdc> vdc) {
-		this.vdc = vdc;
-	}
+//	public List<Vdc> getVdc() {
+//		return vdc;
+//	}
+//	public void setVdc(List<Vdc> vdc) {
+//		this.vdc = vdc;
+//	}
 	public LocalLevelType getLocalLevelType() {
 		return localLevelType;
 	}

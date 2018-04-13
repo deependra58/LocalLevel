@@ -20,4 +20,6 @@ public interface MetropolitanRepository extends JpaRepository<Metropolitan, Long
 
 	Metropolitan findByMetropolitan(String string);
 
+	Metropolitan findById(Long metropolitan_id);
+
 }

@@ -282,9 +282,11 @@ public class District implements Serializable {
 	public String toString() {
 		return "District [id=" + id + ", district=" + district + ", area=" + area + ", population=" + population
 				+ ", headquater=" + headquater + ", districtPicture=" + districtPicture + ", localLevelType="
-				+ localLevelType + ", state=" + state + ", vdc=" + vdc + ", ruralMunicipality=" + ruralMunicipality
-				+ ", municipality=" + municipality + ", subMetropolitan=" + subMetropolitan + ", metropolitan="
-				+ metropolitan + "]";
+				+ localLevelType + ", status=" + status + ", state=" + state + ", vdc=" + vdc + ", ruralMunicipality="
+				+ ruralMunicipality + ", municipality=" + municipality + ", subMetropolitan=" + subMetropolitan
+				+ ", metropolitan=" + metropolitan + ", attraction=" + attraction + ", mountains=" + mountains
+				+ ", lakes=" + lakes + ", waterfall=" + waterfall + ", protectedAreas=" + protectedAreas + ", airports="
+				+ airports + ", hospital=" + hospital + ", hydropower=" + hydropower + ", industry=" + industry + "]";
 	}
 
 }

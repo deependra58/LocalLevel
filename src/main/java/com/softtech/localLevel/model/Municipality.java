@@ -47,16 +47,16 @@ public class Municipality implements Serializable {
 	@JoinColumn(name="district_id")
 	private District district;
 	
-	@OneToMany(mappedBy="municipality", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private List<Vdc> vdc;
-	
-	public List<Vdc> getVdc() {
-		return vdc;
-	}
-
-	public void setVdc(List<Vdc> vdc) {
-		this.vdc = vdc;
-	}
+//	@OneToMany(mappedBy="municipality", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+//	private List<Vdc> vdc;
+//	
+//	public List<Vdc> getVdc() {
+//		return vdc;
+//	}
+//
+//	public void setVdc(List<Vdc> vdc) {
+//		this.vdc = vdc;
+//	}
 
 	
 

@@ -18,4 +18,6 @@ public interface MunicipalityRepository extends JpaRepository<Municipality, Long
 
 	Municipality findByMunicipal(String municipality);
 
+	Municipality findById(Long id);
+
 }

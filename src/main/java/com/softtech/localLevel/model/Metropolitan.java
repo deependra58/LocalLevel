@@ -39,8 +39,8 @@ public class Metropolitan implements Serializable {
 	@JoinColumn(name="district_id")
 	private District district;
 	
-	@OneToMany(mappedBy="metropolitan", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private List<Vdc> vdc;
+//	@OneToMany(mappedBy="metropolitan", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+//	private List<Vdc> vdc;
 	
 	@Enumerated(EnumType.STRING)
 	private LocalLevelType localLevelType;
@@ -55,12 +55,12 @@ public class Metropolitan implements Serializable {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	public List<Vdc> getVdc() {
-		return vdc;
-	}
-	public void setVdc(List<Vdc> vdc) {
-		this.vdc = vdc;
-	}
+//	public List<Vdc> getVdc() {
+//		return vdc;
+//	}
+//	public void setVdc(List<Vdc> vdc) {
+//		this.vdc = vdc;
+//	}
 	public LocalLevelType getLocalLevelType() {
 		return localLevelType;
 	}

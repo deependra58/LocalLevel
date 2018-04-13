@@ -1,8 +1,12 @@
 package com.softtech.localLevel.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.google.common.base.Optional;
+import com.softtech.localLevel.model.District;
 import com.softtech.localLevel.model.Vdc;
 import com.softtech.localLevel.util.Status;
 
@@ -12,5 +16,11 @@ public interface VdcRepository extends JpaRepository<Vdc, Long> {
 	Vdc findByIdAndStatusNot(Long vdcId, Status deleted);
 
 	Vdc findByIdAndVdcAndStatusNot(Long vdcId, String vdc, Status deleted);
+
+	Vdc findByVdcAndStatusNot(String oldVdc, Status deleted);
+
+	List<Vdc> findAllByVdcAndStatusNot(String oldVdc, Status deleted);
+
+	List<Vdc> findAllByDistrict(District district);
 
 }

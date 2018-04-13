@@ -22,4 +22,11 @@ public interface RuralMunicipalityRepository extends JpaRepository<RuralMunicipa
 
 	RuralMunicipality findByRuralMunicipal(String ruralMunicipal);
 
+
+
+	RuralMunicipality findById(Long id);
+
+
+
+
 }

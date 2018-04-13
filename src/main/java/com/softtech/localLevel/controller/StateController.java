@@ -1,6 +1,10 @@
 package com.softtech.localLevel.controller;
 
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -24,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.softech.localLevel.exception.AlreadyExistException;
 import com.softech.localLevel.request.StateCreationRequest;
 import com.softech.localLevel.request.StateEditRequest;
@@ -236,7 +241,7 @@ public class StateController {
 	
 	@ApiOperation(value="Get natural resources")
 	@RequestMapping(value="naturalResources/{state:.+}",method=RequestMethod.GET)
-	public ResponseEntity<Object> getNaturalResources(String state){
+	public ResponseEntity<Object> getNaturalResources(@PathVariable String state){
 		
 		List<MountainsResponseDto> mountainsResponseDtos=mountainService.getMountain(state);
 		List<RiversResponseDto> riversResponseDtos=riversService.getRivers(state);
@@ -264,7 +269,7 @@ public ResponseEntity<Object> getInfrastructures(String state){
 	
 	/*==========================================================================================================*/
 
-/*	@RequestMapping(value = "url to the controller method", method = RequestMethod.POST)
+	@RequestMapping(value = "url to the controller method", method = RequestMethod.POST)
 	public String createImage(@RequestParam("image") MultipartFile image){
 
 	    try {
@@ -277,22 +282,25 @@ public ResponseEntity<Object> getInfrastructures(String state){
 	    }
 
 	    return "redirect:/home";
-	}*/
+	}
+	
+	/*=================================================================================================================*/
 	
 	@PostMapping("/upload") 
     public ResponseEntity<Object> singleFileUpload(@RequestParam("file") MultipartFile file,@RequestHeader Long stateId) throws IOException{
 
       stateService.storeImage(file,stateId);
-      return new ResponseEntity<Object>(HttpStatus.OK);
+    //  return new ResponseEntity<Object>(HttpStatus.OK);
        
-        /*File convertFile=new File(""+file.getOriginalFilename());
+        File convertFile=new File(""+file.getOriginalFilename());
         convertFile.createNewFile();
         System.out.println("" + convertFile);
         FileOutputStream fout=new FileOutputStream(convertFile);
         System.out.println("" + fout);
         fout.write(file.getBytes());
         fout.close();
-        return "File uploaded";*/
+        return new ResponseEntity<Object>(HttpStatus.OK);
+        
     }
 
 	
