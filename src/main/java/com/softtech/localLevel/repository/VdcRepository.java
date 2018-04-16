@@ -23,4 +23,16 @@ public interface VdcRepository extends JpaRepository<Vdc, Long> {
 
 	List<Vdc> findAllByDistrict(District district);
 
+
+
+	List<Vdc> findAllByRuralMunicipalityId(Long id);
+
+	List<Vdc> findAllByMunicipalityId(Long id);
+
+	List<Vdc> findAllBySubMetropolitanId(Long id);
+
+	List<Vdc> findAllByMetropolitanId(Long id);
+
+
+
 }

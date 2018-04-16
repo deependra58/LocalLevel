@@ -11,5 +11,5 @@ public class OldVdcListResponse {
 	public void setOldVdc(String oldVdc) {
 		this.oldVdc = oldVdc;
 	}
-	
+
 }

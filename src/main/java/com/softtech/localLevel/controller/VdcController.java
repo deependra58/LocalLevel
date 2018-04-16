@@ -104,11 +104,13 @@ public class VdcController {
 				byte[] u1 = string1.getBytes("UTF-8");
 				string1 = new String(u1, "UTF-8");
 				RuralMunicipality rMunicipality=ruralMunicipalityRepository.findByRuralMunicipal(string1);
-				vdc.setRuralMuniciaplity_id(rMunicipality.getId());
+				Long id=rMunicipality.getId();
+				System.out.println("Id====="+id);
+				vdc.setRuralMunicipalityId(rMunicipality.getId());
 				Long i=(long) 0;
-				vdc.setMunicipality_id(i);
-				vdc.setSubmetropolitan_id(i);
-				vdc.setMetropolitan_id(i);
+				vdc.setMunicipalityId(i);
+				vdc.setSubMetropolitanId(i);
+				vdc.setMetropolitanId(i);
 
 				String string2 = row.getCell(2).toString();
 				byte[] u2 = string2.getBytes("UTF-8");
@@ -165,11 +167,11 @@ public class VdcController {
 				byte[] u1 = string1.getBytes("UTF-8");
 				string1 = new String(u1, "UTF-8");
 				Municipality municipality=municipalityRepository.findByMunicipal(string1);
-				vdc.setMunicipality_id(municipality.getId());
+				vdc.setMunicipalityId(municipality.getId());
 				Long i=(long) 0;
-				vdc.setRuralMuniciaplity_id(i);
-				vdc.setSubmetropolitan_id(i);
-				vdc.setMetropolitan_id(i);
+				vdc.setRuralMunicipalityId(i);
+				vdc.setSubMetropolitanId(i);
+				vdc.setMetropolitanId(i);
 
 				String string2 = row.getCell(2).toString();
 				byte[] u2 = string2.getBytes("UTF-8");
@@ -226,11 +228,11 @@ public class VdcController {
 				byte[] u1 = string1.getBytes("UTF-8");
 				string1 = new String(u1, "UTF-8");
 				SubMetropolitan subMetropolitan=subMetropolitanRespository.findBySubMetropolitan(string1);
-				vdc.setSubmetropolitan_id(subMetropolitan.getId());
+				vdc.setSubMetropolitanId(subMetropolitan.getId());
 				Long i=(long) 0;
-				vdc.setMunicipality_id(i);
-				vdc.setRuralMuniciaplity_id(i);
-				vdc.setMetropolitan_id(i);
+				vdc.setMunicipalityId(i);
+				vdc.setRuralMunicipalityId(i);
+				vdc.setMetropolitanId(i);
 
 				String string2 = row.getCell(2).toString();
 				byte[] u2 = string2.getBytes("UTF-8");
@@ -287,11 +289,11 @@ public class VdcController {
 				byte[] u1 = string1.getBytes("UTF-8");
 				string1 = new String(u1, "UTF-8");
 				Metropolitan metropolitan=metropolitanRepository.findByMetropolitan(string1);
-				vdc.setMetropolitan_id(metropolitan.getId());
+				vdc.setMetropolitanId(metropolitan.getId());
 				Long i=(long) 0;
-				vdc.setMunicipality_id(i);
-				vdc.setSubmetropolitan_id(i);
-				vdc.setRuralMuniciaplity_id(i);
+				vdc.setMunicipalityId(i);
+				vdc.setSubMetropolitanId(i);
+				vdc.setRuralMunicipalityId(i);
 
 				String string2 = row.getCell(2).toString();
 				byte[] u2 = string2.getBytes("UTF-8");
@@ -347,7 +349,7 @@ public class VdcController {
 	}
 	
 	@ApiOperation(value="Get old vdc list from district")
-	@RequestMapping(value="/{district}",method=RequestMethod.GET) 
+	@RequestMapping(value="district/{district:.+}",method=RequestMethod.GET) 
 	public ResponseEntity<Object> getNewVdc(@PathVariable String district){
 		List<OldVdcListResponse> oldVdcListResponses=vdcService.getOldVdcList(district);
 		return new ResponseEntity<Object>( oldVdcListResponses,HttpStatus.OK);
@@ -355,10 +357,19 @@ public class VdcController {
 	}
 	
 	@ApiOperation(value="Get new vdc from old vdc")
-	@RequestMapping(value="/{oldVdc:.+",method=RequestMethod.GET)
-	public ResponseEntity<Object> getnewVdcs(@RequestParam  String oldVdc){
+	@RequestMapping(value="oldVdc/{oldVdc:.+}",method=RequestMethod.GET)
+	public ResponseEntity<Object> getnewVdcs(@PathVariable  String oldVdc){
 		List<VdcResponse> vdcResponse=vdcService.getNewVdcs(oldVdc);
 		return new ResponseEntity<Object>(vdcResponse,HttpStatus.OK);
+		
+	}
+	
+	
+	@ApiOperation(value="Get old vdc list from new Vdc")
+	@RequestMapping(value="OldVdcList/{newVdcs:.+}", method=RequestMethod.GET)
+	public ResponseEntity<Object> getOldVdcs(@PathVariable String newVdcs){
+		List<OldVdcListResponse> oldVdcListResponses=vdcService.getOldVdcsFromNewVdc(newVdcs);
+		return new ResponseEntity<Object>(oldVdcListResponses, HttpStatus.OK);
 		
 	}
 	
