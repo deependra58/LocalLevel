@@ -24,6 +24,8 @@ public class Ministry {
 	private String contactNumber;
 	private String ministerImage;
 	private String ministerEmail;
+	private String stateMinister;
+	private String party;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="state_id")
@@ -34,6 +36,23 @@ public class Ministry {
 
 	@Enumerated(EnumType.STRING)
 	private Status status;
+
+	
+	public String getStateMinister() {
+		return stateMinister;
+	}
+
+	public void setStateMinister(String stateMinister) {
+		this.stateMinister = stateMinister;
+	}
+
+	public String getParty() {
+		return party;
+	}
+
+	public void setParty(String party) {
+		this.party = party;
+	}
 
 	public String getMinistryName() {
 		return ministryName;

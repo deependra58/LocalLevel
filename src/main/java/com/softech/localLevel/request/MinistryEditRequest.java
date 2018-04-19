@@ -7,6 +7,22 @@ public class MinistryEditRequest {
 	private String ministerImage;
 	private String ministerEmail;
 	private String ministryName;
+	private String stateMinister;
+	private String party;
+	
+	
+	public String getStateMinister() {
+		return stateMinister;
+	}
+	public void setStateMinister(String stateMinister) {
+		this.stateMinister = stateMinister;
+	}
+	public String getParty() {
+		return party;
+	}
+	public void setParty(String party) {
+		this.party = party;
+	}
 	public String getMinistryName() {
 		return ministryName;
 	}

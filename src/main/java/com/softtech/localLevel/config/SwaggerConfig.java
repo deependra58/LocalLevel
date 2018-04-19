@@ -29,7 +29,7 @@ public class SwaggerConfig {
     private ApiInfo metaInfo() {
 
         ApiInfo apiInfo = new ApiInfo(
-                " Barcode Reader Demo",
+                " LocalLevel Of Nepal",
                 "",
                 "",
                 "",

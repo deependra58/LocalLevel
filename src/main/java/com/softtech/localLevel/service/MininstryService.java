@@ -218,6 +218,8 @@ public class MininstryService {
 		mdto.setMinisterImage(ministry.getMinisterImage());
 		mdto.setContactNumber(ministry.getContactNumber());
 		mdto.setMinisterEmail(ministry.getMinisterEmail());
+		mdto.setParty(ministry.getParty());
+		mdto.setStateMinister(ministry.getStateMinister());
 		System.out.println(mdto.toString());
 		return mdto;
 	}
@@ -236,6 +238,7 @@ public class MininstryService {
 		mdto.setMinisterImage(ministry.getMinisterImage());
 		mdto.setContactNumber(ministry.getContactNumber());
 		mdto.setMinisterEmail(ministry.getMinisterEmail());
+		mdto.setParty(ministry.getParty());
 		System.out.println(mdto.toString());
 		return mdto;
 	}
