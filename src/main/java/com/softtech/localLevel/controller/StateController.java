@@ -1,8 +1,5 @@
 package com.softtech.localLevel.controller;
 
-
-import static org.hamcrest.CoreMatchers.nullValue;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,7 +8,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
-
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -61,50 +57,47 @@ import com.softtech.localLevel.util.LocalLevelType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-
-
 @RestController
 @RequestMapping("/rest/states")
-@Api(value="State Controller", description="Operation about states")
+@Api(value = "State Controller", description = "Operation about states")
 public class StateController {
-	 private static String UPLOADED_FOLDER ="";
+	private static String UPLOADED_FOLDER = "";
 	@Autowired
 	private StateService stateService;
-	
+
 	@Autowired
 	private StateRepository stateRepository;
-	
+
 	@Autowired
 	private MountainService mountainService;
-	
+
 	@Autowired
 	private RiversService riversService;
-	
+
 	@Autowired
 	private LakesService LakesService;
-	
+
 	@Autowired
 	private WaterfallService waterfallService;
-	
+
 	@Autowired
 	private ProtectedAreasService protectedAreasService;
-	
+
 	@Autowired
 	private AirportsService airportService;
-	
+
 	@Autowired
 	private HydropowerService hydropowerService;
-	
+
 	@Autowired
 	private HospitalService hospitalService;
-	
+
 	@Autowired
 	private IndustryService industryService;
-	
+
 	@ApiOperation(value = "Upload an excel file for State")
 	@RequestMapping(value = "/uploadState", method = RequestMethod.POST)
-	ResponseEntity<Object> processExcelSheet(@RequestParam("States") MultipartFile multipartFile)
-			throws IOException {
+	ResponseEntity<Object> processExcelSheet(@RequestParam("States") MultipartFile multipartFile) throws IOException {
 
 		InputStream stream = multipartFile.getInputStream();
 		XSSFWorkbook workbook = new XSSFWorkbook(stream);
@@ -127,10 +120,10 @@ public class StateController {
 		temp4[0] = null;
 		String[] temp5 = new String[35083];
 		temp5[0] = null;
-		
-		State st=stateRepository.findByState("state 7");
-		if(st!=null) {
-			
+
+		State st = stateRepository.findByState("state 7");
+		if (st != null) {
+
 			throw new AlreadyExistException("State file has been already uploaded into the database.");
 		}
 
@@ -141,8 +134,6 @@ public class StateController {
 			}
 
 			try {
-				
-				
 
 				State state = new State();
 				String string0 = row.getCell(1).toString();
@@ -154,9 +145,6 @@ public class StateController {
 				byte[] u1 = string1.getBytes("UTF-8");
 				string1 = new String(u1, "UTF-8");
 				state.setCapital(string1);
-				
-				
-				
 
 				String string2 = row.getCell(5).toString();
 				byte[] u2 = string2.getBytes("UTF-8");
@@ -166,32 +154,29 @@ public class StateController {
 				String string3 = row.getCell(6).toString();
 				byte[] u3 = string3.getBytes("UTF-8");
 				string3 = new String(u3, "UTF-8");
-				String[] a1=string3.split(Pattern.quote("."));
+				String[] a1 = string3.split(Pattern.quote("."));
 				state.setPopulation(a1[0]);
-				
+
 				String string4 = row.getCell(3).toString();
 				byte[] u4 = string4.getBytes("UTF-8");
 				string4 = new String(u4, "UTF-8");
 				state.setGoverner(string4);
-				
+
 				String string5 = row.getCell(4).toString();
 				byte[] u5 = string5.getBytes("UTF-8");
 				string5 = new String(u5, "UTF-8");
 				state.setChiefMinister(string5);
-				
-				
+
 				String string6 = row.getCell(7).toString();
 				byte[] u6 = string6.getBytes("UTF-8");
 				string6 = new String(u6, "UTF-8");
-				String[] a2=string6.split(Pattern.quote("."));
+				String[] a2 = string6.split(Pattern.quote("."));
 				state.setDensity(a2[0]);
-				
+
 				String string7 = row.getCell(8).toString();
 				byte[] u7 = string7.getBytes("UTF-8");
 				string7 = new String(u7, "UTF-8");
 				state.setWebsite(string7);
-				
-				
 
 				state.setLocalLevelType(LocalLevelType.STATE);
 
@@ -203,106 +188,112 @@ public class StateController {
 
 		}
 
-		return new ResponseEntity<Object>("State uploaded!",HttpStatus.OK);
+		return new ResponseEntity<Object>("State uploaded!", HttpStatus.OK);
 	}
 
-	
-	@ApiOperation(value="Post the state details manually", notes="Post state details manually")
-	@RequestMapping(value="state", method=RequestMethod.POST)
-	public ResponseEntity<Object> postState(@RequestBody StateCreationRequest stateCreationRequest){
+	@ApiOperation(value = "Post the state details manually", notes = "Post state details manually")
+	@RequestMapping(value = "state", method = RequestMethod.POST)
+	public ResponseEntity<Object> postState(@RequestBody StateCreationRequest stateCreationRequest) {
 		stateService.createState(stateCreationRequest);
 		return new ResponseEntity<Object>(HttpStatus.OK);
-		
+
 	}
-	
-	@ApiOperation(value="Shows the state details", notes="Shows the details regarding state")
+
+	@ApiOperation(value = "Shows the state details", notes = "Shows the details regarding state")
 	@RequestMapping(value = "stateDetails/{state:.+}", method = RequestMethod.GET)
 	public ResponseEntity<Object> listAllDistricts(@PathVariable("state") String state) {
 		StateDetailDto stateDetaildto = stateService.getStateDetails(state);
 		System.out.println(stateDetaildto.getStatePicture());
 		return new ResponseEntity<Object>(stateDetaildto, HttpStatus.OK);
 	}
-	
-	@ApiOperation(value="Edit state information", notes="Edit state information")
-	@RequestMapping(value="editState/{stateId}", method=RequestMethod.PUT)
-	public ResponseEntity<Object> editState(@RequestBody StateEditRequest stateEditRequest, @RequestParam(required=false) String state,@RequestHeader(required=false) Long stateId){
-		State st=stateService.editState(stateEditRequest,state, stateId);
-		return new ResponseEntity<Object>(st,HttpStatus.OK);
-		
+
+	@ApiOperation(value = "Edit state information", notes = "Edit state information")
+	@RequestMapping(value = "editState/{stateId}", method = RequestMethod.PUT)
+	public ResponseEntity<Object> editState(@RequestBody StateEditRequest stateEditRequest,
+			@RequestParam(required = false) String state, @RequestHeader(required = false) Long stateId) {
+		State st = stateService.editState(stateEditRequest, state, stateId);
+		return new ResponseEntity<Object>(st, HttpStatus.OK);
+
 	}
-	
-	
-	@ApiOperation(value="Post the state picture", notes="Post the state picture")
-	@RequestMapping(value="stateImg/{state:.+}",method=RequestMethod.POST)
-	public ResponseEntity<Object> postPicture(@RequestBody String string ,@RequestParam String state){
-	stateService.postPicture(string,state);
+
+	@ApiOperation(value = "Post the state picture", notes = "Post the state picture")
+	@RequestMapping(value = "stateImg/{state:.+}", method = RequestMethod.POST)
+	public ResponseEntity<Object> postPicture(@RequestBody String string, @RequestParam String state) {
+		stateService.postPicture(string, state);
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
-	
-	@ApiOperation(value="Get natural resources")
-	@RequestMapping(value="naturalResources/{state:.+}",method=RequestMethod.GET)
-	public ResponseEntity<Object> getNaturalResources(@PathVariable String state){
-		
-		List<MountainsResponseDto> mountainsResponseDtos=mountainService.getMountain(state);
-		List<RiversResponseDto> riversResponseDtos=riversService.getRivers(state);
-		List<LakesResponseDto> lakesResponseDtos=LakesService.getLakes(state);
-		List<WaterfallResponseDto> waterfallResponseDtos=waterfallService.getWaterfall(state);
-		List<ProtectedAreaResponseDto> protectedAreasResponseDtos=protectedAreasService.getProtectedArea(state);
-		NaturalResourcesDtoList naturalResourcesDtoList=new NaturalResourcesDtoList(mountainsResponseDtos,riversResponseDtos,lakesResponseDtos,waterfallResponseDtos,protectedAreasResponseDtos);
-		return new ResponseEntity<Object> (naturalResourcesDtoList,HttpStatus.OK);
-		
+
+	@ApiOperation(value = "Get natural resources")
+	@RequestMapping(value = "naturalResources/{state:.+}", method = RequestMethod.GET)
+	public ResponseEntity<Object> getNaturalResources(@PathVariable String state) {
+
+		List<MountainsResponseDto> mountainsResponseDtos = mountainService.getMountain(state);
+		List<RiversResponseDto> riversResponseDtos = riversService.getRivers(state);
+		List<LakesResponseDto> lakesResponseDtos = LakesService.getLakes(state);
+		List<WaterfallResponseDto> waterfallResponseDtos = waterfallService.getWaterfall(state);
+		List<ProtectedAreaResponseDto> protectedAreasResponseDtos = protectedAreasService.getProtectedArea(state);
+		NaturalResourcesDtoList naturalResourcesDtoList = new NaturalResourcesDtoList(mountainsResponseDtos,
+				riversResponseDtos, lakesResponseDtos, waterfallResponseDtos, protectedAreasResponseDtos);
+		return new ResponseEntity<Object>(naturalResourcesDtoList, HttpStatus.OK);
+
 	}
-	
-	@ApiOperation(value="Get Infrastructures")
-	@RequestMapping(value="Infrastructure/{state:.+}", method=RequestMethod.GET)
-public ResponseEntity<Object> getInfrastructures(String state){
-		
-		List<AirportsResponseDto> airportsResponseDtos=airportService.getAirports(state);
-		List<HospitalResponseDto> hospitalResponseDtos=hospitalService.getHospitalDetail(state);
-		List<HydropowerResponseDto> hydropowerResponseDtos=hydropowerService.getHydropower(state);
-		List<IndustriesResponseDto> industriesResponseDtos=industryService.getIndustries(state);
-		
-		InfrastructureDtoList infrastructureDtoList=new InfrastructureDtoList(airportsResponseDtos,hydropowerResponseDtos,hospitalResponseDtos,industriesResponseDtos);
-		return new ResponseEntity<Object> (infrastructureDtoList,HttpStatus.OK);
-		
+
+	@ApiOperation(value = "Get Infrastructures")
+	@RequestMapping(value = "Infrastructure/{state:.+}", method = RequestMethod.GET)
+	public ResponseEntity<Object> getInfrastructures(String state) {
+
+		List<AirportsResponseDto> airportsResponseDtos = airportService.getAirports(state);
+		List<HospitalResponseDto> hospitalResponseDtos = hospitalService.getHospitalDetail(state);
+		List<HydropowerResponseDto> hydropowerResponseDtos = hydropowerService.getHydropower(state);
+		List<IndustriesResponseDto> industriesResponseDtos = industryService.getIndustries(state);
+
+		InfrastructureDtoList infrastructureDtoList = new InfrastructureDtoList(airportsResponseDtos,
+				hydropowerResponseDtos, hospitalResponseDtos, industriesResponseDtos);
+		return new ResponseEntity<Object>(infrastructureDtoList, HttpStatus.OK);
+
 	}
-	
-	/*==========================================================================================================*/
+
+	/*
+	 * =============================================================================
+	 * =============================
+	 */
 
 	@RequestMapping(value = "url to the controller method", method = RequestMethod.POST)
-	public String createImage(@RequestParam("image") MultipartFile image){
+	public String createImage(@RequestParam("image") MultipartFile image) {
 
-	    try {
-	        byte[] design = image.getBytes();
+		try {
+			byte[] design = image.getBytes();
 
-	        System.out.println(design.toString());
+			System.out.println(design.toString());
 
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-	    return "redirect:/home";
+		return "redirect:/home";
 	}
-	
-	/*=================================================================================================================*/
-	
-	@PostMapping("/upload") 
-    public ResponseEntity<Object> singleFileUpload(@RequestParam("file") MultipartFile file,@RequestHeader Long stateId) throws IOException{
 
-      stateService.storeImage(file,stateId);
-    //  return new ResponseEntity<Object>(HttpStatus.OK);
-       
-        File convertFile=new File(""+file.getOriginalFilename());
-        convertFile.createNewFile();
-        System.out.println("" + convertFile);
-        FileOutputStream fout=new FileOutputStream(convertFile);
-        System.out.println("" + fout);
-        fout.write(file.getBytes());
-        fout.close();
-        return new ResponseEntity<Object>(HttpStatus.OK);
-        
-    }
+	/*
+	 * =============================================================================
+	 * ====================================
+	 */
 
-	
-	
+	@PostMapping("/upload")
+	public ResponseEntity<Object> singleFileUpload(@RequestParam("file") MultipartFile file,
+			@RequestHeader Long stateId) throws IOException {
+
+		stateService.storeImage(file, stateId);
+		// return new ResponseEntity<Object>(HttpStatus.OK);
+
+		File convertFile = new File("" + file.getOriginalFilename());
+		convertFile.createNewFile();
+		System.out.println("" + convertFile);
+		FileOutputStream fout = new FileOutputStream(convertFile);
+		System.out.println("" + fout);
+		fout.write(file.getBytes());
+		fout.close();
+		return new ResponseEntity<Object>(HttpStatus.OK);
+
+	}
+
 }

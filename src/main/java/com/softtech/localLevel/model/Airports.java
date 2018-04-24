@@ -29,6 +29,7 @@ public class Airports implements Serializable{
 	@JoinColumn(name="district_id")
 	private District district;
 	
+	
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="state_id")
 	private State state;

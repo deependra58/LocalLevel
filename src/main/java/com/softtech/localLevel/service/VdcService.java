@@ -1,14 +1,11 @@
 package com.softtech.localLevel.service;
 
-import static org.assertj.core.api.Assertions.useDefaultDateFormatsOnly;
-import static org.mockito.Matchers.longThat;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.apache.poi.hssf.record.ContinueRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -2,9 +2,15 @@ package com.softtech.localLevel;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class LocalLevelApplication {
+public class LocalLevelApplication extends SpringBootServletInitializer {
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(LocalLevelApplication.class);
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(LocalLevelApplication.class, args);
