@@ -104,6 +104,11 @@ public class HydropowerController {
 				byte[] u4 = string4.getBytes("UTF-8");
 				string4 = new String(u4, "UTF-8");
 				hydropower.setAddress(string4);
+				
+				String string5 = row.getCell(6).toString();
+				byte[] u5 = string5.getBytes("UTF-8");
+				string5 = new String(u5, "UTF-8");
+				hydropower.setHydroStatus(string5);
 
 				hydropower.setStatus(Status.ACTIVE);
 
@@ -119,8 +124,8 @@ public class HydropowerController {
 	
 	@ApiOperation(value = "Post hydropower")
 	@RequestMapping(value = "addHydropower", method = RequestMethod.POST)
-	public ResponseEntity<Object> postHydropower(@RequestParam String hydropowerName, @RequestParam String district,@RequestParam String address,@RequestParam String description,@RequestParam String capacity) {
-		Hydropower infra = hydropowerService.postHydropower(hydropowerName, district,capacity,description,address);
+	public ResponseEntity<Object> postHydropower(@RequestParam String hydropowerName, @RequestParam String district,@RequestParam String address,@RequestParam String description,@RequestParam String capacity,@RequestParam String hydroStatus) {
+		Hydropower infra = hydropowerService.postHydropower(hydropowerName, district,capacity,description,address,hydroStatus);
 		System.out.println("Hydropower name:" + infra.getHydropower());
 		return new ResponseEntity<Object>(infra.getHydropower() + " posted Successfully", HttpStatus.OK);
 

@@ -192,10 +192,10 @@ public class MinistryController {
 
 	}
 	
-	@ApiOperation(value="Show central Ministry Details", notes="Showing central level government details")
-	@RequestMapping(value="centralMinistries/{ministryName:.+}",method=RequestMethod.GET)
-	public ResponseEntity<Object> showCentralDetails(@PathVariable String ministryName){
-		MinistryDetailsDto ministryDetailDto=ministryService.showCentralDetails(ministryName);
+	@ApiOperation(value="Show central Ministry Details", notes="Showing All central level government details")
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<Object> showCentralDetails(){
+		List<MinistryDetailsDto> ministryDetailDto=ministryService.showCentralDetails();
 		return new ResponseEntity<Object>(ministryDetailDto,HttpStatus.OK);
 	}
 	

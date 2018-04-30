@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.softtech.localLevel.model.Attraction;
 import com.softtech.localLevel.response.AttractionResponseDto;
-import com.softtech.localLevel.response.HospitalResponseDto;
 import com.softtech.localLevel.service.AttractionService;
 
 import io.swagger.annotations.ApiOperation;

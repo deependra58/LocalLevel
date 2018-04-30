@@ -207,21 +207,23 @@ public class MininstryService {
 	}
 
 	@Transactional
-	public MinistryDetailsDto showCentralDetails(String ministryName) {
-		Ministry ministry = ministryRepository.findByMinistryNameAndStatusNot(ministryName, Status.DELETED);
-		if (ministry == null) {
-			throw new NotFoundException("Ministry with given name " + ministryName + " not found!");
-		}
-		MinistryDetailsDto mdto = new MinistryDetailsDto();
-		mdto.setMinistryName(ministry.getMinistryName());
-		mdto.setMinisterName(ministry.getMinisterName());
-		mdto.setMinisterImage(ministry.getMinisterImage());
-		mdto.setContactNumber(ministry.getContactNumber());
-		mdto.setMinisterEmail(ministry.getMinisterEmail());
-		mdto.setParty(ministry.getParty());
-		mdto.setStateMinister(ministry.getStateMinister());
-		System.out.println(mdto.toString());
-		return mdto;
+	public List<MinistryDetailsDto> showCentralDetails() {
+		List<Ministry> ministry = ministryRepository.findAllByGovType(GovType.CENTRAL);
+		List<MinistryDetailsDto> ministryDetailDtoList=new ArrayList<MinistryDetailsDto>();
+		ministry.stream().forEach(u->{
+			MinistryDetailsDto mdto = new MinistryDetailsDto();
+			mdto.setMinistryName(u.getMinistryName());
+			mdto.setMinisterName(u.getMinisterName());
+			mdto.setMinisterImage(u.getMinisterImage());
+			mdto.setContactNumber(u.getContactNumber());
+			mdto.setMinisterEmail(u.getMinisterEmail());
+			mdto.setParty(u.getParty());
+			mdto.setStateMinister(u.getStateMinister());
+			System.out.println(mdto.toString());
+			ministryDetailDtoList.add(mdto);
+			
+		});
+		return ministryDetailDtoList;
 	}
 
 	@Transactional

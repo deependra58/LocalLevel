@@ -30,7 +30,7 @@ public class HydropowerService {
 	@Autowired
 	HydropowerRepository hydropowerRepository;
 
-	public Hydropower postHydropower(String hydropowerName, String district, String capacity, String description,String address) {
+	public Hydropower postHydropower(String hydropowerName, String district, String capacity, String description,String address,String hydroStatus) {
 		Hydropower infrac = new Hydropower();
 		District districts = districtRepository.findByDistrict(district);
 		if (districts == null) {
@@ -47,6 +47,7 @@ public class HydropowerService {
 		infrac.setAddress(address);
 		State state = stateRepository.findById(districts.getState().getId());
 		infrac.setState(state);
+		infrac.setHydroStatus(hydroStatus);
 		infrac.setStatus(Status.ACTIVE);
 		hydropowerRepository.save(infrac);
 
@@ -67,6 +68,7 @@ public class HydropowerService {
 				hydropowerResponseDto.setAddress(u.getAddress());
 				hydropowerResponseDto.setCapacity(u.getCapacity());
 				hydropowerResponseDto.setHydropowerImage(u.getHydropowerImage());
+				hydropowerResponseDto.setHydroStatus(u.getHydroStatus());
 				hydropowerResponseDtoList.add(hydropowerResponseDto);
 			
 		});

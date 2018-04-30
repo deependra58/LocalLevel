@@ -1,13 +1,22 @@
 package com.softtech.localLevel.response;
 
+
 public class HydropowerResponseDto {
 	private String hydropower;
 	private String capacity;
 	private String hydropowerImage;
 	private String description;
+	private String hydroStatus;
 	private String address;
 	private String district;
 	
+	
+	public String getHydroStatus() {
+		return hydroStatus;
+	}
+	public void setHydroStatus(String hydroStatus) {
+		this.hydroStatus = hydroStatus;
+	}
 	public String getHydropower() {
 		return hydropower;
 	}

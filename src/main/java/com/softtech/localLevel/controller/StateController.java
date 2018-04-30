@@ -8,6 +8,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
+
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -32,6 +33,8 @@ import com.softtech.localLevel.dto.StateDetailDto;
 import com.softtech.localLevel.model.State;
 import com.softtech.localLevel.repository.StateRepository;
 import com.softtech.localLevel.response.AirportsResponseDto;
+import com.softtech.localLevel.response.AtmResponse;
+import com.softtech.localLevel.response.BloodBankResponse;
 import com.softtech.localLevel.response.HospitalResponseDto;
 import com.softtech.localLevel.response.HydropowerResponseDto;
 import com.softtech.localLevel.response.IndustriesResponseDto;
@@ -39,15 +42,20 @@ import com.softtech.localLevel.response.InfrastructureDtoList;
 import com.softtech.localLevel.response.LakesResponseDto;
 import com.softtech.localLevel.response.MountainsResponseDto;
 import com.softtech.localLevel.response.NaturalResourcesDtoList;
+import com.softtech.localLevel.response.PoliceStationResponse;
 import com.softtech.localLevel.response.ProtectedAreaResponseDto;
 import com.softtech.localLevel.response.RiversResponseDto;
+import com.softtech.localLevel.response.UrgentService;
 import com.softtech.localLevel.response.WaterfallResponseDto;
 import com.softtech.localLevel.service.AirportsService;
+import com.softtech.localLevel.service.AtmService;
+import com.softtech.localLevel.service.BloodBankService;
 import com.softtech.localLevel.service.HospitalService;
 import com.softtech.localLevel.service.HydropowerService;
 import com.softtech.localLevel.service.IndustryService;
 import com.softtech.localLevel.service.LakesService;
 import com.softtech.localLevel.service.MountainService;
+import com.softtech.localLevel.service.PoliceStationService;
 import com.softtech.localLevel.service.ProtectedAreasService;
 import com.softtech.localLevel.service.RiversService;
 import com.softtech.localLevel.service.StateService;
@@ -94,6 +102,15 @@ public class StateController {
 
 	@Autowired
 	private IndustryService industryService;
+
+	@Autowired
+	private AtmService atmService;
+
+	@Autowired
+	private BloodBankService bloodBankService;
+
+	@Autowired
+	private PoliceStationService policeStationService;
 
 	@ApiOperation(value = "Upload an excel file for State")
 	@RequestMapping(value = "/uploadState", method = RequestMethod.POST)
@@ -240,7 +257,7 @@ public class StateController {
 
 	@ApiOperation(value = "Get Infrastructures")
 	@RequestMapping(value = "Infrastructure/{state:.+}", method = RequestMethod.GET)
-	public ResponseEntity<Object> getInfrastructures(String state) {
+	public ResponseEntity<Object> getInfrastructures(@PathVariable String state) {
 
 		List<AirportsResponseDto> airportsResponseDtos = airportService.getAirports(state);
 		List<HospitalResponseDto> hospitalResponseDtos = hospitalService.getHospitalDetail(state);
@@ -253,10 +270,17 @@ public class StateController {
 
 	}
 
-	/*
-	 * =============================================================================
-	 * =============================
-	 */
+	@ApiOperation(value = "Get Urgent Services")
+	@RequestMapping(value = "UrgentService/{state:.+},method=RequestMethod.GET")
+	public ResponseEntity<Object> getUrgentServices(@PathVariable String state) {
+		List<AtmResponse> atmResponseList = atmService.getAllAtm(state);
+		List<BloodBankResponse> bloodBankList = bloodBankService.getAllBloodBank(state);
+		List<HospitalResponseDto> hospitalResponseList = hospitalService.getHospitalDetail(state);
+		List<PoliceStationResponse> policeStationList = policeStationService.listAllPoliceStation(state);
+		UrgentService urgentServiceList = new UrgentService(bloodBankList, policeStationList, atmResponseList,
+				hospitalResponseList);
+		return new ResponseEntity<Object>(urgentServiceList, HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "url to the controller method", method = RequestMethod.POST)
 	public String createImage(@RequestParam("image") MultipartFile image) {

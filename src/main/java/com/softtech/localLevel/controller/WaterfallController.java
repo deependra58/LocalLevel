@@ -53,7 +53,7 @@ public class WaterfallController {
 	
 	@ApiOperation(value = "Upload an excel file for Natural Resources-waterfalls")
 	@RequestMapping(value = "/uploadNaturalResources/waterfalls", method = RequestMethod.POST)
-	ResponseEntity<Object> processExcelSheetFor(@RequestParam("lakes") MultipartFile multipartFile)
+	ResponseEntity<Object> processExcelSheetFor(@RequestParam("Waterfall") MultipartFile multipartFile)
 			throws IOException {
 
 		InputStream stream = multipartFile.getInputStream();

@@ -63,6 +63,12 @@ public class District implements Serializable {
 	private List<Attraction> attraction;
 
 	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<BloodBank> bloodBank;
+
+	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Atm> atm;
+
+	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Mountains> mountains;
 
 	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -81,6 +87,9 @@ public class District implements Serializable {
 	private List<Hospital> hospital;
 
 	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<PoliceStation> policeStation;
+
+	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Hydropower> hydropower;
 
 	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -92,6 +101,30 @@ public class District implements Serializable {
 
 	public void setIndustry(List<Industry> industry) {
 		this.industry = industry;
+	}
+
+	public List<Atm> getAtm() {
+		return atm;
+	}
+
+	public void setAtm(List<Atm> atm) {
+		this.atm = atm;
+	}
+
+	public List<PoliceStation> getPoliceStation() {
+		return policeStation;
+	}
+
+	public void setPoliceStation(List<PoliceStation> policeStation) {
+		this.policeStation = policeStation;
+	}
+
+	public List<BloodBank> getBloodBank() {
+		return bloodBank;
+	}
+
+	public void setBloodBank(List<BloodBank> bloodBank) {
+		this.bloodBank = bloodBank;
 	}
 
 	public List<Hydropower> getHydropower() {

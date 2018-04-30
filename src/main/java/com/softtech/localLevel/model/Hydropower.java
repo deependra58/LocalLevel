@@ -15,25 +15,27 @@ import javax.persistence.ManyToOne;
 import com.softtech.localLevel.util.Status;
 
 @Entity
-public class Hydropower implements Serializable{
-	
+public class Hydropower implements Serializable {
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String hydropower;
 	private String capacity;
 	private String hydropowerImage;
 	private String description;
 	private String address;
-	
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="district_id")
+
+	private String hydroStatus;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "district_id")
 	private District district;
-	
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="state_id")
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "state_id")
 	private State state;
-	
+
 	@Enumerated(EnumType.STRING)
 	private Status status;
 
@@ -63,6 +65,14 @@ public class Hydropower implements Serializable{
 
 	public String getHydropowerImage() {
 		return hydropowerImage;
+	}
+
+	public String getHydroStatus() {
+		return hydroStatus;
+	}
+
+	public void setHydroStatus(String hydroStatus) {
+		this.hydroStatus = hydroStatus;
 	}
 
 	public void setHydropowerImage(String hydropowerImage) {
@@ -108,6 +118,5 @@ public class Hydropower implements Serializable{
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	
 
 }
