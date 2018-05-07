@@ -18,7 +18,13 @@ import javax.persistence.Table;
 
 import com.softtech.localLevel.util.LocalLevelType;
 import com.softtech.localLevel.util.Status;
-
+/**
+ * <<This is the entity for RuralMunicipality>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 2 March 2018
+*/
+@SuppressWarnings("serial")
 @Entity
 @Table(name="ruralMunicipality")
 public class RuralMunicipality implements Serializable{

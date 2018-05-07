@@ -29,15 +29,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.softtech.localLevel.util.LocalLevelType;
-
 /**
- * <<Description Here>>
- * 
- * @author Lothbroke
- * @version
- * @since , march 4, 2018
- */
-
+ * <<This is the entity for State>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 2 March 2018
+*/
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "state")

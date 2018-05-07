@@ -11,7 +11,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.softtech.localLevel.util.Status;
-
+/**
+ * <<This is the entity for Blood Bank>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 1 March 2018
+*/
 @Entity
 public class BloodBank {
 

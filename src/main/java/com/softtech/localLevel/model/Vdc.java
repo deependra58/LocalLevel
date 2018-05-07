@@ -1,5 +1,6 @@
 package com.softtech.localLevel.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,9 +16,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.softtech.localLevel.util.Status;
-
+/**
+ * <<This is the entity for Vdc>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 6 March 2018
+*/
+@SuppressWarnings("serial")
 @Entity
-public class Vdc {
+public class Vdc implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

@@ -13,7 +13,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.softtech.localLevel.util.Status;
-
+/**
+ * <<This is the entity for PoliceStation>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 4 March 2018
+*/
 @SuppressWarnings("serial")
 @Entity
 public class PoliceStation implements Serializable{

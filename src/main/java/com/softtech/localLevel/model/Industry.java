@@ -13,7 +13,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.softtech.localLevel.util.Status;
-
+/**
+ * <<This is the entity for Industry>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 2 March 2018
+*/
+@SuppressWarnings("serial")
 @Entity
 public class Industry implements Serializable{
 	

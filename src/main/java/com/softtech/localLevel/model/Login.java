@@ -12,7 +12,12 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.softtech.localLevel.util.LoginStatus;
 import com.softtech.localLevel.util.UserRole;
-
+/**
+ * <<This is the entity for Login>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 2 March 2018
+*/
 @SuppressWarnings("serial")
 @Entity
 public class Login extends AbstractEntity {

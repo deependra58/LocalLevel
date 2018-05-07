@@ -1,5 +1,7 @@
 package com.softtech.localLevel.model;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,9 +13,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.softtech.localLevel.util.Status;
-
+/**
+ * <<This is the entity for ProtectedArea>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 2 March 2018
+*/
+@SuppressWarnings("serial")
 @Entity
-public class ProtectedAreas {
+public class ProtectedAreas implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;

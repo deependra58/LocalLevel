@@ -130,7 +130,7 @@ public class AirportsController {
 
 	@ApiOperation(value = "get Airports")
 	@RequestMapping(value = "getAirport/{state:.+}", method = RequestMethod.GET)
-	public ResponseEntity<Object> getAirport(@PathVariable String state, @RequestHeader Long LoginId) {
+	public ResponseEntity<Object> getAirport(@PathVariable String state) {
 		List<AirportsResponseDto> airportResponseDto = airportsService.getAirports(state);
 		return new ResponseEntity<Object>(airportResponseDto, HttpStatus.OK);
 

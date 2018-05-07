@@ -17,7 +17,13 @@ import javax.persistence.OneToMany;
 
 import com.softtech.localLevel.util.LocalLevelType;
 import com.softtech.localLevel.util.Status;
-
+/**
+ * <<This is the entity for Metropolitan>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 2 March 2018
+*/
+@SuppressWarnings("serial")
 @Entity
 public class Metropolitan implements Serializable {
 	@Id

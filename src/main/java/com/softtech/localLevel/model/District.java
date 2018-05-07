@@ -19,7 +19,12 @@ import javax.persistence.Table;
 
 import com.softtech.localLevel.util.LocalLevelType;
 import com.softtech.localLevel.util.Status;
-
+/**
+ * <<This is the entity for district>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 1 March 2018
+*/
 @Entity
 @Table(name = "district")
 public class District implements Serializable {

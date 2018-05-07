@@ -12,7 +12,12 @@ import javax.persistence.ManyToOne;
 
 import com.softtech.localLevel.util.GovType;
 import com.softtech.localLevel.util.Status;
-
+/**
+ * <<This is the entity for Ministry>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 2 March 2018
+*/
 @Entity
 public class Ministry {
 

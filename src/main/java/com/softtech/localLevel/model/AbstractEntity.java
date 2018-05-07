@@ -14,7 +14,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.softtech.localLevel.util.Status;
-
+/**
+ * <<This is the entity that can be imported by every other entity>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 1 March 2018
+*/
 @SuppressWarnings("serial")
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable {

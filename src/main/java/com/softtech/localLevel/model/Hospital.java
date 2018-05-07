@@ -15,7 +15,13 @@ import javax.persistence.ManyToOne;
 import org.hibernate.jpa.criteria.expression.function.SubstringFunction;
 
 import com.softtech.localLevel.util.Status;
-
+/**
+ * <<This is the entity for Hospital>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 1 March 2018
+*/
+@SuppressWarnings("serial")
 @Entity
 public class Hospital  implements Serializable{
 

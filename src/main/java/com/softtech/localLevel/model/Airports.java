@@ -14,6 +14,13 @@ import javax.persistence.ManyToOne;
 
 import com.softtech.localLevel.util.Status;
 
+/**
+ * <<This is the entity for Airport>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 1 March 2018
+*/
+@SuppressWarnings("serial")
 @Entity
 public class Airports implements Serializable{
 	

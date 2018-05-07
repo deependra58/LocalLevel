@@ -31,7 +31,7 @@ public class UserService {
 	private LoginRepository loginRepository;
 
 	public User createUser(Long userId, UserCreationRequest userCreationRequest) {
-		Login logins= loginRepository.findByUsernameAndStatusNot(userCreationRequest.getUsername(), Status.DELETED);
+		Login logins = loginRepository.findByUsernameAndStatusNot(userCreationRequest.getUsername(), Status.DELETED);
 		if (logins != null) {
 			throw new AlreadyExistException("User with username " + userCreationRequest.getUsername()
 					+ " already exist. Try with other username.");
@@ -40,58 +40,52 @@ public class UserService {
 		User user = userRepository.findByEmailAndStatusNot(userCreationRequest.getEmail(), Status.DELETED);
 		if (user != null) {
 
-			throw new AlreadyExistException("User with email " + userCreationRequest.getEmail()
-					+ " already exist. Try with other email.");
+			throw new AlreadyExistException(
+					"User with email " + userCreationRequest.getEmail() + " already exist. Try with other email.");
 		}
-		File file=null;
+		File file = null;
 		try {
-		user=new User();
-		user.setFirstName(userCreationRequest.getFirstName());
-		user.setMiddleName(userCreationRequest.getMiddleName());
-		user.setLastName(userCreationRequest.getLastName());
-		user.setAddress(userCreationRequest.getAddress());
-		user.setEmail(userCreationRequest.getEmail());
-		user.setMobileNumber(userCreationRequest.getMobileNumber());
-		user.setStatus(Status.ACTIVE);
-		if (userCreationRequest.getProfilePicture() != null) {
-			file = FileUtil.write(
-					String.valueOf(new Date().getTime()).concat(".").concat("png"),
-					userCreationRequest.getProfilePicture());
-			LOG.debug("path {}", file.getAbsolutePath());
-			if (file != null)
-				user.setProfilePicture(file.getAbsolutePath());
-		}
-		
-		Login login=new Login();
-		login.setLoginStatus(LoginStatus.LOGOUT);  //default login
-		login.setUsername(userCreationRequest.getUsername());
-		login.setUserRole(userCreationRequest.getUserRole());
-		String pw=BCrypt.hashpw(userCreationRequest.getPassword(), BCrypt.gensalt());
-		System.out.println("passoword:"+pw);
-		login.setPassword(pw);
-		login.setStatus(Status.ACTIVE);
-		login.setCreatedDate(new Date());
-		login.setCreatedBy(userId);
-		LOG.debug("Adding user...");
-		loginRepository.save(login);
-		user.setCreatedBy(userId);
-		user.setCreatedDate(new Date());
-		user.setLoginId(login.getId());
-		userRepository.save(user);
-		LOG.debug("User Added...");
-		}
-		catch (Exception e) {
+			user = new User();
+			user.setFirstName(userCreationRequest.getFirstName());
+			user.setMiddleName(userCreationRequest.getMiddleName());
+			user.setLastName(userCreationRequest.getLastName());
+			user.setAddress(userCreationRequest.getAddress());
+			user.setEmail(userCreationRequest.getEmail());
+			user.setMobileNumber(userCreationRequest.getMobileNumber());
+			user.setStatus(Status.ACTIVE);
+			if (userCreationRequest.getProfilePicture() != null) {
+				file = FileUtil.write(String.valueOf(new Date().getTime()).concat(".").concat("png"),
+						userCreationRequest.getProfilePicture());
+				LOG.debug("path {}", file.getAbsolutePath());
+				if (file != null)
+					user.setProfilePicture(file.getAbsolutePath());
+			}
+
+			Login login = new Login();
+			login.setLoginStatus(LoginStatus.LOGOUT); // default login
+			login.setUsername(userCreationRequest.getUsername());
+			login.setUserRole(userCreationRequest.getUserRole());
+			String pw = BCrypt.hashpw(userCreationRequest.getPassword(), BCrypt.gensalt());
+			System.out.println("passoword:" + pw);
+			login.setPassword(pw);
+			login.setStatus(Status.ACTIVE);
+			login.setCreatedDate(new Date());
+			login.setCreatedBy(userId);
+			LOG.debug("Adding user...");
+			loginRepository.save(login);
+			user.setCreatedBy(userId);
+			user.setCreatedDate(new Date());
+			user.setLoginId(login.getId());
+			userRepository.save(user);
+			LOG.debug("User Added...");
+		} catch (Exception e) {
 			e.printStackTrace();
 			if (file != null) {
 				file.delete();
 			}
-		
-	
+
 		}
-		
+
 		return user;
 	}
 }
-		
-
-	

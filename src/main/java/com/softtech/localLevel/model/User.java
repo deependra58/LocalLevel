@@ -2,7 +2,12 @@ package com.softtech.localLevel.model;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
-
+/**
+ * <<This is the entity for User>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 2 March 2018
+*/
 @SuppressWarnings("serial")
 @Entity
 public class User extends AbstractEntity {
