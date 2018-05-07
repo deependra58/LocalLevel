@@ -46,7 +46,7 @@ public class HospitalController {
 
 	@Autowired
 	private DistrictRepository districtRepository;
-	
+
 	@Autowired
 	private HospitalService hospitalService;
 
@@ -76,7 +76,7 @@ public class HospitalController {
 			try {
 
 				Hospital hospital = new Hospital();
-				String string0 = row.getCell(2).toString();
+				String string0 = row.getCell(3).toString();
 				byte[] u0 = string0.getBytes("UTF-8");
 				string0 = new String(u0, "UTF-8");
 				District district = districtRepository.findByDistrict(string0);
@@ -84,12 +84,12 @@ public class HospitalController {
 				hospital.setDistrict(district);
 				hospital.setState(state);
 
-				String string1 = row.getCell(1).toString();
+				String string1 = row.getCell(0).toString();
 				byte[] u1 = string1.getBytes("UTF-8");
 				string1 = new String(u1, "UTF-8");
 				hospital.setHospital(string1);
 
-				String string2 = row.getCell(3).toString();
+				String string2 = row.getCell(2).toString();
 				byte[] u2 = string2.getBytes("UTF-8");
 				string2 = new String(u2, "UTF-8");
 				hospital.setAddress(string2);
@@ -98,8 +98,8 @@ public class HospitalController {
 				byte[] u3 = string3.getBytes("UTF-8");
 				string3 = new String(u3, "UTF-8");
 				hospital.setDescription(string3);
-				
-				String string4 = row.getCell(5).toString();
+
+				String string4 = row.getCell(1).toString();
 				byte[] u4 = string4.getBytes("UTF-8");
 				string4 = new String(u4, "UTF-8");
 				hospital.setContactNumber(string4);
@@ -115,21 +115,24 @@ public class HospitalController {
 		}
 		return new ResponseEntity<Object>("Hospital File uploaded successfully!", HttpStatus.OK);
 	}
-	
+
 	@ApiOperation(value = "Post hospital")
 	@RequestMapping(value = "addHospital", method = RequestMethod.POST)
-	public ResponseEntity<Object> posthospital(@RequestParam String hospitalName, @RequestParam String district,@RequestParam String address,@RequestParam String hospitalContactNumber,@RequestParam String description) {
-		Hospital infra = hospitalService.postHospital(hospitalName, district,hospitalContactNumber,description,address);
+	public ResponseEntity<Object> posthospital(@RequestParam String hospitalName, @RequestParam String district,
+			@RequestParam String address, @RequestParam String hospitalContactNumber,
+			@RequestParam String description) {
+		Hospital infra = hospitalService.postHospital(hospitalName, district, hospitalContactNumber, description,
+				address);
 		return new ResponseEntity<Object>(infra.getHospital() + " posted Successfully", HttpStatus.OK);
 
 	}
-	
-	@ApiOperation(value="get Hospital")
-	@RequestMapping(value="getHospital/{state:.+}", method=RequestMethod.GET)
-	public ResponseEntity<Object> getHospital(@PathVariable String state){
-		
-		List<HospitalResponseDto> hospitalResponseDtos=hospitalService.getHospitalDetail(state);
+
+	@ApiOperation(value = "get Hospital")
+	@RequestMapping(value = "getHospital/{state:.+}", method = RequestMethod.GET)
+	public ResponseEntity<Object> getHospital(@PathVariable String state) {
+
+		List<HospitalResponseDto> hospitalResponseDtos = hospitalService.getHospitalDetail(state);
 		return new ResponseEntity<Object>(hospitalResponseDtos, HttpStatus.OK);
-		
+
 	}
 }

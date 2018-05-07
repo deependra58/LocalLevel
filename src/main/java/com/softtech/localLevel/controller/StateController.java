@@ -271,7 +271,7 @@ public class StateController {
 	}
 
 	@ApiOperation(value = "Get Urgent Services")
-	@RequestMapping(value = "UrgentService/{state:.+},method=RequestMethod.GET")
+	@RequestMapping(value = "UrgentService/{state:.+}",method=RequestMethod.GET)
 	public ResponseEntity<Object> getUrgentServices(@PathVariable String state) {
 		List<AtmResponse> atmResponseList = atmService.getAllAtm(state);
 		List<BloodBankResponse> bloodBankList = bloodBankService.getAllBloodBank(state);

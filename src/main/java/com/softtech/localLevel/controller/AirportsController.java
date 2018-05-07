@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +32,8 @@ import com.softtech.localLevel.response.AirportsResponseDto;
 import com.softtech.localLevel.service.AirportsService;
 import com.softtech.localLevel.util.Status;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
@@ -48,7 +51,8 @@ public class AirportsController {
 
 	@Autowired
 	private DistrictRepository districtRepository;
-
+	
+	
 	@ApiOperation(value = "Upload an excel file for Natural Resources-Mountains")
 	@RequestMapping(value = "/uploadAirports/airports", method = RequestMethod.POST)
 	ResponseEntity<Object> processExcelSheetForMountain(@RequestParam("Airports") MultipartFile multipartFile)
@@ -121,9 +125,12 @@ public class AirportsController {
 
 	}
 
+//	@ApiImplicitParams({
+//		@ApiImplicitParam(name = "token", required = true, dataType = "string", paramType = "header") })
+
 	@ApiOperation(value = "get Airports")
 	@RequestMapping(value = "getAirport/{state:.+}", method = RequestMethod.GET)
-	public ResponseEntity<Object> getAirport(@PathVariable String state) {
+	public ResponseEntity<Object> getAirport(@PathVariable String state, @RequestHeader Long LoginId) {
 		List<AirportsResponseDto> airportResponseDto = airportsService.getAirports(state);
 		return new ResponseEntity<Object>(airportResponseDto, HttpStatus.OK);
 

@@ -28,6 +28,7 @@ public class FileUtil {
 	 * @param value The value that should not be null and must containg Base64 string.
 	 * @return <code>true</code> if written successfully otherwise <code>false</code>
 	 */
+	@SuppressWarnings("restriction")
 	@Deprecated
 	public static boolean write(String fileName, String location, String value) {
 		LOG.info("File Uploading...");

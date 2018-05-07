@@ -15,7 +15,7 @@ import com.softtech.localLevel.service.LoginService;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("rest/login")
+@RequestMapping("rest/v1")
 public class LoginController {
 	
 	@Autowired

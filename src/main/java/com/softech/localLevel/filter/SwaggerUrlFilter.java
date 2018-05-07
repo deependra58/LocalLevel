@@ -10,12 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 
 @Configuration
-@Profile({ "production", "staging" })
+//@Profile({ "production", "staging" })
 public class SwaggerUrlFilter extends OncePerRequestFilter {
 
 	private String servletPath;
