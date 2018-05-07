@@ -8,4 +8,6 @@ import com.softtech.localLevel.model.LoginToken;
 @Repository
 public interface LoginTokenRepository extends JpaRepository<LoginToken, Long>{
 
+	LoginToken findByLoginIdAndToken(Long userId, String token);
+
 }
