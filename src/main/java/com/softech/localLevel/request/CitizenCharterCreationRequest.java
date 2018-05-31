@@ -11,9 +11,26 @@ public class CitizenCharterCreationRequest {
     private String responsiblePerson;
     private String complainTo;
     private String remarks;
+    private String district;
+//    private Long municipalityId;
+//    private Long ruralMunicipalityId;
+//    private Long metropolitanId;
+//    private Long subMetropolitanId;
+    
+	
+	
 	public ArrayList<String> getServiceRequirement() {
 		return serviceRequirement;
 	}
+
+	public String getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+
 	public void setServiceRequirement(ArrayList<String> serviceRequirement) {
 		this.serviceRequirement = serviceRequirement;
 	}

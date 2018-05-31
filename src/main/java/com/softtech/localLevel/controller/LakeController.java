@@ -34,7 +34,12 @@ import com.softtech.localLevel.service.LakesService;
 import com.softtech.localLevel.util.Status;
 
 import io.swagger.annotations.ApiOperation;
-
+/**
+ * <<This is the controller for Lake>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 2 March 2018
+*/
 @RestController
 @RequestMapping("rest/lakes")
 public class LakeController {

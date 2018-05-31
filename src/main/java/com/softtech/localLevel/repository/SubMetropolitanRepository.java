@@ -8,18 +8,20 @@ import com.softtech.localLevel.model.District;
 import com.softtech.localLevel.model.SubMetropolitan;
 import com.softtech.localLevel.util.Status;
 
-public interface SubMetropolitanRepository extends JpaRepository<SubMetropolitan,Long>{
+public interface SubMetropolitanRepository extends JpaRepository<SubMetropolitan, Long> {
 
-	//List<SubMetropolitan> findAllByDistricts(District district);
+	// List<SubMetropolitan> findAllByDistricts(District district);
 
 	List<SubMetropolitan> findAllByDistrict(District district);
 
 	SubMetropolitan findBySubMetropolitan(String subMetropolitan);
 
-	SubMetropolitan findBySubMetropolitanAndStatusNot(String subMetropolitan, Status deleted);
-
 	SubMetropolitan findById(Long submetropolitan_id);
 
-	//SubMetropolitan findBySubMetropolitan();
+	SubMetropolitan findBySubMetropolitanAndStatusNot(String subMetropolitan, Status deleted);
+
+	SubMetropolitan findByIdAndStatusNot(Long id, Status deleted);
+
+	// SubMetropolitan findBySubMetropolitan();
 
 }

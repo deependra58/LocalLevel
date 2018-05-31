@@ -16,14 +16,20 @@ import com.softtech.localLevel.response.AtmResponse;
 import com.softtech.localLevel.service.AtmService;
 
 import io.swagger.annotations.ApiOperation;
-
+/**
+ * <<This is the controller for Atm>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 2 March 2018
+*/
 @RestController
-@RequestMapping("rest/Atm")
+@RequestMapping("rest/Atms")
 public class AtmController {
 	
 	@Autowired
 	private AtmService atmService;
 	
+	/*Api to post atm manually*/
 	@ApiOperation(value="Post Atm",notes="Api to post ATM")
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Object> postAtm(@RequestBody AtmCreationRequest atmCreationRequest){
@@ -33,6 +39,7 @@ public class AtmController {
 		
 	}
 	
+	/*Api to get all Atm by state*/
 	@ApiOperation(value="Get All Atm ",notes="Api to get all atm by state name")
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<Object> getAtm(@RequestParam String state){

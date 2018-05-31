@@ -3,13 +3,15 @@ package com.softtech.localLevel.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.softech.localLevel.exception.AlreadyExistException;
+import com.softech.localLevel.exception.NotFoundException;
 import com.softtech.localLevel.model.Airports;
 import com.softtech.localLevel.model.District;
-
 import com.softtech.localLevel.model.State;
 import com.softtech.localLevel.repository.AirportsRepository;
 import com.softtech.localLevel.repository.DistrictRepository;
@@ -66,6 +68,36 @@ public class AirportsService {
 
 		});
 		return airportsResponseDtoList;
+	}
+
+	@Transactional
+	public void editAirport(String airportName, String district, String description, String airportAddress) {
+		Airports airport=airportsRepository.findByAirportNameAndStatusNot(airportName, Status.DELETED);
+		if(airport==null) {
+			throw new NotFoundException("Airport with name "+airportName +" not found");
+		}
+		District districts = districtRepository.findByDistrict(district);
+		State state = stateRepository.findById(districts.getState().getId());
+		airport.setState(state);
+		airport.setDistrict(districts);
+		airport.setAirportName(airportName);
+		airport.setAirportAddress(airportAddress);
+		airport.setDescription(description);
+		airport.setStatus(Status.ACTIVE);
+		airportsRepository.save(airport);
+		
+		
+		
+	}
+	
+	@Transactional
+	public void deleteAirport(String airportName) {
+		Airports airport=airportsRepository.findByAirportNameAndStatusNot(airportName, Status.DELETED);
+		if(airport==null) {
+			throw new NotFoundException("Airport with name "+airportName+" not found.");
+		}
+		airport.setStatus(Status.DELETED);
+		airportsRepository.save(airport);
 	}
 
 	

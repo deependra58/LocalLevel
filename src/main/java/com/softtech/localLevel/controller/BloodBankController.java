@@ -16,14 +16,20 @@ import com.softtech.localLevel.response.BloodBankResponse;
 import com.softtech.localLevel.service.BloodBankService;
 
 import io.swagger.annotations.ApiOperation;
-
+/**
+ * <<This is the controller for Blood Bank>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 2 March 2018
+*/
 @RestController
-@RequestMapping("rest/bloodBank")
+@RequestMapping("rest/bloodBanks")
 public class BloodBankController {
 	
 	@Autowired
 	private BloodBankService bloodBankService;
 	
+	/*Api to post blood bank*/
 	@ApiOperation(value="Post BloodBank",notes="Api to post BlodBank")
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Object> postBloodBank(@RequestBody BloodBankCreationRequest bloodBankCreationRequest){
@@ -33,6 +39,7 @@ public class BloodBankController {
 		
 	}
 	
+	/*Api to get all blood bank by state*/
 	@ApiOperation(value="Get All BloodBank ",notes="Api to get all BloodBank")
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<Object> getBloodBank(@RequestParam String state){

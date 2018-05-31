@@ -33,7 +33,12 @@ import com.softtech.localLevel.service.HospitalService;
 import com.softtech.localLevel.util.Status;
 
 import io.swagger.annotations.ApiOperation;
-
+/**
+ * <<This is the controller for Hospital>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 2 March 2018
+*/
 @RestController
 @RequestMapping("rest/hospital")
 public class HospitalController {

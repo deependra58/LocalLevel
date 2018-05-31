@@ -19,6 +19,7 @@ import com.softtech.localLevel.util.Status;
  * @Version 1.0.0
  * @Since , 2 March 2018
 */
+@SuppressWarnings("serial")
 @Entity
 public class Lakes implements Serializable{
 	

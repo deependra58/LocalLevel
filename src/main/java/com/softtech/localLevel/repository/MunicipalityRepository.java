@@ -20,4 +20,6 @@ public interface MunicipalityRepository extends JpaRepository<Municipality, Long
 
 	Municipality findById(Long id);
 
+	Municipality findByIdAndStatusNot(Long id, Status deleted);
+
 }

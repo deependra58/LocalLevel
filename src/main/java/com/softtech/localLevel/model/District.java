@@ -25,6 +25,7 @@ import com.softtech.localLevel.util.Status;
  * @Version 1.0.0
  * @Since , 1 March 2018
 */
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "district")
 public class District implements Serializable {
@@ -55,8 +56,12 @@ public class District implements Serializable {
 	@OneToMany(mappedBy = "district", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<RuralMunicipality> ruralMunicipality;
 
+	
 	@OneToMany(mappedBy = "district", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Municipality> municipality;
+	
+//	@OneToMany(mappedBy="district", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+//	private List<RuralMunicipalWard> ruralMunicipal;
 
 	@OneToMany(mappedBy = "district", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<SubMetropolitan> subMetropolitan;
@@ -99,7 +104,9 @@ public class District implements Serializable {
 
 	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Industry> industry;
+	
 
+	
 	public List<Industry> getIndustry() {
 		return industry;
 	}

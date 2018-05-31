@@ -34,7 +34,12 @@ import com.softtech.localLevel.service.WaterfallService;
 import com.softtech.localLevel.util.Status;
 
 import io.swagger.annotations.ApiOperation;
-
+/**
+ * <<This is the controller for Waterfall>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 2 April 2018
+*/
 @RestController
 @RequestMapping("rest/waterfall")
 public class WaterfallController {

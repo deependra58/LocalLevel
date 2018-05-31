@@ -35,7 +35,12 @@ import com.softtech.localLevel.util.LocalLevelType;
 import com.softtech.localLevel.util.Status;
 
 import io.swagger.annotations.ApiOperation;
-
+/**
+ * <<This is the controller for sub metropolitan>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 2 April 2018
+*/
 @RestController
 @RequestMapping("/rest")
 public class SubMetropolitanController {

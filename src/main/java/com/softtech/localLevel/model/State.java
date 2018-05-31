@@ -53,6 +53,7 @@ public class State implements Serializable {
 
 	@Column(unique = true)
 	private String state;
+	
 	@OneToMany(mappedBy = "state", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	// @JsonManagedReference
 	private List<District> districts;

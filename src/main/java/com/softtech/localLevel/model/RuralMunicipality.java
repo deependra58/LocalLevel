@@ -18,19 +18,21 @@ import javax.persistence.Table;
 
 import com.softtech.localLevel.util.LocalLevelType;
 import com.softtech.localLevel.util.Status;
+
 /**
  * <<This is the entity for RuralMunicipality>>
+ * 
  * @Author Deependra
  * @Version 1.0.0
  * @Since , 2 March 2018
-*/
+ */
 @SuppressWarnings("serial")
 @Entity
-@Table(name="ruralMunicipality")
-public class RuralMunicipality implements Serializable{
-	
+@Table(name = "ruralMunicipality")
+public class RuralMunicipality implements Serializable {
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String ruralMunicipal;
 	private String population;
@@ -43,122 +45,160 @@ public class RuralMunicipality implements Serializable{
 	private String viceChairmen;
 	private String viceChairmenContact;
 	private String viceChairmenEmail;
-	
+
+	@OneToMany(mappedBy="ruralMunicipality", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<RuralMunicipalWard> ruralMunicipalWard;
+
 	@Enumerated(EnumType.STRING)
 	private Status status;
 	
-	public Status getStatus() {
-		return status;
-	}
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-	@ManyToOne(cascade= {CascadeType.ALL})
-	@JoinColumn(name="district_id")
-	private District district;
-	
-//	@OneToMany(mappedBy="ruralMunicipality", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-//	private List<Vdc> vdc;
-	
-	
-//	public List<Vdc> getVdc() {
-//		return vdc;
-//	}
-//	public void setVdc(List<Vdc> vdc) {
-//		this.vdc = vdc;
-//	}
 	@Enumerated(EnumType.STRING)
 	private LocalLevelType localLevelType;
 	
+	@ManyToOne(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "district_id")
+	private District district;
+
+
+	public Status getStatus() {
+
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	
+
+	// @OneToMany(mappedBy="ruralMunicipality", fetch=FetchType.LAZY,
+	// cascade=CascadeType.ALL)
+	// private List<Vdc> vdc;
+
+	// public List<Vdc> getVdc() {
+	// return vdc;
+	// }
+	// public void setVdc(List<Vdc> vdc) {
+	// this.vdc = vdc;
+	// }
 	
 	public LocalLevelType getLocalLevelType() {
 		return localLevelType;
 	}
+
 	public void setLocalLevelType(LocalLevelType localLevelType) {
 		this.localLevelType = localLevelType;
 	}
+
 	public District getDistrict() {
 		return district;
 	}
+
 	public void setDistrict(District district) {
 		this.district = district;
 	}
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getRuralMunicipal() {
 		return ruralMunicipal;
 	}
+
 	public void setRuralMunicipal(String ruralMunicipal) {
 		this.ruralMunicipal = ruralMunicipal;
 	}
+
 	public String getPopulation() {
 		return population;
 	}
+
 	public void setPopulation(String population) {
 		this.population = population;
 	}
+
 	public String getArea() {
 		return area;
 	}
+
 	public void setArea(String area) {
 		this.area = area;
 	}
+
 	public String getDensity() {
 		return density;
 	}
+
 	public void setDensity(String density) {
 		this.density = density;
 	}
+
 	public String getWebsite() {
 		return website;
 	}
+
 	public void setWebsite(String website) {
 		this.website = website;
 	}
+
 	public String getChairmen() {
 		return chairmen;
 	}
+
 	public void setChairmen(String chairmen) {
 		this.chairmen = chairmen;
 	}
+
 	public String getChairmenContact() {
 		return chairmenContact;
 	}
+
 	public void setChairmenContact(String chairmenContact) {
 		this.chairmenContact = chairmenContact;
 	}
+
 	public String getChairmenEmail() {
 		return chairmenEmail;
 	}
+
 	public void setChairmenEmail(String chairmenEmail) {
 		this.chairmenEmail = chairmenEmail;
 	}
+
 	public String getViceChairmen() {
 		return viceChairmen;
 	}
+
 	public void setViceChairmen(String viceChairmen) {
 		this.viceChairmen = viceChairmen;
 	}
+
 	public String getViceChairmenContact() {
 		return viceChairmenContact;
 	}
+
 	public void setViceChairmenContact(String viceChairmenContact) {
 		this.viceChairmenContact = viceChairmenContact;
 	}
+
 	public String getViceChairmenEmail() {
 		return viceChairmenEmail;
 	}
+
 	public void setViceChairmenEmail(String viceChairmenEmail) {
 		this.viceChairmenEmail = viceChairmenEmail;
 	}
+
 	public RuralMunicipality() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
 	public RuralMunicipality(Long id, String ruralMunicipal, String population, String area, String density,
 			String website, String chairmen, String chairmenContact, String chairmenEmail, String viceChairmen,
 			String viceChairmenContact, String viceChairmenEmail) {
@@ -176,11 +216,9 @@ public class RuralMunicipality implements Serializable{
 		this.viceChairmenContact = viceChairmenContact;
 		this.viceChairmenEmail = viceChairmenEmail;
 	}
+
 	public RuralMunicipality(Long id) {
-		this.id=id;
+		this.id = id;
 	}
-	
-	
-	
 
 }

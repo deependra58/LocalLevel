@@ -1,5 +1,7 @@
 package com.softtech.localLevel.service;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +12,16 @@ import com.softtech.localLevel.util.Status;
 
 @Service
 public class RuralMunicipalityService {
-	
+
 	@Autowired
 	private RuralMunicipalityRepository ruralMunicipalityRepository;
 
+	@Transactional
 	public RuralMunicipalDetailsDto showDetails(String ruralMunicipal) {
-		RuralMunicipality ruralMunicipality=ruralMunicipalityRepository.findByRuralMunicipalAndStatusNot(ruralMunicipal,Status.ACTIVE);
+		RuralMunicipality ruralMunicipality = ruralMunicipalityRepository
+				.findByRuralMunicipalAndStatusNot(ruralMunicipal, Status.ACTIVE);
 		System.out.println(ruralMunicipality.toString());
-		RuralMunicipalDetailsDto ruralMunicipalDetailsDto=new RuralMunicipalDetailsDto();
+		RuralMunicipalDetailsDto ruralMunicipalDetailsDto = new RuralMunicipalDetailsDto();
 		ruralMunicipalDetailsDto.setRuralMunicipal(ruralMunicipality.getRuralMunicipal());
 		ruralMunicipalDetailsDto.setPopulation(ruralMunicipality.getPopulation());
 		ruralMunicipalDetailsDto.setPopulation(ruralMunicipality.getPopulation());
@@ -32,8 +36,7 @@ public class RuralMunicipalityService {
 		ruralMunicipalDetailsDto.setViceChairmenEmail(ruralMunicipality.getViceChairmenEmail());
 		ruralMunicipalDetailsDto.setStatus(Status.ACTIVE);
 		return ruralMunicipalDetailsDto;
-		
-		
+
 	}
 
 }

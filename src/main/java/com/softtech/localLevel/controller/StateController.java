@@ -64,7 +64,12 @@ import com.softtech.localLevel.util.LocalLevelType;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
+/**
+ * <<This is the controller for state>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 2 April 2018
+*/
 @RestController
 @RequestMapping("/rest/states")
 @Api(value = "State Controller", description = "Operation about states")

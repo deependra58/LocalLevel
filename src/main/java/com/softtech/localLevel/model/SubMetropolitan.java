@@ -56,8 +56,18 @@ public class SubMetropolitan implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Status status;
 	
+	@OneToMany(mappedBy="subMetropolitan",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	private List<SubMetropolitanWard> subMetropolitanWard;
 	
 	
+	
+	
+	public List<SubMetropolitanWard> getSubMetropolitanWard() {
+		return subMetropolitanWard;
+	}
+	public void setSubMetropolitanWard(List<SubMetropolitanWard> subMetropolitanWard) {
+		this.subMetropolitanWard = subMetropolitanWard;
+	}
 	public Status getStatus() {
 		return status;
 	}

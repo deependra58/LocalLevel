@@ -15,7 +15,12 @@ import com.softtech.localLevel.service.UserService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
+/**
+ * <<This is the controller for user>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 2 April 2018
+*/
 @RestController
 @RequestMapping("rest/")
 @Api(value = "user Controller", description = "API for users")

@@ -4,9 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.softtech.localLevel.util.Status;
 /**
  * <<This is the entity for Citizen Charter>>
  * @Author Deependra
@@ -28,18 +32,31 @@ public class CitizenCharter implements Serializable{
     private String responsiblePerson;
     private String complainTo;
     private String remarks;
+    private Long districtId;
+    private Long municipalityId;
+    private Long metropolitanId;
+    private Long ruralMunicipalityId;
+    private Long subMetropolitanId;
+    @Enumerated(EnumType.STRING)
+    private Status status;
     
-	public ArrayList<String> getServiceRequirement() {
-		return serviceRequirement;
+	public Status getStatus() {
+		return status;
 	}
-	public void setServiceRequirement(ArrayList<String> serviceRequirement) {
-		this.serviceRequirement = serviceRequirement;
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public ArrayList<String> getServiceRequirement() {
+		return serviceRequirement;
+	}
+	public void setServiceRequirement(ArrayList<String> serviceRequirement) {
+		this.serviceRequirement = serviceRequirement;
 	}
 	public String getServiceType() {
 		return serviceType;
@@ -77,10 +94,37 @@ public class CitizenCharter implements Serializable{
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+	public Long getDistrictId() {
+		return districtId;
+	}
+	public void setDistrictId(Long districtId) {
+		this.districtId = districtId;
+	}
+	public Long getMunicipalityId() {
+		return municipalityId;
+	}
+	public void setMunicipalityId(Long municipalityId) {
+		this.municipalityId = municipalityId;
+	}
+	public Long getMetropolitanId() {
+		return metropolitanId;
+	}
+	public void setMetropolitanId(Long metropolitanId) {
+		this.metropolitanId = metropolitanId;
+	}
+	public Long getRuralMunicipalityId() {
+		return ruralMunicipalityId;
+	}
+	public void setRuralMunicipalityId(Long ruralMunicipalityId) {
+		this.ruralMunicipalityId = ruralMunicipalityId;
+	}
+	public Long getSubMetropolitanId() {
+		return subMetropolitanId;
+	}
+	public void setSubMetropolitanId(Long subMetropolitanId) {
+		this.subMetropolitanId = subMetropolitanId;
+	}
     
-    
-	
-	
 
 }
  

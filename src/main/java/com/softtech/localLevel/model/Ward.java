@@ -24,6 +24,7 @@ public class Ward implements Serializable {
 	private Long id;
 	
 	private Long newWardId;
+	private String newWardName;
 	private Long oldWardId;
 	
 	@ManyToOne(cascade=CascadeType.ALL)

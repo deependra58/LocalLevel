@@ -17,12 +17,14 @@ import javax.persistence.OneToMany;
 
 import com.softtech.localLevel.util.LocalLevelType;
 import com.softtech.localLevel.util.Status;
+
 /**
  * <<This is the entity for Municipality>>
+ * 
  * @Author Deependra
  * @Version 1.0.0
  * @Since , 2 March 2018
-*/
+ */
 @SuppressWarnings("serial")
 @Entity
 public class Municipality implements Serializable {
@@ -41,33 +43,42 @@ public class Municipality implements Serializable {
 	private String deputMayor;
 	private String deputMayorContact;
 	private String deputMayorEmail;
-	
+
 	@Enumerated(EnumType.STRING)
 	private Status status;
-	
+
 	@Enumerated(EnumType.STRING)
 	private LocalLevelType localLevelType;
-	
 
-	@ManyToOne(cascade= {CascadeType.ALL})
-	@JoinColumn(name="district_id")
+	@ManyToOne(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "district_id")
 	private District district;
-	
-//	@OneToMany(mappedBy="municipality", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-//	private List<Vdc> vdc;
-//	
-//	public List<Vdc> getVdc() {
-//		return vdc;
-//	}
-//
-//	public void setVdc(List<Vdc> vdc) {
-//		this.vdc = vdc;
-//	}
 
-	
+	@OneToMany(mappedBy = "municipality", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<MunicipalWard> municipalWard;
+
+	// @OneToMany(mappedBy="municipality", cascade=CascadeType.ALL,
+	// fetch=FetchType.LAZY)
+	// private List<Vdc> vdc;
+	//
+	// public List<Vdc> getVdc() {
+	// return vdc;
+	// }
+	//
+	// public void setVdc(List<Vdc> vdc) {
+	// this.vdc = vdc;
+	// }
 
 	public LocalLevelType getLocalLevelType() {
 		return localLevelType;
+	}
+
+	public List<MunicipalWard> getMunicipalWard() {
+		return municipalWard;
+	}
+
+	public void setMunicipalWard(List<MunicipalWard> municipalWard) {
+		this.municipalWard = municipalWard;
 	}
 
 	public Status getStatus() {
@@ -77,6 +88,7 @@ public class Municipality implements Serializable {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+
 	public void setLocalLevelType(LocalLevelType localLevelType) {
 		this.localLevelType = localLevelType;
 	}
@@ -96,8 +108,6 @@ public class Municipality implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	
 
 	public String getMunicipal() {
 		return municipal;
@@ -193,7 +203,7 @@ public class Municipality implements Serializable {
 	}
 
 	public Municipality(Long id) {
-		this.id=id;
+		this.id = id;
 	}
 
 }

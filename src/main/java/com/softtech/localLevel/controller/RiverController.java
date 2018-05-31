@@ -32,7 +32,12 @@ import com.softtech.localLevel.service.RiversService;
 import com.softtech.localLevel.util.Status;
 
 import io.swagger.annotations.ApiOperation;
-
+/**
+ * <<This is the controller for River>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 2 March 2018
+*/
 @RestController
 @RequestMapping("rest/rivers")
 public class RiverController {

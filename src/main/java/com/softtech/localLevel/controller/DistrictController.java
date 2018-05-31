@@ -44,7 +44,12 @@ import com.softtech.localLevel.util.Status;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
+/**
+ * <<This is the controller for District>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 2 March 2018
+*/
 @RestController
 @RequestMapping("/rest/districts")
 @Api(value = "District controller", description = "Operation about District  ")

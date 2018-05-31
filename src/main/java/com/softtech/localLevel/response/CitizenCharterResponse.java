@@ -2,6 +2,9 @@ package com.softtech.localLevel.response;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+@JsonInclude(Include.NON_NULL)
 public class CitizenCharterResponse {
 	
 	private Long id;
@@ -12,6 +15,43 @@ public class CitizenCharterResponse {
     private String responsiblePerson;
     private String complainTo;
     private String remarks;
+    private String district;
+    private String municipality;
+    private String ruralMunicipality;
+    private String metropolitan;
+    private String subMetropolitan;
+    
+	
+	public String getDistrict() {
+		return district;
+	}
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+	public String getMunicipality() {
+		return municipality;
+	}
+	public void setMunicipality(String municipality) {
+		this.municipality = municipality;
+	}
+	public String getRuralMunicipality() {
+		return ruralMunicipality;
+	}
+	public void setRuralMunicipality(String ruralMunicipality) {
+		this.ruralMunicipality = ruralMunicipality;
+	}
+	public String getMetropolitan() {
+		return metropolitan;
+	}
+	public void setMetropolitan(String metropolitan) {
+		this.metropolitan = metropolitan;
+	}
+	public String getSubMetropolitan() {
+		return subMetropolitan;
+	}
+	public void setSubMetropolitan(String subMetropolitan) {
+		this.subMetropolitan = subMetropolitan;
+	}
 	public ArrayList<String> getServiceRequirement() {
 		return serviceRequirement;
 	}

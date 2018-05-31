@@ -16,7 +16,12 @@ import com.softtech.localLevel.response.PoliceStationResponse;
 import com.softtech.localLevel.service.PoliceStationService;
 
 import io.swagger.annotations.ApiOperation;
-
+/**
+ * <<This is the controller for Police Station>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 2 March 2018
+*/
 @RestController
 @RequestMapping("rest/policeStation")
 public class PoliceStationController {

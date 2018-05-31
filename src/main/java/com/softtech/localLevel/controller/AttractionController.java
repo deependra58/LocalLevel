@@ -16,7 +16,12 @@ import com.softtech.localLevel.response.AttractionResponseDto;
 import com.softtech.localLevel.service.AttractionService;
 
 import io.swagger.annotations.ApiOperation;
-
+/**
+ * <<This is the controller for Attraction>>
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 2 March 2018
+*/
 @RestController
 @RequestMapping("rest/famousFor")
 public class AttractionController {
@@ -24,6 +29,7 @@ public class AttractionController {
 	@Autowired 
 	private AttractionService attractionService;
 	
+	/*Api to post famous thing of a district*/
 	@ApiOperation(value="Post famous items")
 	@RequestMapping(value="famousFor", method=RequestMethod.POST)
 	public ResponseEntity<Object> postFamousFor(@RequestParam String item, @RequestParam String district,@RequestParam String localAddress,@RequestParam String description){
@@ -31,6 +37,7 @@ public class AttractionController {
 		return new ResponseEntity<Object>(ff.getItem()+" posted Successfully!",HttpStatus.OK);
 	}
 	
+	/*Api to get the famous thing by state*/
 	@ApiOperation(value="get Attraction")
 	@RequestMapping(value="getAttraction/{state:.+}", method=RequestMethod.GET)
 	public ResponseEntity<Object> getAttraction(@PathVariable String state){

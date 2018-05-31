@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,10 +32,15 @@ import com.softtech.localLevel.response.AirportsResponseDto;
 import com.softtech.localLevel.service.AirportsService;
 import com.softtech.localLevel.util.Status;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
+/**
+ * <<Here you can find the API's for Airport>>
+ * 
+ * @Author Deependra
+ * @Version 1.0.0
+ * @Since , 2 March 2018
+ */
 @RestController
 @RequestMapping("rest/airports")
 public class AirportsController {
@@ -51,10 +56,11 @@ public class AirportsController {
 
 	@Autowired
 	private DistrictRepository districtRepository;
-	
-	
+
+	/* Api to upload the excel sheet for airport */
+
 	@ApiOperation(value = "Upload an excel file for Natural Resources-Mountains")
-	@RequestMapping(value = "/uploadAirports/airports", method = RequestMethod.POST)
+	@RequestMapping(value = "/uploadAirportExcel", method = RequestMethod.POST)
 	ResponseEntity<Object> processExcelSheetForMountain(@RequestParam("Airports") MultipartFile multipartFile)
 			throws IOException {
 
@@ -116,8 +122,9 @@ public class AirportsController {
 		return new ResponseEntity<Object>("Airports file  uploaded Successfully!", HttpStatus.OK);
 	}
 
+	/* Api to post Airport details Manually */
 	@ApiOperation(value = "Post Airports ")
-	@RequestMapping(value = "addAirports", method = RequestMethod.POST)
+	@RequestMapping( method = RequestMethod.POST)
 	public ResponseEntity<Object> postAirports(@RequestParam String airportName, @RequestParam String district,
 			@RequestParam String description, @RequestParam String airportAddress) {
 		Airports airports = airportsService.postAirports(airportName, district, description, airportAddress);
@@ -125,15 +132,33 @@ public class AirportsController {
 
 	}
 
-//	@ApiImplicitParams({
-//		@ApiImplicitParam(name = "token", required = true, dataType = "string", paramType = "header") })
+	/* Api to get Airport details by state name */
 
 	@ApiOperation(value = "get Airports")
-	@RequestMapping(value = "getAirport/{state:.+}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{state:.+}", method = RequestMethod.GET)
 	public ResponseEntity<Object> getAirport(@PathVariable String state) {
 		List<AirportsResponseDto> airportResponseDto = airportsService.getAirports(state);
 		return new ResponseEntity<Object>(airportResponseDto, HttpStatus.OK);
 
+	}
+	
+	/*Api to edit Airport details */
+	
+	@ApiOperation(value="Edit airport")
+	@RequestMapping(method=RequestMethod.PUT)
+	public ResponseEntity<Object> editAirport(@RequestParam String airportName, @RequestParam String district,
+			@RequestParam String description, @RequestParam String airportAddress){
+		airportsService.editAirport(airportName, district, description, airportAddress);
+		return new ResponseEntity<Object>("Edited Successfully",HttpStatus.OK);
+		
+	}
+	
+	/*Api to Delete airport*/
+	@ApiOperation(value="Delete Airport")
+	@RequestMapping(method=RequestMethod.DELETE)
+	public ResponseEntity<Object> deleteAirport(@RequestParam String airportName){
+		airportsService.deleteAirport(airportName);
+		return new ResponseEntity<Object>("Deleted Successfully",HttpStatus.OK);
 	}
 
 }

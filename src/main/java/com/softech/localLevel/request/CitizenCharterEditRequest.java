@@ -11,9 +11,17 @@ public class CitizenCharterEditRequest {
     private String responsiblePerson;
     private String complainTo;
     private String remarks;
+   // private Long districtId;
+//    private Long municipalityId;
+//    private Long ruralMunicipalityId;
+//    private Long metropolitanId;
+//    private Long subMetropolitanId;
+    
+
 	public ArrayList<String> getServiceRequirement() {
 		return serviceRequirement;
 	}
+	
 	public void setServiceRequirement(ArrayList<String> serviceRequirement) {
 		this.serviceRequirement = serviceRequirement;
 	}

@@ -1,6 +1,7 @@
 package com.softtech.localLevel.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -10,23 +11,18 @@ import com.softtech.localLevel.model.RuralMunicipality;
 import com.softtech.localLevel.util.Status;
 
 @Repository
-public interface RuralMunicipalityRepository extends JpaRepository<RuralMunicipality,Long> {
+public interface RuralMunicipalityRepository extends JpaRepository<RuralMunicipality, Long> {
 
 	List<RuralMunicipality> findAllByDistrict(District district);
 
-	
-
-	RuralMunicipality findByRuralMunicipalAndStatusNot(String ruralMunicipality, Status deleted);
-
-
+	RuralMunicipality findByRuralMunicipalAndStatusNot(RuralMunicipality ruralMunicipality, Status deleted);
 
 	RuralMunicipality findByRuralMunicipal(String ruralMunicipal);
 
-
-
 	RuralMunicipality findById(Long id);
 
+	RuralMunicipality findByIdAndStatusNot(Long ruralMunicipalityId, Status deleted);
 
-
+	RuralMunicipality findByRuralMunicipalAndStatusNot(String ruralMunicipality, Status deleted);
 
 }
